@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Stock Model Comparison Dashboard</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0e0f12;
+    --surface: #161820;
+    --surface2: #1e2028;
+    --border: #2a2d38;
+    --text: #e8eaf0;
+    --text-muted: #7a7e91;
+    --accent: #4f8ef7;
+    --zup:  #34d399;
+    --zip:  #f59e0b;
+    --zap:  #f87171;
+    --base: #a78bfa;
+    --win-bg: rgba(52,211,153,0.08);
+    --win-border: rgba(52,211,153,0.35);
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 14px;
+    line-height: 1.5;
+    padding: 24px 28px 48px;
+  }
+
+  header {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+  header h1 { font-size: 20px; font-weight: 600; letter-spacing: -0.3px; }
+  header .sub { color: var(--text-muted); font-size: 12px; }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 24px;
+  }
+
+  .card-title {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 16px;
+  }
+
+  /* ── Chart ── */
+  .chart-wrap {
+    position: relative;
+    height: 380px;
+  }
+
+  /* ── Legend toggle pills ── */
+  .legend-row {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 14px;
+  }
+  .legend-pill {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    padding: 5px 12px;
+    border-radius: 20px;
+    border: 1.5px solid transparent;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 500;
+    user-select: none;
+    transition: opacity 0.15s, border-color 0.15s;
+    background: var(--surface2);
+  }
+  .legend-pill.off { opacity: 0.35; }
+  .legend-pill .dot {
+    width: 10px; height: 10px; border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  /* ── Tooltip ── */
+  #tooltip {
+    position: fixed;
+    pointer-events: none;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 12px;
+    min-width: 180px;
+    z-index: 100;
+    display: none;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+  }
+  #tooltip .tt-date {
+    font-weight: 600;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+    font-size: 11px;
+    letter-spacing: 0.05em;
+  }
+  #tooltip .tt-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    padding: 2px 0;
+  }
+  #tooltip .tt-label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--text-muted);
+  }
+  #tooltip .tt-dot {
+    width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0;
+  }
+  #tooltip .tt-val { font-weight: 600; }
+  #tooltip .tt-val.pos { color: #34d399; }
+  #tooltip .tt-val.neg { color: #f87171; }
+
+  /* ── Table ── */
+  .tbl-wrap { overflow-x: auto; }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+  thead th {
+    padding: 8px 14px;
+    text-align: right;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    border-bottom: 1px solid var(--border);
+    white-space: nowrap;
+  }
+  thead th:first-child { text-align: left; }
+  tbody tr {
+    border-bottom: 1px solid var(--border);
+    transition: background 0.1s;
+  }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover { background: var(--surface2); }
+  tbody tr.winner {
+    background: var(--win-bg);
+    border-color: var(--win-border);
+  }
+  tbody tr.winner td:first-child {
+    border-left: 3px solid var(--zup);
+    padding-left: 11px;
+  }
+  tbody td {
+    padding: 10px 14px;
+    text-align: right;
+    white-space: nowrap;
+  }
+  tbody td:first-child { text-align: left; font-weight: 600; }
+  .badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    background: rgba(52,211,153,0.15);
+    color: var(--zup);
+    margin-left: 6px;
+    vertical-align: middle;
+  }
+  .pos { color: #34d399; }
+  .neg { color: #f87171; }
+  .neutral { color: var(--text); }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Stock Model Dashboard</h1>
+  <span class="sub">ZIP · ZAP · ZUP · BASELINE &nbsp;|&nbsp; Backtest comparison</span>
+</header>
+
+<div class="card">
+  <div class="card-title">Cumulative Return (%)</div>
+  <div class="legend-row" id="legendRow"></div>
+  <div class="chart-wrap">
+    <canvas id="chart"></canvas>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-title">Model Performance Comparison</div>
+  <div class="tbl-wrap">
+    <table id="statsTable">
+      <thead>
+        <tr>
+          <th>Model</th>
+          <th>Days</th>
+          <th>Accuracy</th>
+          <th>OOS Acc</th>
+          <th>Total Return</th>
+          <th>Sharpe</th>
+          <th>Max DD</th>
+          <th>Avg Daily Ret</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+</div>
+
+<div id="tooltip"></div>
+
+<script>
+const RAW_DATA = {"BASELINE":[{"date":"2026-01-02","return_pct":1.9807,"spy_correct":true},{"date":"2026-01-05","return_pct":1.7564,"spy_correct":true},{"date":"2026-01-06","return_pct":-0.9696,"spy_correct":false},{"date":"2026-01-07","return_pct":0.0873,"spy_correct":true},{"date":"2026-01-08","return_pct":-1.861,"spy_correct":false},{"date":"2026-01-09","return_pct":0.4918,"spy_correct":true},{"date":"2026-01-12","return_pct":-0.6739,"spy_correct":false},{"date":"2026-01-13","return_pct":1.538,"spy_correct":true},{"date":"2026-01-14","return_pct":-0.7574,"spy_correct":false},{"date":"2026-01-15","return_pct":0.4403,"spy_correct":true},{"date":"2026-01-20","return_pct":3.3834,"spy_correct":true},{"date":"2026-01-21","return_pct":-1.5117,"spy_correct":false},{"date":"2026-01-22","return_pct":0.0443,"spy_correct":true},{"date":"2026-01-27","return_pct":0.0595,"spy_correct":true},{"date":"2026-01-28","return_pct":0.6839,"spy_correct":true},{"date":"2026-01-29","return_pct":1.0337,"spy_correct":true},{"date":"2026-01-30","return_pct":-1.52,"spy_correct":false},{"date":"2026-02-02","return_pct":2.6714,"spy_correct":true},{"date":"2026-02-03","return_pct":1.4455,"spy_correct":true},{"date":"2026-02-04","return_pct":-3.825,"spy_correct":false},{"date":"2026-02-05","return_pct":5.776,"spy_correct":true},{"date":"2026-02-06","return_pct":-1.3679,"spy_correct":false},{"date":"2026-02-09","return_pct":0.8262,"spy_correct":true},{"date":"2026-02-10","return_pct":0.0878,"spy_correct":true},{"date":"2026-02-11","return_pct":4.7076,"spy_correct":true},{"date":"2026-02-12","return_pct":-0.0279,"spy_correct":false},{"date":"2026-02-13","return_pct":-0.4749,"spy_correct":false},{"date":"2026-02-17","return_pct":-1.8868,"spy_correct":false},{"date":"2026-02-18","return_pct":-0.2819,"spy_correct":true},{"date":"2026-02-19","return_pct":-3.1023,"spy_correct":false},{"date":"2026-02-23","return_pct":-2.9563,"spy_correct":false},{"date":"2026-02-24","return_pct":-2.8767,"spy_correct":false},{"date":"2026-02-26","return_pct":0.5714,"spy_correct":true},{"date":"2026-02-27","return_pct":-1.3882,"spy_correct":false},{"date":"2026-03-02","return_pct":2.0616,"spy_correct":true},{"date":"2026-03-03","return_pct":-2.5546,"spy_correct":false},{"date":"2026-03-04","return_pct":1.6389,"spy_correct":true},{"date":"2026-03-05","return_pct":1.5464,"spy_correct":true},{"date":"2026-03-06","return_pct":-3.135,"spy_correct":false},{"date":"2026-03-09","return_pct":-3.6259,"spy_correct":true},{"date":"2026-03-10","return_pct":0.0125,"spy_correct":true},{"date":"2026-03-11","return_pct":3.4103,"spy_correct":true},{"date":"2026-03-12","return_pct":1.7253,"spy_correct":true},{"date":"2026-03-13","return_pct":-3.3905,"spy_correct":false}],"ZIP":[{"date":"2025-01-02","return_pct":-2.6725,"spy_correct":false},{"date":"2025-01-03","return_pct":-2.834,"spy_correct":false},{"date":"2025-01-06","return_pct":-3.779,"spy_correct":false},{"date":"2025-01-07","return_pct":1.603,"spy_correct":false},{"date":"2025-01-08","return_pct":3.9421,"spy_correct":true},{"date":"2025-01-10","return_pct":0.4295,"spy_correct":false},{"date":"2025-01-13","return_pct":-1.6444,"spy_correct":false},{"date":"2025-01-14","return_pct":-5.378,"spy_correct":false},{"date":"2025-01-15","return_pct":0.0818,"spy_correct":true},{"date":"2025-01-16","return_pct":-2.3428,"spy_correct":false},{"date":"2025-01-17","return_pct":-2.8571,"spy_correct":false},{"date":"2025-01-21","return_pct":-2.4432,"spy_correct":false},{"date":"2025-01-22","return_pct":1.586,"spy_correct":true},{"date":"2025-01-23","return_pct":-0.1326,"spy_correct":true},{"date":"2025-01-24","return_pct":4.4405,"spy_correct":true},{"date":"2025-01-27","return_pct":-3.5699,"spy_correct":false},{"date":"2025-01-28","return_pct":0.0,"spy_correct":true},{"date":"2025-01-30","return_pct":-1.1981,"spy_correct":false},{"date":"2025-02-04","return_pct":-2.1619,"spy_correct":false},{"date":"2025-02-05","return_pct":2.1368,"spy_correct":true},{"date":"2025-02-11","return_pct":-0.3063,"spy_correct":false},{"date":"2025-02-12","return_pct":4.0833,"spy_correct":true},{"date":"2025-02-13","return_pct":1.2757,"spy_correct":false},{"date":"2025-02-14","return_pct":-0.7105,"spy_correct":false},{"date":"2025-02-18","return_pct":1.1251,"spy_correct":true},{"date":"2025-02-19","return_pct":0.402,"spy_correct":true},{"date":"2025-02-20","return_pct":5.3286,"spy_correct":true},{"date":"2025-02-24","return_pct":2.7801,"spy_correct":true},{"date":"2025-02-25","return_pct":0.3284,"spy_correct":false},{"date":"2025-02-26","return_pct":5.3932,"spy_correct":true},{"date":"2025-02-27","return_pct":-1.5707,"spy_correct":false},{"date":"2025-02-28","return_pct":2.4741,"spy_correct":true},{"date":"2025-03-03","return_pct":-6.2899,"spy_correct":false},{"date":"2025-03-04","return_pct":-2.2727,"spy_correct":false},{"date":"2025-03-05","return_pct":3.3093,"spy_correct":true},{"date":"2025-03-06","return_pct":0.4366,"spy_correct":true},{"date":"2025-03-07","return_pct":5.9428,"spy_correct":true},{"date":"2025-03-10","return_pct":-4.026,"spy_correct":false},{"date":"2025-03-11","return_pct":-0.6803,"spy_correct":false},{"date":"2025-03-12","return_pct":4.4674,"spy_correct":true},{"date":"2025-03-13","return_pct":4.1224,"spy_correct":true},{"date":"2025-03-14","return_pct":3.8591,"spy_correct":true},{"date":"2025-03-17","return_pct":-2.3185,"spy_correct":false},{"date":"2025-03-18","return_pct":2.2986,"spy_correct":true},{"date":"2025-03-19","return_pct":0.0,"spy_correct":true},{"date":"2025-03-20","return_pct":0.0,"spy_correct":false},{"date":"2025-03-21","return_pct":6.6629,"spy_correct":true},{"date":"2025-03-24","return_pct":-1.4373,"spy_correct":false},{"date":"2025-03-25","return_pct":3.4377,"spy_correct":true},{"date":"2025-03-26","return_pct":2.364,"spy_correct":true},{"date":"2025-03-27","return_pct":6.4611,"spy_correct":true},{"date":"2025-03-28","return_pct":-0.9175,"spy_correct":true},{"date":"2025-03-31","return_pct":-3.6556,"spy_correct":false},{"date":"2025-04-01","return_pct":-3.0812,"spy_correct":false},{"date":"2025-04-02","return_pct":11.9039,"spy_correct":true},{"date":"2025-04-04","return_pct":5.1275,"spy_correct":true},{"date":"2025-04-07","return_pct":1.758,"spy_correct":true},{"date":"2025-04-08","return_pct":19.1101,"spy_correct":true},{"date":"2025-04-09","return_pct":-8.5949,"spy_correct":true},{"date":"2025-04-10","return_pct":-5.0129,"spy_correct":false},{"date":"2025-04-11","return_pct":-5.8901,"spy_correct":false},{"date":"2025-04-14","return_pct":1.5428,"spy_correct":true},{"date":"2025-04-15","return_pct":7.5958,"spy_correct":true},{"date":"2025-04-16","return_pct":1.3438,"spy_correct":false},{"date":"2025-04-17","return_pct":7.5521,"spy_correct":true},{"date":"2025-04-21","return_pct":5.9281,"spy_correct":true},{"date":"2025-04-22","return_pct":-6.6453,"spy_correct":false},{"date":"2025-04-23","return_pct":-4.3814,"spy_correct":false},{"date":"2025-04-24","return_pct":-4.9787,"spy_correct":false},{"date":"2025-04-25","return_pct":-1.5112,"spy_correct":false},{"date":"2025-04-28","return_pct":-2.1261,"spy_correct":false},{"date":"2025-04-29","return_pct":1.3651,"spy_correct":true},{"date":"2025-04-30","return_pct":4.6086,"spy_correct":true},{"date":"2025-05-01","return_pct":3.3921,"spy_correct":true},{"date":"2025-05-02","return_pct":0.9709,"spy_correct":true},{"date":"2025-05-05","return_pct":-2.5373,"spy_correct":false},{"date":"2025-05-06","return_pct":-0.939,"spy_correct":false},{"date":"2025-05-07","return_pct":-2.554,"spy_correct":false},{"date":"2025-05-08","return_pct":-0.7544,"spy_correct":false},{"date":"2025-05-09","return_pct":9.2678,"spy_correct":true},{"date":"2025-05-12","return_pct":2.8608,"spy_correct":true},{"date":"2025-05-13","return_pct":0.9818,"spy_correct":true},{"date":"2025-05-14","return_pct":1.4389,"spy_correct":true},{"date":"2025-05-15","return_pct":-3.058,"spy_correct":false},{"date":"2025-05-16","return_pct":1.257,"spy_correct":true},{"date":"2025-05-19","return_pct":-0.6961,"spy_correct":true},{"date":"2025-05-20","return_pct":-4.8105,"spy_correct":false},{"date":"2025-05-21","return_pct":-1.8689,"spy_correct":true},{"date":"2025-05-22","return_pct":2.4043,"spy_correct":true},{"date":"2025-05-23","return_pct":6.7494,"spy_correct":true},{"date":"2025-05-27","return_pct":0.0912,"spy_correct":true},{"date":"2025-05-28","return_pct":0.2074,"spy_correct":true},{"date":"2025-05-29","return_pct":-0.7146,"spy_correct":false},{"date":"2025-05-30","return_pct":2.3024,"spy_correct":true},{"date":"2025-06-02","return_pct":3.344,"spy_correct":true},{"date":"2025-06-03","return_pct":0.7023,"spy_correct":false},{"date":"2025-06-04","return_pct":-1.8071,"spy_correct":false},{"date":"2025-06-05","return_pct":1.8073,"spy_correct":true},{"date":"2025-06-06","return_pct":0.3535,"spy_correct":true},{"date":"2025-06-09","return_pct":1.5978,"spy_correct":true},{"date":"2025-06-10","return_pct":-0.0483,"spy_correct":false},{"date":"2025-06-11","return_pct":0.5133,"spy_correct":true},{"date":"2025-06-12","return_pct":-2.4761,"spy_correct":false},{"date":"2025-06-13","return_pct":2.2104,"spy_correct":true},{"date":"2025-06-16","return_pct":2.0408,"spy_correct":true},{"date":"2025-06-17","return_pct":-0.9078,"spy_correct":false},{"date":"2025-06-18","return_pct":1.5267,"spy_correct":true},{"date":"2025-06-20","return_pct":1.9632,"spy_correct":true},{"date":"2025-06-23","return_pct":4.8507,"spy_correct":true},{"date":"2025-06-24","return_pct":0.6706,"spy_correct":true},{"date":"2025-06-25","return_pct":2.2535,"spy_correct":true},{"date":"2025-06-26","return_pct":2.0615,"spy_correct":true},{"date":"2025-06-27","return_pct":-2.0877,"spy_correct":false},{"date":"2025-06-30","return_pct":0.0531,"spy_correct":true},{"date":"2025-07-01","return_pct":-1.7469,"spy_correct":false},{"date":"2025-07-02","return_pct":-3.095,"spy_correct":false},{"date":"2025-07-03","return_pct":-1.6994,"spy_correct":false},{"date":"2025-07-07","return_pct":-0.5849,"spy_correct":false},{"date":"2025-07-08","return_pct":1.4943,"spy_correct":true},{"date":"2025-07-09","return_pct":1.2784,"spy_correct":true},{"date":"2025-07-10","return_pct":0.9879,"spy_correct":true},{"date":"2025-07-11","return_pct":-0.9234,"spy_correct":false},{"date":"2025-07-14","return_pct":-0.8121,"spy_correct":false},{"date":"2025-07-15","return_pct":-0.399,"spy_correct":true},{"date":"2025-07-16","return_pct":2.5054,"spy_correct":true},{"date":"2025-07-17","return_pct":-0.4953,"spy_correct":true},{"date":"2025-07-18","return_pct":-0.3882,"spy_correct":false},{"date":"2025-07-21","return_pct":0.1673,"spy_correct":false},{"date":"2025-07-22","return_pct":-2.7747,"spy_correct":false},{"date":"2025-07-23","return_pct":-0.905,"spy_correct":false},{"date":"2025-07-24","return_pct":0.9496,"spy_correct":true},{"date":"2025-07-25","return_pct":-0.2872,"spy_correct":true},{"date":"2025-07-28","return_pct":-0.8679,"spy_correct":false},{"date":"2025-07-29","return_pct":1.0938,"spy_correct":true},{"date":"2025-07-30","return_pct":-1.4147,"spy_correct":false},{"date":"2025-07-31","return_pct":-6.5543,"spy_correct":false},{"date":"2025-08-01","return_pct":3.6072,"spy_correct":true},{"date":"2025-08-04","return_pct":-0.1105,"spy_correct":true},{"date":"2025-08-05","return_pct":-1.2813,"spy_correct":false},{"date":"2025-08-06","return_pct":-0.6711,"spy_correct":true},{"date":"2025-08-07","return_pct":-1.6431,"spy_correct":false},{"date":"2025-08-11","return_pct":2.7293,"spy_correct":true},{"date":"2025-08-12","return_pct":-2.217,"spy_correct":false},{"date":"2025-08-13","return_pct":0.058,"spy_correct":true},{"date":"2025-08-14","return_pct":0.4751,"spy_correct":true},{"date":"2025-08-15","return_pct":0.5945,"spy_correct":true},{"date":"2025-08-18","return_pct":1.5348,"spy_correct":true},{"date":"2025-08-19","return_pct":-1.6391,"spy_correct":false},{"date":"2025-08-20","return_pct":-0.9703,"spy_correct":false},{"date":"2025-08-21","return_pct":4.3162,"spy_correct":true},{"date":"2025-08-22","return_pct":-0.4684,"spy_correct":true},{"date":"2025-08-25","return_pct":-0.8265,"spy_correct":false},{"date":"2025-08-26","return_pct":1.3656,"spy_correct":true},{"date":"2025-08-27","return_pct":-1.4908,"spy_correct":false},{"date":"2025-08-28","return_pct":-1.343,"spy_correct":false},{"date":"2025-08-29","return_pct":2.7414,"spy_correct":true},{"date":"2025-09-02","return_pct":2.5222,"spy_correct":true},{"date":"2025-09-03","return_pct":-2.8739,"spy_correct":false},{"date":"2025-09-05","return_pct":-0.1804,"spy_correct":false},{"date":"2025-09-08","return_pct":-0.8423,"spy_correct":false},{"date":"2025-09-09","return_pct":-1.5088,"spy_correct":false},{"date":"2025-09-10","return_pct":-2.0859,"spy_correct":false},{"date":"2025-09-11","return_pct":-0.8696,"spy_correct":true},{"date":"2025-09-12","return_pct":-1.2531,"spy_correct":false},{"date":"2025-09-15","return_pct":0.0,"spy_correct":true},{"date":"2025-09-16","return_pct":0.9512,"spy_correct":true},{"date":"2025-09-17","return_pct":-1.5694,"spy_correct":false},{"date":"2025-09-18","return_pct":-1.4678,"spy_correct":false},{"date":"2025-09-19","return_pct":1.8001,"spy_correct":true},{"date":"2025-09-22","return_pct":-0.7162,"spy_correct":false},{"date":"2025-09-23","return_pct":-1.6991,"spy_correct":false},{"date":"2025-09-24","return_pct":-2.06,"spy_correct":false},{"date":"2025-09-25","return_pct":1.9122,"spy_correct":true},{"date":"2025-09-26","return_pct":1.426,"spy_correct":true},{"date":"2025-09-29","return_pct":1.0178,"spy_correct":true},{"date":"2025-09-30","return_pct":1.8659,"spy_correct":true},{"date":"2025-10-01","return_pct":1.3858,"spy_correct":true},{"date":"2025-10-02","return_pct":0.16,"spy_correct":true},{"date":"2025-10-03","return_pct":-0.6882,"spy_correct":false},{"date":"2025-10-06","return_pct":0.974,"spy_correct":true},{"date":"2025-10-07","return_pct":-1.0911,"spy_correct":false},{"date":"2025-10-09","return_pct":8.5941,"spy_correct":true},{"date":"2025-10-10","return_pct":-0.4847,"spy_correct":false},{"date":"2025-10-13","return_pct":-0.0775,"spy_correct":true},{"date":"2025-10-14","return_pct":2.5132,"spy_correct":true},{"date":"2025-10-15","return_pct":-2.1279,"spy_correct":false},{"date":"2025-10-16","return_pct":-0.3702,"spy_correct":false},{"date":"2025-10-17","return_pct":-4.132,"spy_correct":false},{"date":"2025-10-20","return_pct":-0.8004,"spy_correct":true},{"date":"2025-10-21","return_pct":1.6616,"spy_correct":true},{"date":"2025-10-22","return_pct":-1.2428,"spy_correct":false},{"date":"2025-10-24","return_pct":3.6623,"spy_correct":true},{"date":"2025-10-27","return_pct":-1.3773,"spy_correct":false},{"date":"2025-10-28","return_pct":-0.1079,"spy_correct":false},{"date":"2025-10-29","return_pct":3.2174,"spy_correct":true},{"date":"2025-10-30","return_pct":0.2114,"spy_correct":false},{"date":"2025-10-31","return_pct":-0.1271,"spy_correct":false},{"date":"2025-11-03","return_pct":3.7373,"spy_correct":true},{"date":"2025-11-04","return_pct":0.4116,"spy_correct":true},{"date":"2025-11-05","return_pct":2.9466,"spy_correct":true},{"date":"2025-11-06","return_pct":-1.0685,"spy_correct":true},{"date":"2025-11-07","return_pct":6.0766,"spy_correct":true},{"date":"2025-11-11","return_pct":0.8603,"spy_correct":true},{"date":"2025-11-12","return_pct":5.0816,"spy_correct":true},{"date":"2025-11-13","return_pct":1.86,"spy_correct":true},{"date":"2025-11-14","return_pct":1.4981,"spy_correct":true},{"date":"2025-11-17","return_pct":-3.4382,"spy_correct":false},{"date":"2025-11-18","return_pct":-0.811,"spy_correct":false},{"date":"2025-11-19","return_pct":4.4943,"spy_correct":true},{"date":"2025-11-20","return_pct":1.8196,"spy_correct":false},{"date":"2025-11-21","return_pct":-5.1031,"spy_correct":false},{"date":"2025-11-24","return_pct":4.1433,"spy_correct":true},{"date":"2025-11-25","return_pct":-3.7473,"spy_correct":false},{"date":"2025-11-26","return_pct":-1.8502,"spy_correct":false},{"date":"2025-11-28","return_pct":0.779,"spy_correct":true},{"date":"2025-12-01","return_pct":-0.508,"spy_correct":false},{"date":"2025-12-02","return_pct":0.961,"spy_correct":true},{"date":"2025-12-03","return_pct":-0.9332,"spy_correct":false},{"date":"2025-12-04","return_pct":-0.5375,"spy_correct":false},{"date":"2025-12-05","return_pct":1.0895,"spy_correct":true},{"date":"2025-12-08","return_pct":0.672,"spy_correct":true},{"date":"2025-12-09","return_pct":-1.7247,"spy_correct":false},{"date":"2025-12-10","return_pct":1.7425,"spy_correct":true},{"date":"2025-12-11","return_pct":-2.1496,"spy_correct":false},{"date":"2025-12-12","return_pct":-1.6941,"spy_correct":false},{"date":"2025-12-15","return_pct":-1.8224,"spy_correct":false},{"date":"2025-12-17","return_pct":0.264,"spy_correct":true},{"date":"2025-12-18","return_pct":2.1823,"spy_correct":true},{"date":"2025-12-19","return_pct":2.6472,"spy_correct":true},{"date":"2025-12-22","return_pct":1.6126,"spy_correct":true},{"date":"2025-12-23","return_pct":1.8686,"spy_correct":true},{"date":"2025-12-24","return_pct":0.3746,"spy_correct":false},{"date":"2025-12-26","return_pct":-1.1774,"spy_correct":false},{"date":"2025-12-29","return_pct":-0.3588,"spy_correct":false},{"date":"2025-12-30","return_pct":-2.44,"spy_correct":false},{"date":"2025-12-31","return_pct":-0.6923,"spy_correct":true},{"date":"2026-01-02","return_pct":1.6539,"spy_correct":true},{"date":"2026-01-05","return_pct":1.8454,"spy_correct":true},{"date":"2026-01-06","return_pct":-0.1753,"spy_correct":false},{"date":"2026-01-07","return_pct":-0.8097,"spy_correct":false},{"date":"2026-01-08","return_pct":-2.0461,"spy_correct":false},{"date":"2026-01-09","return_pct":1.2352,"spy_correct":true},{"date":"2026-01-12","return_pct":0.2024,"spy_correct":false},{"date":"2026-01-13","return_pct":-1.6594,"spy_correct":false},{"date":"2026-01-14","return_pct":-1.0025,"spy_correct":false},{"date":"2026-01-15","return_pct":0.9514,"spy_correct":true},{"date":"2026-01-20","return_pct":2.1956,"spy_correct":true},{"date":"2026-01-21","return_pct":-2.5952,"spy_correct":false},{"date":"2026-01-22","return_pct":-0.1063,"spy_correct":true},{"date":"2026-01-27","return_pct":-0.2151,"spy_correct":true},{"date":"2026-01-28","return_pct":0.924,"spy_correct":true},{"date":"2026-01-29","return_pct":0.6029,"spy_correct":true},{"date":"2026-01-30","return_pct":-1.7784,"spy_correct":false},{"date":"2026-02-03","return_pct":2.4002,"spy_correct":true},{"date":"2026-02-04","return_pct":-4.3711,"spy_correct":false},{"date":"2026-02-05","return_pct":4.8221,"spy_correct":true},{"date":"2026-02-06","return_pct":-3.3371,"spy_correct":false},{"date":"2026-02-09","return_pct":0.011,"spy_correct":false},{"date":"2026-02-10","return_pct":0.8329,"spy_correct":true},{"date":"2026-02-11","return_pct":5.4864,"spy_correct":true},{"date":"2026-02-12","return_pct":2.7628,"spy_correct":false},{"date":"2026-02-13","return_pct":-0.4192,"spy_correct":false},{"date":"2026-02-17","return_pct":-2.3101,"spy_correct":false},{"date":"2026-02-18","return_pct":0.4544,"spy_correct":true},{"date":"2026-02-19","return_pct":2.2691,"spy_correct":true},{"date":"2026-02-23","return_pct":0.9235,"spy_correct":true},{"date":"2026-02-24","return_pct":3.7961,"spy_correct":true},{"date":"2026-02-26","return_pct":1.8224,"spy_correct":true},{"date":"2026-02-27","return_pct":-0.7754,"spy_correct":false},{"date":"2026-03-02","return_pct":-1.2041,"spy_correct":false},{"date":"2026-03-03","return_pct":-3.485,"spy_correct":false},{"date":"2026-03-04","return_pct":0.8693,"spy_correct":true},{"date":"2026-03-05","return_pct":3.9578,"spy_correct":true},{"date":"2026-03-06","return_pct":-2.3959,"spy_correct":false},{"date":"2026-03-09","return_pct":-2.3429,"spy_correct":true},{"date":"2026-03-10","return_pct":0.8974,"spy_correct":true},{"date":"2026-03-11","return_pct":4.8319,"spy_correct":true},{"date":"2026-03-12","return_pct":2.9472,"spy_correct":true},{"date":"2026-03-13","return_pct":-1.8056,"spy_correct":false}],"ZAP":[{"date":"2025-01-02","return_pct":2.6313,"spy_correct":true},{"date":"2025-01-03","return_pct":2.9115,"spy_correct":true},{"date":"2025-01-06","return_pct":-3.779,"spy_correct":false},{"date":"2025-01-07","return_pct":-1.7513,"spy_correct":true},{"date":"2025-01-08","return_pct":-4.1662,"spy_correct":false},{"date":"2025-01-10","return_pct":-0.7258,"spy_correct":true},{"date":"2025-01-13","return_pct":-1.6444,"spy_correct":false},{"date":"2025-01-14","return_pct":5.2104,"spy_correct":true},{"date":"2025-01-15","return_pct":0.0465,"spy_correct":false},{"date":"2025-01-16","return_pct":2.2427,"spy_correct":true},{"date":"2025-01-17","return_pct":2.7504,"spy_correct":true},{"date":"2025-01-21","return_pct":2.3966,"spy_correct":true},{"date":"2025-01-22","return_pct":1.586,"spy_correct":true},{"date":"2025-01-23","return_pct":-0.1326,"spy_correct":true},{"date":"2025-01-24","return_pct":4.4405,"spy_correct":true},{"date":"2025-01-27","return_pct":-3.5699,"spy_correct":false},{"date":"2025-01-28","return_pct":0.0,"spy_correct":true},{"date":"2025-01-30","return_pct":-1.1981,"spy_correct":false},{"date":"2025-02-04","return_pct":2.2035,"spy_correct":true},{"date":"2025-02-05","return_pct":2.1368,"spy_correct":true},{"date":"2025-02-11","return_pct":-0.3063,"spy_correct":false},{"date":"2025-02-12","return_pct":-4.0956,"spy_correct":false},{"date":"2025-02-13","return_pct":1.2757,"spy_correct":false},{"date":"2025-02-14","return_pct":-0.7105,"spy_correct":false},{"date":"2025-02-18","return_pct":-1.2016,"spy_correct":false},{"date":"2025-02-19","return_pct":-0.5909,"spy_correct":false},{"date":"2025-02-20","return_pct":-5.0545,"spy_correct":false},{"date":"2025-02-24","return_pct":2.7801,"spy_correct":true},{"date":"2025-02-25","return_pct":-0.1803,"spy_correct":true},{"date":"2025-02-26","return_pct":-5.2076,"spy_correct":false},{"date":"2025-02-27","return_pct":1.2578,"spy_correct":true},{"date":"2025-02-28","return_pct":2.4741,"spy_correct":true},{"date":"2025-03-04","return_pct":-2.2727,"spy_correct":false},{"date":"2025-03-05","return_pct":3.3093,"spy_correct":true},{"date":"2025-03-06","return_pct":0.4366,"spy_correct":true},{"date":"2025-03-07","return_pct":5.9428,"spy_correct":true},{"date":"2025-03-10","return_pct":-4.026,"spy_correct":false},{"date":"2025-03-11","return_pct":-0.6803,"spy_correct":false},{"date":"2025-03-12","return_pct":4.4674,"spy_correct":true},{"date":"2025-03-13","return_pct":4.1224,"spy_correct":true},{"date":"2025-03-14","return_pct":3.8591,"spy_correct":true},{"date":"2025-03-17","return_pct":-2.3185,"spy_correct":false},{"date":"2025-03-18","return_pct":2.2986,"spy_correct":true},{"date":"2025-03-19","return_pct":0.0034,"spy_correct":false},{"date":"2025-03-20","return_pct":0.0275,"spy_correct":true},{"date":"2025-03-21","return_pct":6.6629,"spy_correct":true},{"date":"2025-03-24","return_pct":-1.4373,"spy_correct":false},{"date":"2025-03-25","return_pct":-3.397,"spy_correct":false},{"date":"2025-03-26","return_pct":2.364,"spy_correct":true},{"date":"2025-03-27","return_pct":6.4611,"spy_correct":true},{"date":"2025-03-31","return_pct":-3.6556,"spy_correct":false},{"date":"2025-04-01","return_pct":3.0887,"spy_correct":true},{"date":"2025-04-02","return_pct":11.9039,"spy_correct":true},{"date":"2025-04-04","return_pct":-6.6892,"spy_correct":false},{"date":"2025-04-07","return_pct":1.758,"spy_correct":true},{"date":"2025-04-08","return_pct":-23.0435,"spy_correct":false},{"date":"2025-04-09","return_pct":-8.5949,"spy_correct":true},{"date":"2025-04-10","return_pct":4.856,"spy_correct":true},{"date":"2025-04-11","return_pct":6.0153,"spy_correct":true},{"date":"2025-04-14","return_pct":-1.4722,"spy_correct":false},{"date":"2025-04-15","return_pct":7.5958,"spy_correct":true},{"date":"2025-04-16","return_pct":1.3438,"spy_correct":false},{"date":"2025-04-17","return_pct":7.5521,"spy_correct":true},{"date":"2025-04-21","return_pct":5.9281,"spy_correct":true},{"date":"2025-04-22","return_pct":6.6004,"spy_correct":true},{"date":"2025-04-23","return_pct":4.3209,"spy_correct":true},{"date":"2025-04-24","return_pct":4.9282,"spy_correct":true},{"date":"2025-04-25","return_pct":-1.5112,"spy_correct":false},{"date":"2025-04-28","return_pct":-2.1261,"spy_correct":false},{"date":"2025-04-29","return_pct":-1.2401,"spy_correct":false},{"date":"2025-04-30","return_pct":-4.4287,"spy_correct":false},{"date":"2025-05-01","return_pct":-3.4212,"spy_correct":false},{"date":"2025-05-02","return_pct":-1.1252,"spy_correct":false},{"date":"2025-05-05","return_pct":-2.5373,"spy_correct":false},{"date":"2025-05-06","return_pct":1.0332,"spy_correct":true},{"date":"2025-05-07","return_pct":-2.554,"spy_correct":false},{"date":"2025-05-08","return_pct":-0.7544,"spy_correct":false},{"date":"2025-05-09","return_pct":9.2678,"spy_correct":true},{"date":"2025-05-12","return_pct":2.8608,"spy_correct":true},{"date":"2025-05-13","return_pct":0.9818,"spy_correct":true},{"date":"2025-05-14","return_pct":-1.5469,"spy_correct":false},{"date":"2025-05-15","return_pct":-3.058,"spy_correct":false},{"date":"2025-05-16","return_pct":-1.4439,"spy_correct":false},{"date":"2025-05-19","return_pct":-0.6961,"spy_correct":true},{"date":"2025-05-20","return_pct":4.6555,"spy_correct":true},{"date":"2025-05-21","return_pct":-1.8689,"spy_correct":true},{"date":"2025-05-22","return_pct":2.4043,"spy_correct":true},{"date":"2025-05-23","return_pct":6.7494,"spy_correct":true},{"date":"2025-05-27","return_pct":-0.4507,"spy_correct":false},{"date":"2025-05-28","return_pct":0.2074,"spy_correct":true},{"date":"2025-05-29","return_pct":-0.7146,"spy_correct":false},{"date":"2025-05-30","return_pct":2.3024,"spy_correct":true},{"date":"2025-06-02","return_pct":3.344,"spy_correct":true},{"date":"2025-06-03","return_pct":0.7023,"spy_correct":false},{"date":"2025-06-04","return_pct":-1.8071,"spy_correct":false},{"date":"2025-06-05","return_pct":1.8073,"spy_correct":true},{"date":"2025-06-06","return_pct":0.3535,"spy_correct":true},{"date":"2025-06-09","return_pct":1.5978,"spy_correct":true},{"date":"2025-06-10","return_pct":-0.0483,"spy_correct":false},{"date":"2025-06-11","return_pct":0.5133,"spy_correct":true},{"date":"2025-06-12","return_pct":-2.4761,"spy_correct":false},{"date":"2025-06-13","return_pct":2.2104,"spy_correct":true},{"date":"2025-06-16","return_pct":2.0408,"spy_correct":true},{"date":"2025-06-17","return_pct":-0.9078,"spy_correct":false},{"date":"2025-06-18","return_pct":1.5267,"spy_correct":true},{"date":"2025-06-20","return_pct":1.9632,"spy_correct":true},{"date":"2025-06-23","return_pct":4.8507,"spy_correct":true},{"date":"2025-06-24","return_pct":0.6706,"spy_correct":true},{"date":"2025-06-25","return_pct":2.2535,"spy_correct":true},{"date":"2025-06-26","return_pct":2.0615,"spy_correct":true},{"date":"2025-06-27","return_pct":-2.0877,"spy_correct":false},{"date":"2025-06-30","return_pct":0.0531,"spy_correct":true},{"date":"2025-07-01","return_pct":-1.7469,"spy_correct":false},{"date":"2025-07-02","return_pct":-3.095,"spy_correct":false},{"date":"2025-07-03","return_pct":-1.6994,"spy_correct":false},{"date":"2025-07-07","return_pct":-0.5849,"spy_correct":false},{"date":"2025-07-08","return_pct":1.4943,"spy_correct":true},{"date":"2025-07-09","return_pct":1.2784,"spy_correct":true},{"date":"2025-07-10","return_pct":-0.7727,"spy_correct":false},{"date":"2025-07-11","return_pct":0.7152,"spy_correct":true},{"date":"2025-07-14","return_pct":-0.8121,"spy_correct":false},{"date":"2025-07-15","return_pct":-0.399,"spy_correct":true},{"date":"2025-07-16","return_pct":2.5054,"spy_correct":true},{"date":"2025-07-17","return_pct":0.5456,"spy_correct":false},{"date":"2025-07-18","return_pct":0.2471,"spy_correct":true},{"date":"2025-07-21","return_pct":-0.3021,"spy_correct":true},{"date":"2025-07-22","return_pct":2.7008,"spy_correct":true},{"date":"2025-07-23","return_pct":0.9411,"spy_correct":true},{"date":"2025-07-24","return_pct":0.9496,"spy_correct":true},{"date":"2025-07-25","return_pct":-0.2872,"spy_correct":true},{"date":"2025-07-28","return_pct":0.8074,"spy_correct":true},{"date":"2025-07-29","return_pct":1.0938,"spy_correct":true},{"date":"2025-07-30","return_pct":-1.4147,"spy_correct":false},{"date":"2025-07-31","return_pct":-6.5543,"spy_correct":false},{"date":"2025-08-01","return_pct":3.6072,"spy_correct":true},{"date":"2025-08-04","return_pct":-0.2441,"spy_correct":false},{"date":"2025-08-05","return_pct":1.2703,"spy_correct":true},{"date":"2025-08-06","return_pct":0.6751,"spy_correct":false},{"date":"2025-08-07","return_pct":1.5127,"spy_correct":true},{"date":"2025-08-11","return_pct":2.7293,"spy_correct":true},{"date":"2025-08-12","return_pct":2.1792,"spy_correct":true},{"date":"2025-08-13","return_pct":-0.1192,"spy_correct":false},{"date":"2025-08-14","return_pct":0.4751,"spy_correct":true},{"date":"2025-08-15","return_pct":0.5945,"spy_correct":true},{"date":"2025-08-18","return_pct":-1.5685,"spy_correct":false},{"date":"2025-08-19","return_pct":1.6393,"spy_correct":true},{"date":"2025-08-20","return_pct":-0.9703,"spy_correct":false},{"date":"2025-08-21","return_pct":4.3162,"spy_correct":true},{"date":"2025-08-22","return_pct":0.3412,"spy_correct":false},{"date":"2025-08-25","return_pct":-0.8265,"spy_correct":false},{"date":"2025-08-26","return_pct":1.3656,"spy_correct":true},{"date":"2025-08-27","return_pct":-1.4908,"spy_correct":false},{"date":"2025-08-28","return_pct":1.3847,"spy_correct":true},{"date":"2025-08-29","return_pct":2.7414,"spy_correct":true},{"date":"2025-09-03","return_pct":-2.8739,"spy_correct":false},{"date":"2025-09-05","return_pct":0.1636,"spy_correct":true},{"date":"2025-09-08","return_pct":0.7422,"spy_correct":true},{"date":"2025-09-09","return_pct":1.3451,"spy_correct":true},{"date":"2025-09-10","return_pct":2.1597,"spy_correct":true},{"date":"2025-09-11","return_pct":-0.8696,"spy_correct":true},{"date":"2025-09-12","return_pct":-1.2531,"spy_correct":false},{"date":"2025-09-15","return_pct":0.0,"spy_correct":true},{"date":"2025-09-16","return_pct":-0.6631,"spy_correct":false},{"date":"2025-09-17","return_pct":1.5587,"spy_correct":true},{"date":"2025-09-18","return_pct":1.3071,"spy_correct":true},{"date":"2025-09-19","return_pct":1.8001,"spy_correct":true},{"date":"2025-09-22","return_pct":-0.7162,"spy_correct":false},{"date":"2025-09-23","return_pct":-1.6991,"spy_correct":false},{"date":"2025-09-24","return_pct":2.0117,"spy_correct":true},{"date":"2025-09-25","return_pct":1.9122,"spy_correct":true},{"date":"2025-09-26","return_pct":1.426,"spy_correct":true},{"date":"2025-09-29","return_pct":1.0178,"spy_correct":true},{"date":"2025-09-30","return_pct":1.8659,"spy_correct":true},{"date":"2025-10-01","return_pct":1.3858,"spy_correct":true},{"date":"2025-10-02","return_pct":0.16,"spy_correct":true},{"date":"2025-10-03","return_pct":-0.6882,"spy_correct":false},{"date":"2025-10-06","return_pct":0.974,"spy_correct":true},{"date":"2025-10-07","return_pct":-1.0911,"spy_correct":false},{"date":"2025-10-09","return_pct":-8.4761,"spy_correct":false},{"date":"2025-10-10","return_pct":-0.287,"spy_correct":true},{"date":"2025-10-13","return_pct":0.0738,"spy_correct":false},{"date":"2025-10-14","return_pct":2.5132,"spy_correct":true},{"date":"2025-10-15","return_pct":-2.1279,"spy_correct":false},{"date":"2025-10-16","return_pct":0.3648,"spy_correct":true},{"date":"2025-10-17","return_pct":4.181,"spy_correct":true},{"date":"2025-10-20","return_pct":0.6873,"spy_correct":false},{"date":"2025-10-21","return_pct":-1.6489,"spy_correct":false},{"date":"2025-10-22","return_pct":1.2262,"spy_correct":true},{"date":"2025-10-23","return_pct":3.0819,"spy_correct":true},{"date":"2025-10-24","return_pct":3.6623,"spy_correct":true},{"date":"2025-10-27","return_pct":1.3074,"spy_correct":true},{"date":"2025-10-28","return_pct":0.1688,"spy_correct":true},{"date":"2025-10-29","return_pct":3.2174,"spy_correct":true},{"date":"2025-10-30","return_pct":0.2114,"spy_correct":false},{"date":"2025-10-31","return_pct":-0.1271,"spy_correct":false},{"date":"2025-11-03","return_pct":3.7373,"spy_correct":true},{"date":"2025-11-04","return_pct":0.4116,"spy_correct":true},{"date":"2025-11-05","return_pct":2.9466,"spy_correct":true},{"date":"2025-11-06","return_pct":-1.0685,"spy_correct":true},{"date":"2025-11-07","return_pct":6.0766,"spy_correct":true},{"date":"2025-11-11","return_pct":0.8603,"spy_correct":true},{"date":"2025-11-12","return_pct":5.0816,"spy_correct":true},{"date":"2025-11-13","return_pct":1.86,"spy_correct":true},{"date":"2025-11-14","return_pct":1.4981,"spy_correct":true},{"date":"2025-11-18","return_pct":0.8025,"spy_correct":true},{"date":"2025-11-19","return_pct":4.4943,"spy_correct":true},{"date":"2025-11-20","return_pct":-2.0441,"spy_correct":true},{"date":"2025-11-21","return_pct":5.2068,"spy_correct":true},{"date":"2025-11-24","return_pct":4.1433,"spy_correct":true},{"date":"2025-11-25","return_pct":3.7638,"spy_correct":true},{"date":"2025-11-26","return_pct":-1.8502,"spy_correct":false},{"date":"2025-11-28","return_pct":0.779,"spy_correct":true},{"date":"2025-12-01","return_pct":-0.508,"spy_correct":false},{"date":"2025-12-02","return_pct":-0.959,"spy_correct":false},{"date":"2025-12-03","return_pct":0.9608,"spy_correct":true},{"date":"2025-12-04","return_pct":0.615,"spy_correct":true},{"date":"2025-12-05","return_pct":-1.0783,"spy_correct":false},{"date":"2025-12-08","return_pct":0.672,"spy_correct":true},{"date":"2025-12-09","return_pct":-1.7247,"spy_correct":false},{"date":"2025-12-10","return_pct":1.7425,"spy_correct":true},{"date":"2025-12-11","return_pct":-2.1496,"spy_correct":false},{"date":"2025-12-12","return_pct":-1.6941,"spy_correct":false},{"date":"2025-12-15","return_pct":-1.8224,"spy_correct":false},{"date":"2025-12-17","return_pct":0.264,"spy_correct":true},{"date":"2025-12-18","return_pct":2.1823,"spy_correct":true},{"date":"2025-12-19","return_pct":2.6472,"spy_correct":true},{"date":"2025-12-22","return_pct":-1.6046,"spy_correct":false},{"date":"2025-12-23","return_pct":-1.8064,"spy_correct":false},{"date":"2025-12-24","return_pct":-0.372,"spy_correct":true},{"date":"2025-12-26","return_pct":1.1501,"spy_correct":true},{"date":"2025-12-29","return_pct":0.2966,"spy_correct":true},{"date":"2025-12-30","return_pct":2.4848,"spy_correct":true},{"date":"2025-12-31","return_pct":0.6985,"spy_correct":false},{"date":"2026-01-02","return_pct":1.6539,"spy_correct":true},{"date":"2026-01-05","return_pct":1.8454,"spy_correct":true},{"date":"2026-01-06","return_pct":0.1603,"spy_correct":true},{"date":"2026-01-07","return_pct":0.7987,"spy_correct":true},{"date":"2026-01-08","return_pct":-2.0461,"spy_correct":false},{"date":"2026-01-09","return_pct":1.2352,"spy_correct":true},{"date":"2026-01-12","return_pct":0.2024,"spy_correct":false},{"date":"2026-01-13","return_pct":-1.6594,"spy_correct":false},{"date":"2026-01-14","return_pct":1.0234,"spy_correct":true},{"date":"2026-01-15","return_pct":0.9514,"spy_correct":true},{"date":"2026-01-20","return_pct":2.1956,"spy_correct":true},{"date":"2026-01-21","return_pct":2.5478,"spy_correct":true},{"date":"2026-01-27","return_pct":-0.2151,"spy_correct":true},{"date":"2026-01-28","return_pct":0.924,"spy_correct":true},{"date":"2026-01-29","return_pct":0.6029,"spy_correct":true},{"date":"2026-01-30","return_pct":-1.7784,"spy_correct":false},{"date":"2026-02-02","return_pct":-1.5005,"spy_correct":false},{"date":"2026-02-03","return_pct":2.4002,"spy_correct":true},{"date":"2026-02-04","return_pct":-4.3711,"spy_correct":false},{"date":"2026-02-05","return_pct":4.8221,"spy_correct":true},{"date":"2026-02-06","return_pct":3.278,"spy_correct":true},{"date":"2026-02-09","return_pct":0.011,"spy_correct":false},{"date":"2026-02-10","return_pct":-0.811,"spy_correct":false},{"date":"2026-02-13","return_pct":-0.4192,"spy_correct":false},{"date":"2026-02-17","return_pct":2.3662,"spy_correct":true},{"date":"2026-02-18","return_pct":-0.5067,"spy_correct":false},{"date":"2026-02-19","return_pct":2.2691,"spy_correct":true},{"date":"2026-02-23","return_pct":-1.0263,"spy_correct":false},{"date":"2026-02-26","return_pct":1.8224,"spy_correct":true},{"date":"2026-02-27","return_pct":-0.7754,"spy_correct":false},{"date":"2026-03-03","return_pct":-3.485,"spy_correct":false},{"date":"2026-03-04","return_pct":0.8693,"spy_correct":true},{"date":"2026-03-05","return_pct":-3.9316,"spy_correct":false},{"date":"2026-03-09","return_pct":2.3518,"spy_correct":false},{"date":"2026-03-10","return_pct":-0.8834,"spy_correct":false},{"date":"2026-03-11","return_pct":-4.8116,"spy_correct":false},{"date":"2026-03-12","return_pct":-2.9723,"spy_correct":false},{"date":"2026-03-13","return_pct":1.6588,"spy_correct":true}],"ZUP":[{"date":"2025-01-02","return_pct":2.6313,"spy_correct":true},{"date":"2025-01-03","return_pct":2.9115,"spy_correct":true},{"date":"2025-01-06","return_pct":-3.779,"spy_correct":false},{"date":"2025-01-07","return_pct":-1.7513,"spy_correct":true},{"date":"2025-01-08","return_pct":3.9421,"spy_correct":true},{"date":"2025-01-10","return_pct":0.4295,"spy_correct":false},{"date":"2025-01-13","return_pct":-1.6444,"spy_correct":false},{"date":"2025-01-14","return_pct":-5.378,"spy_correct":false},{"date":"2025-01-15","return_pct":0.0818,"spy_correct":true},{"date":"2025-01-16","return_pct":2.2428,"spy_correct":true},{"date":"2025-01-17","return_pct":2.7504,"spy_correct":true},{"date":"2025-01-21","return_pct":2.3966,"spy_correct":true},{"date":"2025-01-22","return_pct":1.586,"spy_correct":true},{"date":"2025-01-23","return_pct":-0.0269,"spy_correct":false},{"date":"2025-01-24","return_pct":-4.646,"spy_correct":false},{"date":"2025-01-27","return_pct":-3.5699,"spy_correct":false},{"date":"2025-01-28","return_pct":0.0,"spy_correct":true},{"date":"2025-01-29","return_pct":-1.2898,"spy_correct":false},{"date":"2025-01-30","return_pct":-1.1981,"spy_correct":false},{"date":"2025-01-31","return_pct":3.8327,"spy_correct":true},{"date":"2025-02-03","return_pct":3.1871,"spy_correct":true},{"date":"2025-02-04","return_pct":2.2035,"spy_correct":true},{"date":"2025-02-05","return_pct":2.1368,"spy_correct":true},{"date":"2025-02-06","return_pct":2.3944,"spy_correct":true},{"date":"2025-02-07","return_pct":-0.4752,"spy_correct":false},{"date":"2025-02-10","return_pct":-0.519,"spy_correct":false},{"date":"2025-02-11","return_pct":-0.3063,"spy_correct":false},{"date":"2025-02-12","return_pct":-4.0955,"spy_correct":false},{"date":"2025-02-13","return_pct":1.2757,"spy_correct":false},{"date":"2025-02-14","return_pct":0.6661,"spy_correct":true},{"date":"2025-02-18","return_pct":1.1251,"spy_correct":true},{"date":"2025-02-19","return_pct":-0.5909,"spy_correct":false},{"date":"2025-02-20","return_pct":-5.0545,"spy_correct":false},{"date":"2025-02-21","return_pct":-3.9058,"spy_correct":false},{"date":"2025-02-24","return_pct":2.7801,"spy_correct":true},{"date":"2025-02-25","return_pct":0.3284,"spy_correct":false},{"date":"2025-02-26","return_pct":5.3932,"spy_correct":true},{"date":"2025-02-27","return_pct":1.2578,"spy_correct":true},{"date":"2025-02-28","return_pct":2.4741,"spy_correct":true},{"date":"2025-03-03","return_pct":-6.2899,"spy_correct":false},{"date":"2025-03-04","return_pct":1.9031,"spy_correct":true},{"date":"2025-03-05","return_pct":3.3093,"spy_correct":true},{"date":"2025-03-06","return_pct":0.4366,"spy_correct":true},{"date":"2025-03-07","return_pct":5.9428,"spy_correct":true},{"date":"2025-03-10","return_pct":3.9271,"spy_correct":true},{"date":"2025-03-11","return_pct":-0.6803,"spy_correct":false},{"date":"2025-03-12","return_pct":4.4674,"spy_correct":true},{"date":"2025-03-13","return_pct":4.1224,"spy_correct":true},{"date":"2025-03-14","return_pct":-3.956,"spy_correct":false},{"date":"2025-03-17","return_pct":-2.3185,"spy_correct":false},{"date":"2025-03-18","return_pct":-2.4117,"spy_correct":false},{"date":"2025-03-19","return_pct":0.0,"spy_correct":true},{"date":"2025-03-20","return_pct":0.0275,"spy_correct":true},{"date":"2025-03-21","return_pct":6.663,"spy_correct":true},{"date":"2025-03-24","return_pct":-1.4373,"spy_correct":false},{"date":"2025-03-25","return_pct":3.4377,"spy_correct":true},{"date":"2025-03-26","return_pct":2.364,"spy_correct":true},{"date":"2025-03-27","return_pct":6.4611,"spy_correct":true},{"date":"2025-03-28","return_pct":0.636,"spy_correct":false},{"date":"2025-03-31","return_pct":-3.6556,"spy_correct":false},{"date":"2025-04-01","return_pct":3.0887,"spy_correct":true},{"date":"2025-04-02","return_pct":11.9039,"spy_correct":true},{"date":"2025-04-03","return_pct":20.3996,"spy_correct":true},{"date":"2025-04-04","return_pct":5.1275,"spy_correct":true},{"date":"2025-04-07","return_pct":-1.7331,"spy_correct":false},{"date":"2025-04-08","return_pct":19.1101,"spy_correct":true},{"date":"2025-04-09","return_pct":1.1926,"spy_correct":false},{"date":"2025-04-10","return_pct":4.856,"spy_correct":true},{"date":"2025-04-11","return_pct":6.0153,"spy_correct":true},{"date":"2025-04-14","return_pct":-1.4722,"spy_correct":false},{"date":"2025-04-15","return_pct":-7.5461,"spy_correct":false},{"date":"2025-04-16","return_pct":-1.2231,"spy_correct":true},{"date":"2025-04-17","return_pct":7.5521,"spy_correct":true},{"date":"2025-04-21","return_pct":5.9281,"spy_correct":true},{"date":"2025-04-22","return_pct":6.6004,"spy_correct":true},{"date":"2025-04-23","return_pct":4.3209,"spy_correct":true},{"date":"2025-04-24","return_pct":4.9282,"spy_correct":true},{"date":"2025-04-25","return_pct":1.5701,"spy_correct":true},{"date":"2025-04-28","return_pct":-2.1261,"spy_correct":false},{"date":"2025-04-29","return_pct":1.3651,"spy_correct":true},{"date":"2025-04-30","return_pct":-4.4287,"spy_correct":false},{"date":"2025-05-01","return_pct":-3.4212,"spy_correct":false},{"date":"2025-05-02","return_pct":0.9709,"spy_correct":true},{"date":"2025-05-05","return_pct":2.482,"spy_correct":true},{"date":"2025-05-06","return_pct":-0.939,"spy_correct":false},{"date":"2025-05-07","return_pct":2.5505,"spy_correct":true},{"date":"2025-05-08","return_pct":-0.7544,"spy_correct":false},{"date":"2025-05-09","return_pct":9.2678,"spy_correct":true},{"date":"2025-05-12","return_pct":-3.169,"spy_correct":false},{"date":"2025-05-13","return_pct":0.9818,"spy_correct":true},{"date":"2025-05-14","return_pct":-1.5469,"spy_correct":false},{"date":"2025-05-15","return_pct":-3.058,"spy_correct":false},{"date":"2025-05-16","return_pct":-1.4439,"spy_correct":false},{"date":"2025-05-19","return_pct":-0.6961,"spy_correct":true},{"date":"2025-05-20","return_pct":4.6555,"spy_correct":true},{"date":"2025-05-21","return_pct":1.5816,"spy_correct":false},{"date":"2025-05-22","return_pct":2.4043,"spy_correct":true},{"date":"2025-05-23","return_pct":-6.6148,"spy_correct":false},{"date":"2025-05-27","return_pct":-0.4508,"spy_correct":false},{"date":"2025-05-28","return_pct":0.2074,"spy_correct":true},{"date":"2025-05-29","return_pct":0.6928,"spy_correct":true},{"date":"2025-05-30","return_pct":-2.3679,"spy_correct":false},{"date":"2025-06-02","return_pct":-3.3471,"spy_correct":false},{"date":"2025-06-03","return_pct":0.7023,"spy_correct":false},{"date":"2025-06-04","return_pct":-1.8071,"spy_correct":false},{"date":"2025-06-05","return_pct":1.8073,"spy_correct":true},{"date":"2025-06-06","return_pct":0.3535,"spy_correct":true},{"date":"2025-06-09","return_pct":1.5978,"spy_correct":true},{"date":"2025-06-10","return_pct":-0.0483,"spy_correct":false},{"date":"2025-06-11","return_pct":0.5133,"spy_correct":true},{"date":"2025-06-12","return_pct":2.6738,"spy_correct":true},{"date":"2025-06-13","return_pct":2.2104,"spy_correct":true},{"date":"2025-06-16","return_pct":-2.2607,"spy_correct":false},{"date":"2025-06-17","return_pct":-0.9079,"spy_correct":false},{"date":"2025-06-18","return_pct":1.5267,"spy_correct":true},{"date":"2025-06-20","return_pct":-2.1378,"spy_correct":false},{"date":"2025-06-23","return_pct":4.8507,"spy_correct":true},{"date":"2025-06-24","return_pct":0.6706,"spy_correct":true},{"date":"2025-06-25","return_pct":-2.0243,"spy_correct":false},{"date":"2025-06-26","return_pct":2.0615,"spy_correct":true},{"date":"2025-06-27","return_pct":2.0165,"spy_correct":true},{"date":"2025-06-30","return_pct":0.0838,"spy_correct":false},{"date":"2025-07-01","return_pct":1.5381,"spy_correct":true},{"date":"2025-07-02","return_pct":3.0885,"spy_correct":true},{"date":"2025-07-03","return_pct":-1.6994,"spy_correct":false},{"date":"2025-07-07","return_pct":-0.5849,"spy_correct":false},{"date":"2025-07-08","return_pct":1.4943,"spy_correct":true},{"date":"2025-07-09","return_pct":1.2784,"spy_correct":true},{"date":"2025-07-10","return_pct":0.9879,"spy_correct":true},{"date":"2025-07-11","return_pct":-0.9234,"spy_correct":false},{"date":"2025-07-14","return_pct":0.8715,"spy_correct":true},{"date":"2025-07-15","return_pct":0.4926,"spy_correct":false},{"date":"2025-07-16","return_pct":2.5055,"spy_correct":true},{"date":"2025-07-17","return_pct":-0.4953,"spy_correct":true},{"date":"2025-07-18","return_pct":-0.3882,"spy_correct":false},{"date":"2025-07-21","return_pct":-0.302,"spy_correct":true},{"date":"2025-07-22","return_pct":2.7008,"spy_correct":true},{"date":"2025-07-23","return_pct":-0.905,"spy_correct":false},{"date":"2025-07-24","return_pct":0.9496,"spy_correct":true},{"date":"2025-07-25","return_pct":0.3317,"spy_correct":false},{"date":"2025-07-28","return_pct":-0.8679,"spy_correct":false},{"date":"2025-07-29","return_pct":1.0938,"spy_correct":true},{"date":"2025-07-30","return_pct":-1.4147,"spy_correct":false},{"date":"2025-07-31","return_pct":-6.5543,"spy_correct":false},{"date":"2025-08-01","return_pct":3.6072,"spy_correct":true},{"date":"2025-08-04","return_pct":-0.1105,"spy_correct":true},{"date":"2025-08-05","return_pct":1.2703,"spy_correct":true},{"date":"2025-08-06","return_pct":0.6751,"spy_correct":false},{"date":"2025-08-07","return_pct":1.5127,"spy_correct":true},{"date":"2025-08-08","return_pct":0.0792,"spy_correct":false},{"date":"2025-08-11","return_pct":2.7293,"spy_correct":true},{"date":"2025-08-12","return_pct":-2.217,"spy_correct":false},{"date":"2025-08-13","return_pct":0.058,"spy_correct":true},{"date":"2025-08-14","return_pct":-0.2899,"spy_correct":false},{"date":"2025-08-15","return_pct":0.5945,"spy_correct":true},{"date":"2025-08-18","return_pct":-1.5685,"spy_correct":false},{"date":"2025-08-19","return_pct":-1.6391,"spy_correct":false},{"date":"2025-08-20","return_pct":-0.9703,"spy_correct":false},{"date":"2025-08-21","return_pct":4.3162,"spy_correct":true},{"date":"2025-08-22","return_pct":-0.4684,"spy_correct":true},{"date":"2025-08-25","return_pct":0.7016,"spy_correct":true},{"date":"2025-08-26","return_pct":-1.4767,"spy_correct":false},{"date":"2025-08-27","return_pct":1.4286,"spy_correct":true},{"date":"2025-08-28","return_pct":-1.343,"spy_correct":false},{"date":"2025-08-29","return_pct":2.7414,"spy_correct":true},{"date":"2025-09-02","return_pct":2.5222,"spy_correct":true},{"date":"2025-09-03","return_pct":2.873,"spy_correct":true},{"date":"2025-09-04","return_pct":0.0,"spy_correct":true},{"date":"2025-09-05","return_pct":0.1636,"spy_correct":true},{"date":"2025-09-08","return_pct":0.7422,"spy_correct":true},{"date":"2025-09-09","return_pct":1.3451,"spy_correct":true},{"date":"2025-09-10","return_pct":2.1597,"spy_correct":true},{"date":"2025-09-11","return_pct":0.5862,"spy_correct":false},{"date":"2025-09-12","return_pct":1.3697,"spy_correct":true},{"date":"2025-09-15","return_pct":0.0,"spy_correct":true},{"date":"2025-09-16","return_pct":0.9512,"spy_correct":true},{"date":"2025-09-17","return_pct":1.5587,"spy_correct":true},{"date":"2025-09-18","return_pct":-1.4678,"spy_correct":false},{"date":"2025-09-19","return_pct":1.8001,"spy_correct":true},{"date":"2025-09-22","return_pct":-0.7162,"spy_correct":false},{"date":"2025-09-23","return_pct":-1.6991,"spy_correct":false},{"date":"2025-09-24","return_pct":-2.06,"spy_correct":false},{"date":"2025-09-25","return_pct":1.9122,"spy_correct":true},{"date":"2025-09-26","return_pct":1.426,"spy_correct":true},{"date":"2025-09-29","return_pct":1.0178,"spy_correct":true},{"date":"2025-09-30","return_pct":1.8659,"spy_correct":true},{"date":"2025-10-01","return_pct":1.3858,"spy_correct":true},{"date":"2025-10-02","return_pct":-0.1292,"spy_correct":false},{"date":"2025-10-03","return_pct":0.6965,"spy_correct":true},{"date":"2025-10-06","return_pct":-0.9963,"spy_correct":false},{"date":"2025-10-07","return_pct":-1.0911,"spy_correct":false},{"date":"2025-10-08","return_pct":-0.1604,"spy_correct":false},{"date":"2025-10-09","return_pct":-8.4761,"spy_correct":false},{"date":"2025-10-10","return_pct":-0.287,"spy_correct":true},{"date":"2025-10-13","return_pct":-0.0775,"spy_correct":true},{"date":"2025-10-14","return_pct":2.5132,"spy_correct":true},{"date":"2025-10-15","return_pct":2.1104,"spy_correct":true},{"date":"2025-10-16","return_pct":0.3648,"spy_correct":true},{"date":"2025-10-17","return_pct":4.181,"spy_correct":true},{"date":"2025-10-20","return_pct":0.6873,"spy_correct":false},{"date":"2025-10-21","return_pct":-1.6489,"spy_correct":false},{"date":"2025-10-22","return_pct":-1.2428,"spy_correct":false},{"date":"2025-10-23","return_pct":3.0819,"spy_correct":true},{"date":"2025-10-24","return_pct":3.6623,"spy_correct":true},{"date":"2025-10-27","return_pct":-1.3773,"spy_correct":false},{"date":"2025-10-28","return_pct":0.1688,"spy_correct":true},{"date":"2025-10-29","return_pct":-3.1644,"spy_correct":false},{"date":"2025-10-30","return_pct":-0.2757,"spy_correct":true},{"date":"2025-10-31","return_pct":0.1566,"spy_correct":true},{"date":"2025-11-03","return_pct":-3.6546,"spy_correct":false},{"date":"2025-11-04","return_pct":-0.4594,"spy_correct":false},{"date":"2025-11-05","return_pct":2.9466,"spy_correct":true},{"date":"2025-11-06","return_pct":1.0743,"spy_correct":false},{"date":"2025-11-07","return_pct":6.0766,"spy_correct":true},{"date":"2025-11-10","return_pct":1.6875,"spy_correct":true},{"date":"2025-11-11","return_pct":0.8603,"spy_correct":true},{"date":"2025-11-12","return_pct":-5.0461,"spy_correct":false},{"date":"2025-11-13","return_pct":-1.9112,"spy_correct":false},{"date":"2025-11-14","return_pct":1.4981,"spy_correct":true},{"date":"2025-11-17","return_pct":-3.4382,"spy_correct":false},{"date":"2025-11-18","return_pct":-0.811,"spy_correct":false},{"date":"2025-11-19","return_pct":-4.4905,"spy_correct":false},{"date":"2025-11-20","return_pct":-2.0441,"spy_correct":true},{"date":"2025-11-21","return_pct":5.2068,"spy_correct":true},{"date":"2025-11-24","return_pct":4.1433,"spy_correct":true},{"date":"2025-11-25","return_pct":-3.7473,"spy_correct":false},{"date":"2025-11-26","return_pct":1.9079,"spy_correct":true},{"date":"2025-11-28","return_pct":-0.8342,"spy_correct":false},{"date":"2025-12-01","return_pct":0.5432,"spy_correct":true},{"date":"2025-12-02","return_pct":0.961,"spy_correct":true},{"date":"2025-12-03","return_pct":0.9608,"spy_correct":true},{"date":"2025-12-04","return_pct":-0.5375,"spy_correct":false},{"date":"2025-12-05","return_pct":1.0895,"spy_correct":true},{"date":"2025-12-08","return_pct":-0.7296,"spy_correct":false},{"date":"2025-12-09","return_pct":-1.7247,"spy_correct":false},{"date":"2025-12-10","return_pct":1.7425,"spy_correct":true},{"date":"2025-12-11","return_pct":-2.1496,"spy_correct":false},{"date":"2025-12-12","return_pct":1.6801,"spy_correct":true},{"date":"2025-12-15","return_pct":-1.8224,"spy_correct":false},{"date":"2025-12-16","return_pct":-3.2711,"spy_correct":false},{"date":"2025-12-17","return_pct":0.264,"spy_correct":true},{"date":"2025-12-18","return_pct":2.1823,"spy_correct":true},{"date":"2025-12-19","return_pct":2.6472,"spy_correct":true},{"date":"2025-12-22","return_pct":-1.6046,"spy_correct":false},{"date":"2025-12-23","return_pct":1.8686,"spy_correct":true},{"date":"2025-12-24","return_pct":-0.372,"spy_correct":true},{"date":"2025-12-26","return_pct":1.1501,"spy_correct":true},{"date":"2025-12-29","return_pct":-0.3588,"spy_correct":false},{"date":"2025-12-30","return_pct":2.4848,"spy_correct":true},{"date":"2025-12-31","return_pct":0.6985,"spy_correct":false},{"date":"2026-01-02","return_pct":1.6539,"spy_correct":true},{"date":"2026-01-05","return_pct":1.8454,"spy_correct":true},{"date":"2026-01-06","return_pct":-0.1753,"spy_correct":false},{"date":"2026-01-07","return_pct":-0.8097,"spy_correct":false},{"date":"2026-01-08","return_pct":2.0582,"spy_correct":true},{"date":"2026-01-09","return_pct":1.2352,"spy_correct":true},{"date":"2026-01-12","return_pct":-0.2728,"spy_correct":true},{"date":"2026-01-13","return_pct":-1.6594,"spy_correct":false},{"date":"2026-01-14","return_pct":1.0234,"spy_correct":true},{"date":"2026-01-15","return_pct":0.9514,"spy_correct":true},{"date":"2026-01-16","return_pct":-6.4674,"spy_correct":false},{"date":"2026-01-20","return_pct":2.1956,"spy_correct":true},{"date":"2026-01-21","return_pct":2.5478,"spy_correct":true},{"date":"2026-01-22","return_pct":0.145,"spy_correct":false},{"date":"2026-01-23","return_pct":1.6853,"spy_correct":true},{"date":"2026-01-26","return_pct":1.6247,"spy_correct":true},{"date":"2026-01-27","return_pct":0.2292,"spy_correct":false},{"date":"2026-01-28","return_pct":-0.9437,"spy_correct":false},{"date":"2026-01-29","return_pct":-0.5399,"spy_correct":false},{"date":"2026-01-30","return_pct":1.7464,"spy_correct":true},{"date":"2026-02-02","return_pct":-1.5005,"spy_correct":false},{"date":"2026-02-03","return_pct":-2.4448,"spy_correct":false},{"date":"2026-02-04","return_pct":4.3902,"spy_correct":true},{"date":"2026-02-05","return_pct":4.8221,"spy_correct":true},{"date":"2026-02-06","return_pct":-3.3371,"spy_correct":false},{"date":"2026-02-09","return_pct":0.011,"spy_correct":false},{"date":"2026-02-10","return_pct":-0.811,"spy_correct":false},{"date":"2026-02-11","return_pct":5.4864,"spy_correct":true},{"date":"2026-02-12","return_pct":-2.8408,"spy_correct":true},{"date":"2026-02-13","return_pct":-0.4192,"spy_correct":false},{"date":"2026-02-17","return_pct":2.3662,"spy_correct":true},{"date":"2026-02-18","return_pct":0.4544,"spy_correct":true},{"date":"2026-02-19","return_pct":2.2691,"spy_correct":true},{"date":"2026-02-20","return_pct":-1.5654,"spy_correct":false},{"date":"2026-02-23","return_pct":0.9235,"spy_correct":true},{"date":"2026-02-24","return_pct":3.7961,"spy_correct":true},{"date":"2026-02-25","return_pct":-1.1056,"spy_correct":false},{"date":"2026-02-26","return_pct":-1.7692,"spy_correct":false},{"date":"2026-02-27","return_pct":0.8199,"spy_correct":true},{"date":"2026-03-02","return_pct":1.1829,"spy_correct":true},{"date":"2026-03-03","return_pct":3.6357,"spy_correct":true},{"date":"2026-03-04","return_pct":0.8693,"spy_correct":true},{"date":"2026-03-05","return_pct":-3.9316,"spy_correct":false},{"date":"2026-03-06","return_pct":2.3677,"spy_correct":true},{"date":"2026-03-09","return_pct":-2.3429,"spy_correct":true},{"date":"2026-03-10","return_pct":0.8974,"spy_correct":true},{"date":"2026-03-11","return_pct":4.8319,"spy_correct":true},{"date":"2026-03-12","return_pct":2.9472,"spy_correct":true},{"date":"2026-03-13","return_pct":1.1338,"spy_correct":true}]};
+
+// ── Colours ──────────────────────────────────────────────
+const COLORS = {
+  ZUP:      '#34d399',
+  ZIP:      '#f59e0b',
+  ZAP:      '#f87171',
+  BASELINE: '#a78bfa',
+};
+const MODEL_ORDER = ['ZUP', 'ZIP', 'ZAP', 'BASELINE'];
+
+// ── Compute cumulative returns ────────────────────────────
+function cumulativeReturns(records) {
+  let cum = 0;
+  return records.map(r => {
+    cum = (1 + cum / 100) * (1 + r.return_pct / 100) * 100 - 100;
+    return { date: r.date, cum: parseFloat(cum.toFixed(4)) };
+  });
+}
+
+// ── Compute stats ─────────────────────────────────────────
+function computeStats(records) {
+  const n = records.length;
+  const rets = records.map(r => r.return_pct);
+
+  // Accuracy
+  const correct = records.filter(r => r.spy_correct).length;
+  const acc = (correct / n * 100).toFixed(1);
+
+  // OOS accuracy (last 40% of records)
+  const oosStart = Math.floor(n * 0.6);
+  const oosRecs = records.slice(oosStart);
+  const oosCorrect = oosRecs.filter(r => r.spy_correct).length;
+  const oosAcc = oosRecs.length > 0 ? (oosCorrect / oosRecs.length * 100).toFixed(1) : 'N/A';
+
+  // Total return
+  let capital = 1;
+  for (const r of rets) capital *= (1 + r / 100);
+  const totalRet = ((capital - 1) * 100).toFixed(2);
+
+  // Avg daily return
+  const mean = rets.reduce((a, b) => a + b, 0) / n;
+  const avgDaily = mean.toFixed(3);
+
+  // Sharpe (annualised, assuming 252 trading days)
+  const variance = rets.reduce((a, b) => a + (b - mean) ** 2, 0) / n;
+  const std = Math.sqrt(variance);
+  const sharpe = std > 0 ? ((mean / std) * Math.sqrt(252)).toFixed(2) : 'N/A';
+
+  // Max drawdown
+  let peak = 1, cum2 = 1, maxDD = 0;
+  for (const r of rets) {
+    cum2 *= (1 + r / 100);
+    if (cum2 > peak) peak = cum2;
+    const dd = (cum2 - peak) / peak * 100;
+    if (dd < maxDD) maxDD = dd;
+  }
+  const maxDDStr = maxDD.toFixed(2);
+
+  return { acc, oosAcc, totalRet, sharpe, maxDD: maxDDStr, avgDaily, n };
+}
+
+// ── Build chart dataset ───────────────────────────────────
+// Merge all dates across models
+const allDatesSet = new Set();
+for (const m of MODEL_ORDER) {
+  for (const r of RAW_DATA[m]) allDatesSet.add(r.date);
+}
+const allDates = [...allDatesSet].sort();
+
+// Build per-model cumulative lookup
+const cumByModel = {};
+for (const m of MODEL_ORDER) {
+  const series = cumulativeReturns(RAW_DATA[m]);
+  const lookup = {};
+  for (const pt of series) lookup[pt.date] = pt.cum;
+  cumByModel[m] = lookup;
+}
+
+// Build chart datasets (null for dates before model starts)
+const datasets = MODEL_ORDER.map(m => {
+  const data = allDates.map(d => cumByModel[m][d] !== undefined ? cumByModel[m][d] : null);
+  return {
+    label: m,
+    data,
+    borderColor: COLORS[m],
+    backgroundColor: 'transparent',
+    borderWidth: m === 'ZUP' ? 2.5 : 1.8,
+    pointRadius: 0,
+    pointHoverRadius: 0,
+    tension: 0.2,
+    spanGaps: false,
+    hidden: false,
+  };
+});
+
+// ── Build legend pills ────────────────────────────────────
+const legendRow = document.getElementById('legendRow');
+const pillMap = {};
+MODEL_ORDER.forEach(m => {
+  const pill = document.createElement('div');
+  pill.className = 'legend-pill';
+  pill.innerHTML = `<span class="dot" style="background:${COLORS[m]}"></span>${m}`;
+  pill.dataset.model = m;
+  legendRow.appendChild(pill);
+  pillMap[m] = pill;
+  pill.addEventListener('click', () => {
+    const idx = MODEL_ORDER.indexOf(m);
+    const ds = chart.data.datasets[idx];
+    ds.hidden = !ds.hidden;
+    pill.classList.toggle('off', ds.hidden);
+    chart.update('none');
+  });
+});
+
+// ── Render chart ──────────────────────────────────────────
+const ctx = document.getElementById('chart').getContext('2d');
+const chart = new Chart(ctx, {
+  type: 'line',
+  data: { labels: allDates, datasets },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    interaction: { mode: 'index', intersect: false },
+    animation: { duration: 400 },
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        enabled: false,
+        external: externalTooltip,
+      },
+    },
+    scales: {
+      x: {
+        grid: { color: 'rgba(255,255,255,0.04)' },
+        ticks: {
+          color: '#7a7e91',
+          maxTicksLimit: 10,
+          maxRotation: 0,
+          font: { size: 11 },
+          callback: function(val, idx) {
+            const d = allDates[idx];
+            if (!d) return '';
+            // Show month/year ticks
+            return d.slice(0, 7); // YYYY-MM
+          },
+        },
+        border: { color: '#2a2d38' },
+      },
+      y: {
+        grid: { color: 'rgba(255,255,255,0.04)' },
+        ticks: {
+          color: '#7a7e91',
+          font: { size: 11 },
+          callback: v => v.toFixed(0) + '%',
+        },
+        border: { color: '#2a2d38' },
+      },
+    },
+  },
+});
+
+// ── External tooltip ──────────────────────────────────────
+const ttEl = document.getElementById('tooltip');
+
+function externalTooltip(context) {
+  const { chart: ch, tooltip } = context;
+  if (tooltip.opacity === 0 || !tooltip.dataPoints || !tooltip.dataPoints.length) { ttEl.style.display = 'none'; return; }
+
+  const date = allDates[tooltip.dataPoints[0].dataIndex];
+
+  let html = `<div class="tt-date">${date}</div>`;
+  // Show each visible dataset
+  for (const dp of tooltip.dataPoints) {
+    const m = dp.dataset.label;
+    const val = dp.raw;
+    if (val === null || val === undefined) continue;
+    const cls = val >= 0 ? 'pos' : 'neg';
+    const sign = val >= 0 ? '+' : '';
+    html += `<div class="tt-row">
+      <span class="tt-label"><span class="tt-dot" style="background:${COLORS[m]}"></span>${m}</span>
+      <span class="tt-val ${cls}">${sign}${val.toFixed(2)}%</span>
+    </div>`;
+  }
+
+  ttEl.innerHTML = html;
+  ttEl.style.display = 'block';
+
+  const canvasRect = ch.canvas.getBoundingClientRect();
+  let x = canvasRect.left + tooltip.caretX + 16;
+  let y = canvasRect.top + tooltip.caretY - 20;
+
+  // Keep inside viewport
+  const tw = ttEl.offsetWidth || 200;
+  const th = ttEl.offsetHeight || 120;
+  if (x + tw > window.innerWidth - 8) x = canvasRect.left + tooltip.caretX - tw - 16;
+  if (y + th > window.innerHeight - 8) y = window.innerHeight - th - 8;
+  if (y < 8) y = 8;
+
+  ttEl.style.left = x + 'px';
+  ttEl.style.top  = y + 'px';
+}
+
+// Hide tooltip when mouse leaves canvas
+document.getElementById('chart').addEventListener('mouseleave', () => {
+  ttEl.style.display = 'none';
+});
+
+// ── Build stats table ─────────────────────────────────────
+const tbody = document.querySelector('#statsTable tbody');
+
+MODEL_ORDER.forEach(m => {
+  const stats = computeStats(RAW_DATA[m]);
+  const isWinner = m === 'ZUP';
+  const tr = document.createElement('tr');
+  if (isWinner) tr.className = 'winner';
+
+  const retVal = parseFloat(stats.totalRet);
+  const retCls = retVal >= 0 ? 'pos' : 'neg';
+  const retSign = retVal >= 0 ? '+' : '';
+
+  const avgVal = parseFloat(stats.avgDaily);
+  const avgCls = avgVal >= 0 ? 'pos' : 'neg';
+  const avgSign = avgVal >= 0 ? '+' : '';
+
+  const ddVal = parseFloat(stats.maxDD);
+  const ddCls = ddVal <= -10 ? 'neg' : ddVal <= -5 ? 'neutral' : 'pos';
+
+  const sharpeVal = parseFloat(stats.sharpe);
+  const sharpeCls = sharpeVal >= 2 ? 'pos' : sharpeVal >= 1 ? 'neutral' : 'neg';
+
+  const nameCell = isWinner
+    ? `${m}<span class="badge">WINNER</span>`
+    : m;
+
+  tr.innerHTML = `
+    <td><span style="color:${COLORS[m]}">${nameCell}</span></td>
+    <td class="neutral">${stats.n}</td>
+    <td class="neutral">${stats.acc}%</td>
+    <td class="neutral">${stats.oosAcc}%</td>
+    <td class="${retCls}">${retSign}${stats.totalRet}%</td>
+    <td class="${sharpeCls}">${stats.sharpe}</td>
+    <td class="${ddCls}">${stats.maxDD}%</td>
+    <td class="${avgCls}">${avgSign}${stats.avgDaily}%</td>
+  `;
+  tbody.appendChild(tr);
+});
+</script>
+</body>
+</html>
