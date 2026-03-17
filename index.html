@@ -414,6 +414,7 @@
             <th>Sharpe</th>
             <th>Max DD</th>
             <th>Avg Daily Ret</th>
+            <th>Avg |Ret|</th>
           </tr>
         </thead>
         <tbody></tbody>
@@ -484,7 +485,7 @@ const ALL_DATA = {
 };
 
 // ── Tomorrow's predictions ───────────────────────────────────────────────────
-const PREDICTIONS = {"for_date":"2026-03-17","generated_on":"2026-03-16","models":{"BASELINE":{"direction":"SPXL","confidence":3,"signals":[{"name":"ma60_slope","vote":-1,"weight":1.0,"desc":"MA60 falling (slope -0.020%/d)"},{"name":"obv_trend","vote":1,"weight":1.0,"desc":"OBV falling with price \u2014 capitulation/bull"},{"name":"gap_up","vote":1,"weight":1.0,"desc":"Gap up +0.92% closed positive \u2014 bull continuation"}],"bull_votes":2,"bear_votes":1,"net_score":1.0},"ZIP":{"direction":"SPXL","confidence":3,"signals":[{"name":"ma60_slope","vote":-1,"weight":1.4,"desc":"MA60 falling (slope -0.020%/d) [modVIX\u2193]"},{"name":"obv_trend","vote":1,"weight":1.2,"desc":"OBV falling with price \u2014 capitulation/bull"},{"name":"gap_up","vote":1,"weight":1.5,"desc":"Gap up +0.92% closed positive \u2014 bull continuation"}],"bull_votes":2,"bear_votes":1,"net_score":1.3},"ZAP":{"direction":"SPXL","confidence":10,"signals":[{"name":"obv_trend","vote":1,"weight":0.384,"desc":"OBV falling with price \u2014 capitulation/bull"},{"name":"gap_up","vote":1,"weight":0.847,"desc":"Gap up +0.92% closed positive \u2014 bull"}],"bull_votes":2,"bear_votes":0,"log_posterior":1.7234,"adx":45.1},"ZUP":{"direction":"SPXL","confidence":6,"signals":[{"name":"ma60_slope","vote":-1,"weight":0.4,"desc":"MA60 falling (slope -0.020%/d)"},{"name":"obv_trend","vote":1,"weight":0.384,"desc":"OBV falling with price \u2014 capitulation/bull"},{"name":"gap_up","vote":1,"weight":0.847,"desc":"Gap up +0.92% closed positive \u2014 bull"}],"bull_votes":2,"bear_votes":1,"regime":"TRANSITION","zap_score":1.1634,"zip_norm":0.1489,"final_score":0.8172,"bounce_risk":1,"bounce_flipped":false}}};
+const PREDICTIONS = {"for_date":"2026-03-17","generated_on":"2026-03-16","models":{"BASELINE":{"direction":"SPXL","confidence":3,"expected_pct":3.67,"signals":[{"name":"ma60_slope","vote":-1,"weight":1.0,"desc":"MA60 falling (slope -0.020%/d)"},{"name":"obv_trend","vote":1,"weight":1.0,"desc":"OBV falling with price \u2014 capitulation/bull"},{"name":"gap_up","vote":1,"weight":1.0,"desc":"Gap up +0.92% closed positive \u2014 bull continuation"}],"bull_votes":2,"bear_votes":1,"net_score":1.0},"ZIP":{"direction":"SPXL","confidence":3,"expected_pct":3.67,"signals":[{"name":"ma60_slope","vote":-1,"weight":1.4,"desc":"MA60 falling (slope -0.020%/d) [modVIX\u2193]"},{"name":"obv_trend","vote":1,"weight":1.2,"desc":"OBV falling with price \u2014 capitulation/bull"},{"name":"gap_up","vote":1,"weight":1.5,"desc":"Gap up +0.92% closed positive \u2014 bull continuation"}],"bull_votes":2,"bear_votes":1,"net_score":1.3},"ZAP":{"direction":"SPXL","confidence":10,"expected_pct":3.67,"signals":[{"name":"obv_trend","vote":1,"weight":0.384,"desc":"OBV falling with price \u2014 capitulation/bull"},{"name":"gap_up","vote":1,"weight":0.847,"desc":"Gap up +0.92% closed positive \u2014 bull"}],"bull_votes":2,"bear_votes":0,"log_posterior":1.7234,"adx":45.1},"ZUP":{"direction":"SPXL","confidence":6,"expected_pct":3.67,"signals":[{"name":"ma60_slope","vote":-1,"weight":0.4,"desc":"MA60 falling (slope -0.020%/d)"},{"name":"obv_trend","vote":1,"weight":0.384,"desc":"OBV falling with price \u2014 capitulation/bull"},{"name":"gap_up","vote":1,"weight":0.847,"desc":"Gap up +0.92% closed positive \u2014 bull"}],"bull_votes":2,"bear_votes":1,"regime":"TRANSITION","zap_score":1.1634,"zip_norm":0.1489,"final_score":0.8172,"bounce_risk":1,"bounce_flipped":false}}};
 
 // ── Colors ──────────────────────────────────────────────────────────────────
 const COLORS = {
@@ -528,7 +529,8 @@ function computeStats(records) {
     if (dd > mdd) mdd = dd;
   }
   const avgD = mean * 100;
-  return {n, acc, totalRet, sharpe, mdd: mdd*100, avgD};
+  const avgAbsRet = rets.reduce((a,b) => a + Math.abs(b), 0) / n;
+  return {n, acc, totalRet, sharpe, mdd: mdd*100, avgD, avgAbsRet};
 }
 
 // ── Tomorrow Predictions — Overview Banner ────────────────────────────────────
@@ -553,9 +555,11 @@ function renderTomorrowBanner() {
     const regTag = d.regime
       ? `<span class="regime-tag ${d.regime==='BULL_TREND'?'bull-trend':d.regime==='BEAR_TREND'?'bear-trend':''}">${d.regime.replace('_TREND','').replace('_',' ')}</span>`
       : '';
+    const expStr = d.expected_pct != null ? `<span style="color:var(--text-muted);font-size:12px">±${d.expected_pct.toFixed(1)}%</span>` : '';
     return `<div class="pred-card" style="border-color:${MODEL_COLORS[m]}22">
       <div class="pred-card-name" style="color:${MODEL_COLORS[m]}">${m}${star}</div>
       <div class="pred-card-dir ${dirCls}">${d.direction}</div>
+      ${expStr}
       <div class="pred-card-meta">
         <span class="pred-card-conf">conf ${d.confidence}/10</span>
         <span><span style="color:#34d399">${d.bull_votes}↑</span> <span style="color:#f87171">${d.bear_votes}↓</span></span>
@@ -610,12 +614,14 @@ function renderModelPrediction(model) {
     if (d.bounce_flipped) extra += `<span style="color:#f59e0b;font-weight:600">⚠ bounce-flip</span>`;
   }
 
+  const expHtml = d.expected_pct != null ? `<span style="color:var(--text-muted);font-size:13px">±${d.expected_pct.toFixed(1)}%</span>` : '';
   el.innerHTML = `
     <div class="pred-section" style="border-color:${color}33">
       <div class="pred-section-header">
         <span class="pred-section-title" style="color:${color}">Tomorrow Prediction</span>
         <span class="tomorrow-banner-date">Tue Mar 17</span>
         <span class="pred-dir-badge ${dirCls}">${d.direction}</span>
+        ${expHtml}
         <div class="pred-meta">
           <span>conf <strong>${d.confidence}/10</strong></span>
           <span><span style="color:#34d399">${d.bull_votes}↑</span> <span style="color:#f87171">${d.bear_votes}↓</span></span>
@@ -681,9 +687,39 @@ const overviewLabels = (() => {
   return [...s].sort();
 })();
 
+// ── "Today" vertical dashed line plugin ──────────────────────────────────────
+const todayLinePlugin = {
+  id: 'todayLine',
+  afterDraw(chart) {
+    const today = '2026-03-16';
+    const idx = chart.data.labels.indexOf(today);
+    if (idx < 0) return;
+    const meta = chart.getDatasetMeta(0);
+    if (!meta || !meta.data[idx]) return;
+    const x = meta.data[idx].x;
+    const {top, bottom} = chart.chartArea;
+    const ctx2 = chart.ctx;
+    ctx2.save();
+    ctx2.setLineDash([4, 4]);
+    ctx2.strokeStyle = 'rgba(200,200,210,0.35)';
+    ctx2.lineWidth = 1;
+    ctx2.beginPath();
+    ctx2.moveTo(x, top);
+    ctx2.lineTo(x, bottom);
+    ctx2.stroke();
+    ctx2.setLineDash([]);
+    ctx2.fillStyle = 'rgba(200,200,210,0.55)';
+    ctx2.font = '10px sans-serif';
+    ctx2.textAlign = 'left';
+    ctx2.fillText('Today', x + 4, top + 13);
+    ctx2.restore();
+  }
+};
+
 const overviewChart = new Chart(document.getElementById('chart').getContext('2d'), {
   type: 'line',
   data: { labels: overviewLabels, datasets: buildOverviewDatasets() },
+  plugins: [todayLinePlugin],
   options: {
     responsive: true, maintainAspectRatio: false,
     interaction: { mode: 'index', intersect: false },
@@ -766,6 +802,7 @@ statsModels.forEach(([name, data, color, isWinner]) => {
     <td class="${s.sharpe>=1?'pos':s.sharpe>=0?'neutral':'neg'}">${s.sharpe.toFixed(2)}</td>
     <td class="neg">-${s.mdd.toFixed(1)}%</td>
     <td class="${clsPct(s.avgD)}">${pct(s.avgD,3)}</td>
+    <td>${s.avgAbsRet.toFixed(2)}%</td>
   `;
   statsBody.appendChild(tr);
 });
