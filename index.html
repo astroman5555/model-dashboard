@@ -419,6 +419,117 @@
     border: 1px solid rgba(160,136,200,0.25); vertical-align: middle; margin-left: 4px;
   }
   .disabled-row td { opacity: 0.35; }
+
+  /* ── Pending Promotions Modal ─────────────────────────────────────────────── */
+  #promo-backdrop {
+    display: none;
+    position: fixed; inset: 0;
+    background: rgba(10,6,2,0.82);
+    backdrop-filter: blur(4px);
+    z-index: 9000;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 32px 16px 48px;
+    overflow-y: auto;
+  }
+  #promo-backdrop.open { display: flex; }
+  #promo-modal {
+    background: #1a1007;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    width: 100%;
+    max-width: 780px;
+    box-shadow: 0 8px 48px rgba(0,0,0,0.7);
+    padding: 28px 32px 32px;
+    position: relative;
+  }
+  #promo-modal-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--accent);
+    margin-bottom: 4px;
+    letter-spacing: -0.2px;
+  }
+  #promo-modal-sub {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-bottom: 24px;
+  }
+  #promo-close {
+    position: absolute;
+    top: 20px; right: 22px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--text-muted);
+    font-size: 20px;
+    line-height: 1;
+    padding: 4px 8px;
+    border-radius: 6px;
+    transition: color 0.15s, background 0.15s;
+  }
+  #promo-close:hover { color: var(--text); background: rgba(255,255,255,0.07); }
+  .promo-card {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px 22px;
+    margin-bottom: 20px;
+  }
+  .promo-card:last-child { margin-bottom: 0; }
+  .promo-card-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 16px;
+  }
+  .promo-model-badge {
+    font-family: 'Playfair Display', serif;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+  }
+  .promo-scores {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    font-size: 13px;
+  }
+  .promo-score-item { display: flex; flex-direction: column; gap: 2px; }
+  .promo-score-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); }
+  .promo-score-val { font-weight: 600; font-variant-numeric: tabular-nums; }
+  .promo-improve { color: #76c472; }
+  .promo-meta {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-bottom: 14px;
+  }
+  .promo-diff-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+  }
+  .promo-diff-table th {
+    text-align: left;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    padding: 4px 8px 6px;
+    border-bottom: 1px solid var(--border);
+  }
+  .promo-diff-table th.r, .promo-diff-table td.r { text-align: right; }
+  .promo-diff-table td {
+    padding: 5px 8px;
+    border-bottom: 1px solid rgba(74,48,24,0.4);
+    font-variant-numeric: tabular-nums;
+  }
+  .promo-diff-table tr:last-child td { border-bottom: none; }
+  .delta-pos { color: #76c472; font-weight: 600; }
+  .delta-neg { color: #f87171; font-weight: 600; }
+  .delta-zero { color: var(--text-muted); }
 </style>
 </head>
 <body>
@@ -528,6 +639,16 @@
 
 <div id="tooltip"></div>
 
+<!-- ── Pending Promotions Modal ──────────────────────────────────────────── -->
+<div id="promo-backdrop">
+  <div id="promo-modal">
+    <div id="promo-modal-title">☕ Weight Promotions Pending</div>
+    <div id="promo-modal-sub">The optimiser found better signal weights. Review below — no action required.</div>
+    <button id="promo-close" title="Dismiss">✕</button>
+    <div id="promo-cards"></div>
+  </div>
+</div>
+
 <script>
 // ── Embedded data (all fields) ──────────────────────────────────────────────
 const ALL_DATA = {
@@ -540,6 +661,9 @@ const ALL_DATA = {
 // ── Tomorrow's predictions ───────────────────────────────────────────────────
 const PREDICTIONS = {"for_date":"2026-03-17","generated_on":"2026-03-17","atr_range_pct":3.67,"models":{"BASELINE":{"direction":"SPXL","confidence":3,"expected_pct":1.7,"signals":[{"name":"ma60_slope","vote":-1,"weight":1.0,"desc":"MA60 falling (slope -0.020%/d)"},{"name":"obv_trend","vote":1,"weight":1.0,"desc":"OBV falling with price \u2014 capitulation/bull"},{"name":"gap_up","vote":1,"weight":1.0,"desc":"Gap up +0.92% closed positive \u2014 bull continuation"}],"bull_votes":2,"bear_votes":1,"net_score":1.0},"ZIP":{"direction":"SPXL","confidence":3,"expected_pct":1.09,"signals":[{"name":"ma60_slope","vote":-1,"weight":1.4,"desc":"MA60 falling (slope -0.020%/d) [modVIX\u2193]"},{"name":"obv_trend","vote":1,"weight":1.2,"desc":"OBV falling with price \u2014 capitulation/bull"},{"name":"gap_up","vote":1,"weight":1.5,"desc":"Gap up +0.92% closed positive \u2014 bull continuation"}],"bull_votes":2,"bear_votes":1,"net_score":1.3},"ZAP":{"direction":"SPXL","confidence":10,"expected_pct":0.42,"signals":[{"name":"obv_trend","vote":1,"weight":0.384,"desc":"OBV falling with price \u2014 capitulation/bull"},{"name":"gap_up","vote":1,"weight":0.847,"desc":"Gap up +0.92% closed positive \u2014 bull"}],"bull_votes":2,"bear_votes":0,"log_posterior":1.7234,"adx":45.1},"ZUP":{"direction":"SPXL","confidence":6,"expected_pct":0.48,"signals":[{"name":"ma60_slope","vote":-1,"weight":0.4,"desc":"MA60 falling (slope -0.020%/d)"},{"name":"obv_trend","vote":1,"weight":0.384,"desc":"OBV falling with price \u2014 capitulation/bull"},{"name":"gap_up","vote":1,"weight":0.847,"desc":"Gap up +0.92% closed positive \u2014 bull"}],"bull_votes":2,"bear_votes":1,"regime":"TRANSITION","zap_score":1.1634,"zip_norm":0.1489,"final_score":0.8172,"bounce_risk":1,"bounce_flipped":false}}};
 const SIGNAL_META = {"BASELINE":{"vix":{"weight":1.0,"label":"VIX level","invert":false,"thresh_bull":"VIX < 15","thresh_bear":"VIX > 25"},"vol_ratio":{"weight":1.0,"label":"Volume ratio","invert":false,"thresh_bull":">1.2\u00d7 avg (up day)","thresh_bear":">1.2\u00d7 avg (down day)"},"vol_regime":{"weight":1.0,"label":"Vol regime","invert":false,"thresh_bull":"20d/60d vol < 0.6","thresh_bear":"20d/60d vol > 1.6"},"ma20_dist":{"weight":1.0,"label":"MA20 distance","invert":false,"thresh_bull":"Price < MA20 \u2212 3%","thresh_bear":"Price > MA20 + 3%"},"ma60_dist":{"weight":1.0,"label":"MA60 distance","invert":false,"thresh_bull":"Price < MA60 \u2212 4%","thresh_bear":"Price > MA60 + 4%"},"zscore_ret":{"weight":1.0,"label":"Z-score returns","invert":false,"thresh_bull":"Z-score < \u22121.5","thresh_bear":"Z-score > +1.5"},"rsi":{"weight":1.0,"label":"RSI momentum-cont (inverted)","invert":false,"thresh_bull":"RSI > 70 (inv)","thresh_bear":"RSI < 30 (inv)"},"macd_mom":{"weight":1.0,"label":"MACD momentum (inverted)","invert":false,"thresh_bull":"Hist falling, dir-flip (inv)","thresh_bear":"Hist rising, dir-flip (inv)"},"macd_cross":{"weight":1.0,"label":"MACD crossover (inverted)","invert":false,"thresh_bull":"MACD cross below signal (inv)","thresh_bear":"MACD cross above signal (inv)"},"ret_5d":{"weight":1.0,"label":"5d return","invert":false,"thresh_bull":"5d ret < \u22124%","thresh_bear":"5d ret > +4%"},"ret_10d":{"weight":1.0,"label":"10d return","invert":false,"thresh_bull":"10d ret < \u22126%","thresh_bear":"10d ret > +6%"},"vix_trend":{"weight":1.0,"label":"VIX 5d trend","invert":false,"thresh_bull":"VIX 5d chg < \u221225%","thresh_bear":"VIX 5d chg > +25%"},"ma20_slope":{"weight":1.0,"label":"MA20 slope","invert":false,"thresh_bull":"Slope > 90th pct","thresh_bear":"Slope < 10th pct"},"ma60_slope":{"weight":1.0,"label":"MA60 slope","invert":false,"thresh_bull":"Slope > +0.01%/d","thresh_bear":"Slope < \u22120.01%/d"},"roc_5d":{"weight":1.0,"label":"ROC 5d","invert":false,"thresh_bull":"ROC 5d < \u22123%","thresh_bear":"ROC 5d > +3%"},"roc_10d":{"weight":1.0,"label":"ROC 10d","invert":false,"thresh_bull":"ROC 10d < \u22125%","thresh_bear":"ROC 10d > +5%"},"atr_expansion":{"weight":1.0,"label":"ATR expansion (inverted)","invert":false,"thresh_bull":"ATR > 1.5\u00d7 avg (inv)","thresh_bear":"ATR < 0.6\u00d7 avg (inv)"},"obv_trend":{"weight":1.0,"label":"OBV trend (inverted)","invert":false,"thresh_bull":"OBV slope > 80th pct (falling w/ price)","thresh_bear":"OBV slope < 20th pct (rising w/ price)"},"near_20d_high":{"weight":1.0,"label":"Near 20d high (inverted)","invert":false,"thresh_bull":"\u2014","thresh_bear":"Price in top 10% of 20d range (inv)"},"near_20d_low":{"weight":1.0,"label":"Near 20d low","invert":false,"thresh_bull":"Price in bot 10% of 20d range","thresh_bear":"\u2014"},"gap_up":{"weight":1.0,"label":"Gap up","invert":false,"thresh_bull":"Gap up > +0.3%","thresh_bear":"\u2014"},"gap_down":{"weight":1.0,"label":"Gap down","invert":false,"thresh_bull":"\u2014","thresh_bear":"Gap down < \u22120.3%"},"mom_3d_rev":{"weight":1.0,"label":"3d mean-reversion","invert":false,"thresh_bull":"3d ret < \u22122%","thresh_bear":"3d ret > +2%"},"vix_spike":{"weight":1.0,"label":"VIX spike","invert":false,"thresh_bull":"\u2014","thresh_bear":"VIX > 10% above 3d avg"}},"ZIP":{"vix":{"weight":2.0,"label":"VIX level","invert":false,"thresh_bull":"VIX < 15","thresh_bear":"VIX > 25"},"vix_spike":{"weight":2.5,"label":"VIX spike","invert":false,"thresh_bull":"\u2014","thresh_bear":"VIX > 10% above 3d avg"},"vix_trend":{"weight":2.0,"label":"VIX 5d trend","invert":false,"thresh_bull":"VIX 5d chg < \u221225%","thresh_bear":"VIX 5d chg > +25%"},"vol_ratio":{"weight":1.5,"label":"Volume ratio","invert":false,"thresh_bull":">1.2\u00d7 avg (up day)","thresh_bear":">1.2\u00d7 avg (down day)"},"vol_regime":{"weight":1.5,"label":"Vol regime","invert":false,"thresh_bull":"20d/60d vol < 0.6","thresh_bear":"20d/60d vol > 1.6"},"ma20_slope":{"weight":1.5,"label":"MA20 slope","invert":false,"thresh_bull":"Slope > 90th pct","thresh_bear":"Slope < 10th pct"},"ma60_slope":{"weight":2.0,"label":"MA60 slope","invert":false,"thresh_bull":"Slope > +0.01%/d","thresh_bear":"Slope < \u22120.01%/d"},"ma200_trend":{"weight":1.5,"label":"MA200 regime","invert":false,"thresh_bull":"Price > MA200","thresh_bear":"Price < MA200"},"gap_up":{"weight":1.5,"label":"Gap up","invert":false,"thresh_bull":"Gap up > +0.3%","thresh_bear":"\u2014"},"gap_down":{"weight":1.5,"label":"Gap down","invert":false,"thresh_bull":"\u2014","thresh_bear":"Gap down < \u22120.3%"},"obv_trend":{"weight":1.2,"label":"OBV trend (inverted)","invert":false,"thresh_bull":"OBV slope > 80th pct (falling w/ price)","thresh_bear":"OBV slope < 20th pct (rising w/ price)"},"atr_expansion":{"weight":1.0,"label":"ATR expansion (inverted)","invert":false,"thresh_bull":"ATR > 1.5\u00d7 avg (inv)","thresh_bear":"ATR < 0.6\u00d7 avg (inv)"},"rsi":{"weight":1.0,"label":"RSI momentum-cont (inverted)","invert":false,"thresh_bull":"RSI > 70 (inv)","thresh_bear":"RSI < 30 (inv)"},"zscore_ret":{"weight":1.0,"label":"Z-score returns","invert":false,"thresh_bull":"Z-score < \u22121.5","thresh_bear":"Z-score > +1.5"},"macd_mom":{"weight":0.5,"label":"MACD momentum (inverted)","invert":false,"thresh_bull":"Hist falling, dir-flip (inv)","thresh_bear":"Hist rising, dir-flip (inv)"},"macd_cross":{"weight":0.5,"label":"MACD crossover (inverted)","invert":false,"thresh_bull":"MACD cross below signal (inv)","thresh_bear":"MACD cross above signal (inv)"},"near_20d_high":{"weight":0.8,"label":"Near 20d high (inverted)","invert":false,"thresh_bull":"\u2014","thresh_bear":"Price in top 10% of 20d range (inv)"},"near_20d_low":{"weight":0.8,"label":"Near 20d low","invert":false,"thresh_bull":"Price in bot 10% of 20d range","thresh_bear":"\u2014"},"ma20_dist":{"weight":0.4,"label":"MA20 distance","invert":false,"thresh_bull":"Price < MA20 \u2212 3%","thresh_bear":"Price > MA20 + 3%"},"ma60_dist":{"weight":0.5,"label":"MA60 distance","invert":false,"thresh_bull":"Price < MA60 \u2212 4%","thresh_bear":"Price > MA60 + 4%"},"ret_5d":{"weight":0.4,"label":"5d return","invert":false,"thresh_bull":"5d ret < \u22124%","thresh_bear":"5d ret > +4%"},"ret_10d":{"weight":0.5,"label":"10d return","invert":false,"thresh_bull":"10d ret < \u22126%","thresh_bear":"10d ret > +6%"},"roc_5d":{"weight":0.3,"label":"ROC 5d","invert":false,"thresh_bull":"ROC 5d < \u22123%","thresh_bear":"ROC 5d > +3%"},"roc_10d":{"weight":0.3,"label":"ROC 10d","invert":false,"thresh_bull":"ROC 10d < \u22125%","thresh_bear":"ROC 10d > +5%"},"mom_3d_rev":{"weight":0.3,"label":"3d mean-reversion","invert":false,"thresh_bull":"3d ret < \u22122%","thresh_bear":"3d ret > +2%"}},"ZAP":{"gap_up":{"weight":0.847,"label":"Gap up (momentum cont)","invert":false,"thresh_bull":"Gap up > +0.3%","thresh_bear":"\u2014"},"ret_5d":{"weight":0.0,"label":"5d return (momentum cont)","invert":true,"thresh_bull":"5d ret < \u22124%","thresh_bear":"5d ret > +4%"},"zscore_ret":{"weight":0.0,"label":"Z-score (momentum cont)","invert":true,"thresh_bull":"Z-score < \u22121.5","thresh_bear":"Z-score > +1.5"},"roc_10d":{"weight":0.0,"label":"ROC 10d (momentum cont)","invert":true,"thresh_bull":"ROC 10d < \u22125%","thresh_bear":"ROC 10d > +5%"},"roc_5d":{"weight":0.0,"label":"ROC 5d (momentum cont)","invert":true,"thresh_bull":"ROC 5d < \u22123%","thresh_bear":"ROC 5d > +3%"},"ret_10d":{"weight":0.467,"label":"10d return (momentum cont)","invert":true,"thresh_bull":"10d ret < \u22126%","thresh_bear":"10d ret > +6%"},"gap_down":{"weight":0.0,"label":"Gap down (momentum cont)","invert":false,"thresh_bull":"\u2014","thresh_bear":"Gap down < \u22120.3%"},"ma20_dist":{"weight":0.0,"label":"MA20 dist (momentum)","invert":true,"thresh_bull":"Price < MA20 \u2212 3%","thresh_bear":"Price > MA20 + 3%"},"obv_trend":{"weight":0.384,"label":"OBV trend","invert":false,"thresh_bull":"OBV slope > 80th pct (falling w/ price)","thresh_bear":"OBV slope < 20th pct (rising w/ price)"},"vix":{"weight":0.288,"label":"VIX level (contrarian)","invert":true,"thresh_bull":"VIX < 15","thresh_bear":"VIX > 25"},"rsi":{"weight":0.269,"label":"RSI extreme","invert":false,"thresh_bull":"RSI > 70 (inv)","thresh_bear":"RSI < 30 (inv)"},"vix_spike":{"weight":0.225,"label":"VIX spike","invert":false,"thresh_bull":"\u2014","thresh_bear":"VIX > 10% above 3d avg"},"vix_trend":{"weight":0.0,"label":"VIX 5d trend","invert":false,"thresh_bull":"VIX 5d chg < \u221225%","thresh_bear":"VIX 5d chg > +25%"},"atr_expansion":{"weight":0.0,"label":"ATR expansion","invert":false,"thresh_bull":"ATR > 1.5\u00d7 avg (inv)","thresh_bear":"ATR < 0.6\u00d7 avg (inv)"},"macd_cross":{"weight":0.12,"label":"MACD crossover","invert":false,"thresh_bull":"MACD cross below signal (inv)","thresh_bear":"MACD cross above signal (inv)"},"vol_ratio":{"weight":0.0,"label":"Volume ratio","invert":false,"thresh_bull":">1.2\u00d7 avg (up day)","thresh_bear":">1.2\u00d7 avg (down day)"},"macd_mom":{"weight":0.06,"label":"MACD momentum","invert":false,"thresh_bull":"Hist falling, dir-flip (inv)","thresh_bear":"Hist rising, dir-flip (inv)"},"ma20_slope":{"weight":0.06,"label":"MA20 slope (contrarian)","invert":true,"thresh_bull":"Slope > 90th pct","thresh_bear":"Slope < 10th pct"},"ma60_dist":{"weight":0.056,"label":"MA60 dist (momentum)","invert":true,"thresh_bull":"Price < MA60 \u2212 4%","thresh_bear":"Price > MA60 + 4%"},"vol_regime":{"weight":0.048,"label":"Vol regime","invert":false,"thresh_bull":"20d/60d vol < 0.6","thresh_bear":"20d/60d vol > 1.6"},"near_20d_high":{"weight":0.02,"label":"Near 20d high (breakout)","invert":true,"thresh_bull":"\u2014","thresh_bear":"Price in top 10% of 20d range (inv)"}},"ZUP":{"gap_up":{"weight":0.847,"label":"Gap up","invert":false,"thresh_bull":"Gap up > +0.3%","thresh_bear":"\u2014"},"ret_5d":{"weight":0.0,"label":"5d return","invert":true,"thresh_bull":"5d ret < \u22124%","thresh_bear":"5d ret > +4%"},"zscore_ret":{"weight":0.0,"label":"Z-score returns","invert":true,"thresh_bull":"Z-score < \u22121.5","thresh_bear":"Z-score > +1.5"},"roc_10d":{"weight":0.0,"label":"ROC 10d","invert":true,"thresh_bull":"ROC 10d < \u22125%","thresh_bear":"ROC 10d > +5%"},"roc_5d":{"weight":0.0,"label":"ROC 5d","invert":true,"thresh_bull":"ROC 5d < \u22123%","thresh_bear":"ROC 5d > +3%"},"ret_10d":{"weight":0.8,"label":"10d return","invert":true,"thresh_bull":"10d ret < \u22126%","thresh_bear":"10d ret > +6%"},"gap_down":{"weight":0.0,"label":"Gap down","invert":false,"thresh_bull":"\u2014","thresh_bear":"Gap down < \u22120.3%"},"ma20_dist":{"weight":0.0,"label":"MA20 distance","invert":true,"thresh_bull":"Price < MA20 \u2212 3%","thresh_bear":"Price > MA20 + 3%"},"obv_trend":{"weight":0.384,"label":"OBV trend (inverted)","invert":false,"thresh_bull":"OBV slope > 80th pct (falling w/ price)","thresh_bear":"OBV slope < 20th pct (rising w/ price)"},"vix":{"weight":0.864,"label":"VIX level","invert":true,"thresh_bull":"VIX < 15","thresh_bear":"VIX > 25"},"vix_spike":{"weight":0.675,"label":"VIX spike","invert":false,"thresh_bull":"\u2014","thresh_bear":"VIX > 10% above 3d avg"},"vix_trend":{"weight":0.0,"label":"VIX 5d trend","invert":false,"thresh_bull":"VIX 5d chg < \u221225%","thresh_bear":"VIX 5d chg > +25%"},"mom_3d_rev":{"weight":0.272,"label":"3d mean-reversion","invert":true,"thresh_bull":"3d ret < \u22122%","thresh_bear":"3d ret > +2%"},"rsi":{"weight":0.269,"label":"RSI momentum-cont (inverted)","invert":false,"thresh_bull":"RSI > 70 (inv)","thresh_bear":"RSI < 30 (inv)"},"atr_expansion":{"weight":0.152,"label":"ATR expansion (inverted)","invert":false,"thresh_bull":"ATR > 1.5\u00d7 avg (inv)","thresh_bear":"ATR < 0.6\u00d7 avg (inv)"},"macd_cross":{"weight":0.12,"label":"MACD crossover (inverted)","invert":false,"thresh_bull":"MACD cross below signal (inv)","thresh_bear":"MACD cross above signal (inv)"},"vol_ratio":{"weight":0.088,"label":"Volume ratio","invert":false,"thresh_bull":">1.2\u00d7 avg (up day)","thresh_bear":">1.2\u00d7 avg (down day)"},"macd_mom":{"weight":0.06,"label":"MACD momentum (inverted)","invert":false,"thresh_bull":"Hist falling, dir-flip (inv)","thresh_bear":"Hist rising, dir-flip (inv)"},"ma20_slope":{"weight":0.06,"label":"MA20 slope","invert":true,"thresh_bull":"Slope > 90th pct","thresh_bear":"Slope < 10th pct"},"ma60_dist":{"weight":0.056,"label":"MA60 distance","invert":true,"thresh_bull":"Price < MA60 \u2212 4%","thresh_bear":"Price > MA60 + 4%"},"vol_regime":{"weight":0.048,"label":"Vol regime","invert":false,"thresh_bull":"20d/60d vol < 0.6","thresh_bear":"20d/60d vol > 1.6"},"near_20d_high":{"weight":0.02,"label":"Near 20d high (inverted)","invert":true,"thresh_bull":"\u2014","thresh_bear":"Price in top 10% of 20d range (inv)"},"ma60_slope":{"weight":0.4,"label":"MA60 slope","invert":false,"thresh_bull":"Slope > +0.01%/d","thresh_bear":"Slope < \u22120.01%/d"},"ma200_trend":{"weight":0.3,"label":"ma200_trend","invert":false,"thresh_bull":"Price > MA200","thresh_bear":"Price < MA200"},"near_20d_low":{"weight":0.15,"label":"Near 20d low","invert":false,"thresh_bull":"Price in bot 10% of 20d range","thresh_bear":"\u2014"},"gap_fade":{"weight":0.2,"label":"gap_fade","invert":false,"thresh_bull":"\u2014","thresh_bear":"Gap > 0.5% fades intraday"},"pc_proxy":{"weight":0.25,"label":"pc_proxy","invert":false,"thresh_bull":"OBV div bullish","thresh_bear":"OBV div bearish"},"day_of_week":{"weight":0.0,"label":"day_of_week","invert":false,"thresh_bull":"Mon/Fri (seasonal)","thresh_bear":"\u2014"}}};
+
+// ── Pending weight promotions (injected by update_dashboard.sh) ───────────────
+const PENDING_PROMOTIONS = [];
 
 // ── Colors ──────────────────────────────────────────────────────────────────
 const COLORS = {
@@ -1059,11 +1183,90 @@ function renderSignalMap(model) {
       </div>
     </div>`;
 }
+// ── Pending Promotions Modal ──────────────────────────────────────────────────
+function renderPromoModal() {
+  if (!PENDING_PROMOTIONS || PENDING_PROMOTIONS.length === 0) return;
+
+  const MODEL_COLORS = { ZUP: '#76c472', ZIP: '#d49348', ZAP: '#c96e5e', BASELINE: '#a088c8' };
+
+  const cards = PENDING_PROMOTIONS.map(p => {
+    const color = MODEL_COLORS[p.model] || '#c9933d';
+    const impSign = p.improvement_pct >= 0 ? '+' : '';
+
+    // Build weight diff table rows
+    const diffEntries = Object.entries(p.weight_diff || {});
+    // Merge all signals from current + proposed weights
+    const allSigs = Array.from(new Set([
+      ...Object.keys(p.current_weights || {}),
+      ...Object.keys(p.proposed_weights || {})
+    ]));
+    const tableRows = allSigs.map(sig => {
+      const curr = p.current_weights?.[sig] ?? 0;
+      const prop = p.proposed_weights?.[sig] ?? 0;
+      const delta = prop - curr;
+      const deltaCls = Math.abs(delta) < 0.001 ? 'delta-zero'
+                     : delta > 0 ? 'delta-pos' : 'delta-neg';
+      const deltaStr = Math.abs(delta) < 0.001 ? '—'
+                     : (delta > 0 ? '+' : '') + delta.toFixed(3);
+      return `<tr>
+        <td>${sig.replace(/_/g,' ')}</td>
+        <td class="r">${curr.toFixed(3)}</td>
+        <td class="r">${prop.toFixed(3)}</td>
+        <td class="r ${deltaCls}">${deltaStr}</td>
+      </tr>`;
+    }).join('');
+
+    return `<div class="promo-card">
+      <div class="promo-card-header">
+        <span class="promo-model-badge" style="color:${color}">${p.model}</span>
+        <div class="promo-scores">
+          <div class="promo-score-item">
+            <span class="promo-score-label">Current</span>
+            <span class="promo-score-val">${(p.current_score >= 0 ? '+' : '')}${p.current_score.toFixed(4)}%/day</span>
+          </div>
+          <div class="promo-score-item">
+            <span class="promo-score-label">Proposed</span>
+            <span class="promo-score-val" style="color:${color}">${(p.winner_score >= 0 ? '+' : '')}${p.winner_score.toFixed(4)}%/day</span>
+          </div>
+          <div class="promo-score-item">
+            <span class="promo-score-label">Improvement</span>
+            <span class="promo-score-val promo-improve">${impSign}${p.improvement_pct.toFixed(1)}%</span>
+          </div>
+        </div>
+      </div>
+      <div class="promo-meta">Windows tested: ${p.windows_tested} &nbsp;|&nbsp; Candidates: ${p.candidates_tested} &nbsp;|&nbsp; Generated: ${p.proposed_at ? p.proposed_at.slice(0,10) : '—'}</div>
+      <div style="overflow-x:auto">
+        <table class="promo-diff-table">
+          <thead><tr>
+            <th>Signal</th>
+            <th class="r">Current&nbsp;w</th>
+            <th class="r">Proposed&nbsp;w</th>
+            <th class="r">Delta</th>
+          </tr></thead>
+          <tbody>${tableRows}</tbody>
+        </table>
+      </div>
+    </div>`;
+  }).join('');
+
+  document.getElementById('promo-cards').innerHTML = cards;
+  document.getElementById('promo-backdrop').classList.add('open');
+}
+
+document.getElementById('promo-close').addEventListener('click', () => {
+  document.getElementById('promo-backdrop').classList.remove('open');
+});
+document.getElementById('promo-backdrop').addEventListener('click', (e) => {
+  if (e.target === document.getElementById('promo-backdrop'))
+    document.getElementById('promo-backdrop').classList.remove('open');
+});
+
 // ── Init ─────────────────────────────────────────────────────────────────────
 renderTomorrowBanner();
 // Render prediction sections for all model tabs immediately (they're hidden by CSS)
 for (const m of ['ZIP','ZAP','ZUP','BASELINE']) renderModelPrediction(m);
 for (const m of ['ZIP','ZAP','ZUP','BASELINE']) renderSignalMap(m);
+renderPromoModal();
 </script>
 </body>
 </html>
