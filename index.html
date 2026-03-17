@@ -3,25 +3,27 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Stock Model Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<title>☕ Signal Roast — Model Dashboard</title>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   :root {
-    --bg: #0e0f12;
-    --surface: #161820;
-    --surface2: #1e2028;
-    --border: #2a2d38;
-    --text: #e8eaf0;
-    --text-muted: #7a7e91;
-    --accent: #4f8ef7;
-    --zup:  #34d399;
-    --zip:  #f59e0b;
-    --zap:  #f87171;
-    --base: #a78bfa;
-    --win-bg: rgba(52,211,153,0.08);
-    --win-border: rgba(52,211,153,0.35);
+    --bg:        #140d05;
+    --surface:   #1f1409;
+    --surface2:  #2a1c0e;
+    --border:    #4a3018;
+    --text:      #f2e6d4;
+    --text-muted:#9e8c76;
+    --accent:    #c9933d;
+    --zup:       #76c472;
+    --zip:       #d49348;
+    --zap:       #c96e5e;
+    --base:      #a088c8;
+    --win-bg:    rgba(118,196,114,0.07);
+    --win-border:rgba(118,196,114,0.30);
   }
 
   body {
@@ -39,7 +41,7 @@
     gap: 16px;
     margin-bottom: 20px;
   }
-  header h1 { font-size: 20px; font-weight: 600; letter-spacing: -0.3px; }
+  header h1 { font-size: 22px; font-weight: 700; letter-spacing: -0.3px; font-family: 'Playfair Display', serif; color: var(--accent); }
   header .sub { color: var(--text-muted); font-size: 12px; }
 
   /* ── Tabs ── */
@@ -68,7 +70,7 @@
   .tab-btn.active {
     color: var(--text);
     border-bottom-color: var(--accent);
-    background: rgba(79,142,247,0.07);
+    background: rgba(201,147,61,0.09);
   }
   .tab-btn[data-model="ZIP"].active  { border-bottom-color: var(--zip);  background: rgba(245,158,11,0.07);  color: var(--zip);  }
   .tab-btn[data-model="ZAP"].active  { border-bottom-color: var(--zap);  background: rgba(248,113,113,0.07); color: var(--zap);  }
@@ -82,17 +84,19 @@
   .card {
     background: var(--surface);
     border: 1px solid var(--border);
-    border-radius: 10px;
+    border-radius: 12px;
     padding: 20px;
     margin-bottom: 20px;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.35);
   }
   .card-title {
     font-size: 11px;
     font-weight: 600;
-    letter-spacing: 0.08em;
+    letter-spacing: 0.10em;
     text-transform: uppercase;
-    color: var(--text-muted);
+    color: var(--accent);
     margin-bottom: 16px;
+    font-family: 'Playfair Display', serif;
   }
 
   /* ── Charts ── */
@@ -200,11 +204,12 @@
 
   /* ── Tomorrow Banner (Overview) ── */
   .tomorrow-banner {
-    background: var(--surface);
+    background: linear-gradient(135deg, var(--surface) 0%, #1f1409 100%);
     border: 1px solid var(--border);
-    border-radius: 10px;
+    border-radius: 12px;
     padding: 18px 20px;
     margin-bottom: 20px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.4);
   }
   .tomorrow-banner-header {
     display: flex;
@@ -375,7 +380,7 @@
 <body>
 
 <header>
-  <h1>Stock Model Dashboard</h1>
+  <h1>☕ Signal Roast</h1>
   <span class="sub">ZIP · ZAP · ZUP · BASELINE &nbsp;|&nbsp; Backtest comparison</span>
 </header>
 
@@ -571,11 +576,14 @@ function renderTomorrowBanner() {
     </div>`;
   }).join('');
 
+  const todayET = new Date().toLocaleDateString('en-CA', {timeZone: 'America/New_York'});
+  const sessionLabel = p.for_date === todayET ? "Today's Session" : "Next Session";
+  const fmtForDate = new Date(p.for_date + 'T12:00:00').toLocaleDateString('en-US', {weekday:'short', month:'short', day:'numeric'});
   el.innerHTML = `
     <div class="tomorrow-banner">
       <div class="tomorrow-banner-header">
-        <span class="tomorrow-banner-title">Tomorrow</span>
-        <span class="tomorrow-banner-date">Wed Mar 18</span>
+        <span class="tomorrow-banner-title">${sessionLabel}</span>
+        <span class="tomorrow-banner-date">${fmtForDate}</span>
         <span style="font-size:11px;color:var(--text-muted);margin-left:auto">generated ${p.generated_on}</span>
       </div>
       <div class="pred-cards">${cards}</div>
@@ -622,11 +630,14 @@ function renderModelPrediction(model) {
   let expHtml = '';
   if (histAvg != null) expHtml += `<span style="color:var(--text-muted);font-size:13px">Hist avg: ${histAvg >= 0 ? '+' : ''}${histAvg.toFixed(1)}%</span>`;
   if (atrRng  != null) expHtml += `<span style="color:var(--text-muted);font-size:11px;margin-left:6px">ATR range: ±${atrRng.toFixed(1)}%</span>`;
+  const todayETM = new Date().toLocaleDateString('en-CA', {timeZone: 'America/New_York'});
+  const sessionLabelM = p.for_date === todayETM ? "Today's" : "Next Session";
+  const fmtForDateM = new Date(p.for_date + 'T12:00:00').toLocaleDateString('en-US', {weekday:'short', month:'short', day:'numeric'});
   el.innerHTML = `
     <div class="pred-section" style="border-color:${color}33">
       <div class="pred-section-header">
-        <span class="pred-section-title" style="color:${color}">Tomorrow Prediction</span>
-        <span class="tomorrow-banner-date">Wed Mar 18</span>
+        <span class="pred-section-title" style="color:${color}">${sessionLabelM} Prediction</span>
+        <span class="tomorrow-banner-date">${fmtForDateM}</span>
         <span class="pred-dir-badge ${dirCls}">${d.direction}</span>
         ${expHtml}
         <div class="pred-meta">
@@ -698,7 +709,7 @@ const overviewLabels = (() => {
 const todayLinePlugin = {
   id: 'todayLine',
   afterDraw(chart) {
-    const today = '2026-03-17';
+    const today = new Date().toLocaleDateString('en-CA', {timeZone: 'America/New_York'});
     const idx = chart.data.labels.indexOf(today);
     if (idx < 0) return;
     const meta = chart.getDatasetMeta(0);
@@ -708,14 +719,14 @@ const todayLinePlugin = {
     const ctx2 = chart.ctx;
     ctx2.save();
     ctx2.setLineDash([4, 4]);
-    ctx2.strokeStyle = 'rgba(200,200,210,0.35)';
+    ctx2.strokeStyle = 'rgba(201,147,61,0.45)';
     ctx2.lineWidth = 1;
     ctx2.beginPath();
     ctx2.moveTo(x, top);
     ctx2.lineTo(x, bottom);
     ctx2.stroke();
     ctx2.setLineDash([]);
-    ctx2.fillStyle = 'rgba(200,200,210,0.55)';
+    ctx2.fillStyle = 'rgba(201,147,61,0.70)';
     ctx2.font = '10px sans-serif';
     ctx2.textAlign = 'left';
     ctx2.fillText('Today', x + 4, top + 13);
@@ -754,14 +765,14 @@ const overviewChart = new Chart(document.getElementById('chart').getContext('2d'
     },
     scales: {
       x: {
-        ticks: { color: '#7a7e91', font: { size: 10 }, maxTicksLimit: 12 },
-        grid: { color: 'rgba(255,255,255,0.04)' }
+        ticks: { color: '#9e8c76', font: { size: 10 }, maxTicksLimit: 12 },
+        grid: { color: 'rgba(255,220,170,0.06)' }
       },
       y: {
-        ticks: { color: '#7a7e91', font: { size: 10 },
+        ticks: { color: '#9e8c76', font: { size: 10 },
           callback: v => (v>=0?'+':'')+v.toFixed(0)+'%'
         },
-        grid: { color: 'rgba(255,255,255,0.06)' },
+        grid: { color: 'rgba(255,220,170,0.08)' },
         border: { dash: [3,3] }
       }
     }
@@ -852,14 +863,14 @@ function initMiniChart(model) {
       },
       scales: {
         x: {
-          ticks: { color: '#7a7e91', font: { size: 10 }, maxTicksLimit: 10 },
-          grid: { color: 'rgba(255,255,255,0.04)' }
+          ticks: { color: '#9e8c76', font: { size: 10 }, maxTicksLimit: 10 },
+          grid: { color: 'rgba(255,220,170,0.06)' }
         },
         y: {
-          ticks: { color: '#7a7e91', font: { size: 10 },
+          ticks: { color: '#9e8c76', font: { size: 10 },
             callback: v => (v>=0?'+':'')+v.toFixed(0)+'%'
           },
-          grid: { color: 'rgba(255,255,255,0.06)' },
+          grid: { color: 'rgba(255,220,170,0.08)' },
           border: { dash: [3,3] }
         }
       }
