@@ -1124,7 +1124,6 @@ function regimeBadge(r) {
 function renderTradeTable(model) {
   const records = [...ALL_DATA[model]].reverse(); // most recent first
   const color = COLORS[model];
-  const isZUP = model === 'ZUP';
   const hasCapital = records[0]?.capital_after != null;
 
   // Compute cumulative return for each row (forward order)
@@ -1135,10 +1134,20 @@ function renderTradeTable(model) {
     cumMap[r.date] = +((cum - 1) * 100).toFixed(4);
   }
 
+  const hasRegime  = records[0]?.regime != null;
+  const hasBounce  = records[0]?.bounce_risk != null;
+
   const table = document.getElementById('table-' + model.toLowerCase());
 
   // Header
-  const cols = ['Date','Direction', ...(isZUP?['Regime']:[]), 'Conf','Signals','VIX','Entry','Exit','Ret %','Cumul %','✓?', ...(hasCapital?['Capital After']:[])];
+  const cols = [
+    'Date', 'Direction',
+    ...(hasRegime  ? ['Regime']  : []),
+    'Conf', 'Signals', 'VIX',
+    ...(hasBounce  ? ['Bounce']  : []),
+    'Entry', 'Exit', 'Ret %', 'Cumul %', '✓?',
+    ...(hasCapital ? ['Capital After'] : []),
+  ];
   table.innerHTML = `<thead><tr>${cols.map(c=>`<th>${c}</th>`).join('')}</tr></thead><tbody></tbody>`;
   const tbody = table.querySelector('tbody');
 
@@ -1162,7 +1171,8 @@ function renderTradeTable(model) {
     const correctHtml = isHolding
       ? '—'
       : (r.spy_correct ? '<span class="correct">✓</span>' : '<span class="incorrect">✗</span>');
-    const regCol = isZUP ? `<td>${regimeBadge(r)}</td>` : '';
+    const regCol = hasRegime  ? `<td>${regimeBadge(r)}</td>` : '';
+    const bounceCol = hasBounce ? `<td>${r.bounce_risk > 0 ? `<span style="color:#f59e0b">${r.bounce_risk}/10</span>` : '—'}</td>` : '';
     const capCol = hasCapital ? `<td>${isHolding ? '—' : fmtDollar(r.capital_after)}</td>` : '';
 
     const tr = document.createElement('tr');
@@ -1173,6 +1183,7 @@ function renderTradeTable(model) {
       <td>${r.confidence ?? '—'}</td>
       <td>${signalStr(r)}</td>
       <td>${r.vix != null ? r.vix.toFixed(1) : '—'}</td>
+      ${bounceCol}
       <td>${r.entry_price != null ? r.entry_price.toFixed(2) : '—'}</td>
       <td>${exitHtml}</td>
       <td>${retHtml}</td>
