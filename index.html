@@ -842,15 +842,16 @@ function renderModelPrediction(model) {
 
   // Extra meta
   let extra = '';
+  // Regime tag — show for all models that have it
+  if (d.regime) {
+    const rc = d.regime==='BULL_TREND'?'bull-trend':d.regime==='BEAR_TREND'?'bear-trend':'';
+    extra += `<span class="regime-tag ${rc}">${d.regime.replace('_',' ')}</span>`;
+  }
   if (model === 'ZAP' && d.log_posterior != null) {
     extra += `<span>log-post <strong>${d.log_posterior >= 0 ? '+' : ''}${d.log_posterior.toFixed(3)}</strong></span>`;
     if (d.adx != null) extra += `<span>ADX <strong>${d.adx.toFixed(1)}</strong></span>`;
   }
   if (model === 'ZUP') {
-    if (d.regime) {
-      const rc = d.regime==='BULL_TREND'?'bull-trend':d.regime==='BEAR_TREND'?'bear-trend':'';
-      extra += `<span class="regime-tag ${rc}">${d.regime.replace('_',' ')}</span>`;
-    }
     if (d.final_score != null) extra += `<span>score <strong>${d.final_score >= 0 ? '+' : ''}${d.final_score.toFixed(3)}</strong></span>`;
     if (d.bounce_flipped) extra += `<span style="color:#f59e0b;font-weight:600">⚠ bounce-flip</span>`;
   }
@@ -1354,23 +1355,37 @@ function renderTournamentPanel() {
       </div>`;
   }
 
+  // Pull full-period stats for each model from ALL_DATA
+  const DATA_KEY = { ZIP: 'ZIP', ZAP: 'ZAP', ZUP: 'ZUP', BASELINE: 'BASELINE' };
+  function tournStats(model) {
+    const d = ALL_DATA[DATA_KEY[model]];
+    return d ? computeStats(d) : null;
+  }
+
   // Leaderboard table
   const rankClass = ['tourn-rank-1', 'tourn-rank-2', 'tourn-rank-3'];
   const rows = lb.map((entry, i) => {
     const delta = entry.best_mean_daily_return - baseline;
     const deltaCol = delta >= 0 ? 'delta-pos' : 'delta-neg';
     const color = MODEL_COLOR[entry.model] || 'var(--text)';
+    const s = tournStats(entry.model);
+    const accCell  = s ? `<td class="${s.acc>=60?'pos':s.acc>=50?'neutral':'neg'}">${s.acc.toFixed(1)}%</td>` : '<td>—</td>';
+    const shrpCell = s ? `<td class="${s.sharpe>=1?'pos':s.sharpe>=0?'neutral':'neg'}">${s.sharpe.toFixed(2)}</td>` : '<td>—</td>';
     return `<tr class="${rankClass[i] || ''}">
       <td style="color:${color}">${entry.model}</td>
       <td>${(entry.best_mean_daily_return >= 0 ? '+' : '') + entry.best_mean_daily_return.toFixed(4)}%</td>
       <td class="${deltaCol}">${(delta >= 0 ? '+' : '') + delta.toFixed(4)}%</td>
+      ${accCell}
+      ${shrpCell}
     </tr>`;
   }).join('');
 
+  const bs = tournStats('BASELINE');
   const baselineRow = `<tr style="opacity:0.6">
     <td style="color:var(--base)">BASELINE</td>
     <td>${(baseline >= 0 ? '+' : '') + baseline.toFixed(4)}%</td>
     <td class="delta-zero">—</td>
+    ${bs ? `<td>${bs.acc.toFixed(1)}%</td><td>${bs.sharpe.toFixed(2)}</td>` : '<td>—</td><td>—</td>'}
   </tr>`;
 
   el.innerHTML = `
@@ -1383,6 +1398,8 @@ function renderTournamentPanel() {
             <th>Model</th>
             <th>Best Mean Daily Ret</th>
             <th>vs Baseline</th>
+            <th>Accuracy</th>
+            <th>Sharpe</th>
           </tr></thead>
           <tbody>${rows}${baselineRow}</tbody>
         </table>
