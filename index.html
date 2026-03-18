@@ -1295,7 +1295,7 @@ function renderPromoModal() {
           </div>
           <div class="promo-score-item">
             <span class="promo-score-label">Proposed</span>
-            <span class="promo-score-val" style="color:${color}">${(p.winner_score >= 0 ? '+' : '')}${p.winner_score.toFixed(4)}%/day</span>
+            <span class="promo-score-val" style="color:${color}">Sharpe ${(p.winner_score >= 0 ? '+' : '')}${p.winner_score.toFixed(4)}</span>
           </div>
           <div class="promo-score-item">
             <span class="promo-score-label">Improvement</span>
@@ -1351,8 +1351,8 @@ function renderTournamentPanel() {
   // Winner banner
   let winnerHtml = '';
   if (winner) {
-    const delta = winner.mean_daily_return - baseline;
-    const deltaStr = (delta >= 0 ? '+' : '') + delta.toFixed(4) + '%/day vs Baseline';
+    const delta = winner.sharpe - baseline;
+    const deltaStr = (delta >= 0 ? '+' : '') + delta.toFixed(4) + ' Sharpe vs DRIP';
     const promoteBtn = beats
       ? `<button class="tourn-promote-btn" id="tourn-promote-btn"
            onclick="tournamentPromote()">Promote to DRIP</button>
@@ -1361,7 +1361,7 @@ function renderTournamentPanel() {
     winnerHtml = `
       <div class="tourn-winner-banner">
         <span class="tourn-winner-label">&#127942; ${winner.model} wins today</span>
-        <span class="tourn-winner-score">${(winner.mean_daily_return >= 0 ? '+' : '') + winner.mean_daily_return.toFixed(4)}%/day &nbsp;|&nbsp; ${deltaStr}</span>
+        <span class="tourn-winner-score">Sharpe ${(winner.sharpe >= 0 ? '+' : '') + winner.sharpe.toFixed(4)} &nbsp;|&nbsp; ${deltaStr}</span>
         ${promoteBtn}
       </div>`;
   }
@@ -1376,7 +1376,7 @@ function renderTournamentPanel() {
   // Leaderboard table
   const rankClass = ['tourn-rank-1', 'tourn-rank-2', 'tourn-rank-3'];
   const rows = lb.map((entry, i) => {
-    const delta = entry.best_mean_daily_return - baseline;
+    const delta = entry.best_sharpe - baseline;
     const deltaCol = delta >= 0 ? 'delta-pos' : 'delta-neg';
     const color = MODEL_COLOR[entry.model] || 'var(--text)';
     const s = tournStats(entry.model);
@@ -1384,8 +1384,8 @@ function renderTournamentPanel() {
     const shrpCell = s ? `<td class="${s.sharpe>=1?'pos':s.sharpe>=0?'neutral':'neg'}">${s.sharpe.toFixed(2)}</td>` : '<td>—</td>';
     return `<tr class="${rankClass[i] || ''}">
       <td style="color:${color}">${entry.model}</td>
-      <td>${(entry.best_mean_daily_return >= 0 ? '+' : '') + entry.best_mean_daily_return.toFixed(4)}%</td>
-      <td class="${deltaCol}">${(delta >= 0 ? '+' : '') + delta.toFixed(4)}%</td>
+      <td>${(entry.best_sharpe >= 0 ? '+' : '') + entry.best_sharpe.toFixed(4)}</td>
+      <td class="${deltaCol}">${(delta >= 0 ? '+' : '') + delta.toFixed(4)}</td>
       ${accCell}
       ${shrpCell}
     </tr>`;
@@ -1394,7 +1394,7 @@ function renderTournamentPanel() {
   const bs = tournStats('DRIP');
   const baselineRow = `<tr style="opacity:0.6">
     <td style="color:var(--base)">DRIP</td>
-    <td>${(baseline >= 0 ? '+' : '') + baseline.toFixed(4)}%</td>
+    <td>${(baseline >= 0 ? '+' : '') + baseline.toFixed(4)}</td>
     <td class="delta-zero">—</td>
     ${bs ? `<td>${bs.acc.toFixed(1)}%</td><td>${bs.sharpe.toFixed(2)}</td>` : '<td>—</td><td>—</td>'}
   </tr>`;
@@ -1407,8 +1407,8 @@ function renderTournamentPanel() {
         <table class="tourn-leaderboard">
           <thead><tr>
             <th>Model</th>
-            <th>Best Mean Daily Ret</th>
-            <th>vs Baseline</th>
+            <th>Best Sharpe</th>
+            <th>vs DRIP</th>
             <th>Accuracy</th>
             <th>Sharpe</th>
           </tr></thead>
