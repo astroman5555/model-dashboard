@@ -694,14 +694,14 @@
 <div class="house-brew-banner" id="house-brew-banner">
   <span class="house-brew-icon">☕</span>
   <span class="house-brew-label">House Brew Today:</span>
-  <span class="house-brew-name">Cold Brew</span>
+  <span class="house-brew-name">Drip (original blend)</span>
   <span class="house-brew-sep">|</span>
   <span class="house-brew-dir-wrap">
     <span class="house-brew-dir spxs">SPXS</span>
-    <span class="house-brew-meta">conf 10/10 · exp +0.3%</span>
+    <span class="house-brew-meta">conf 10/10 · exp +0.4%</span>
   </span>
   <span class="house-brew-sep">|</span>
-  <span class="house-brew-sharpe-wrap">cupping score <strong>+1.4892</strong></span>
+  <span class="house-brew-sharpe-wrap">cupping score <strong>+1.3538</strong></span>
   <span class="house-brew-ts">updated 00:00</span>
 </div>
 
@@ -729,23 +729,12 @@
   </div>
 
   <div class="card">
-    <div class="card-title">Model Performance Comparison</div>
+    <div class="card-title">This Week's Pour</div>
+    <div style="font-size:11px;color:var(--text-muted);margin-bottom:8px">
+      Model return % per day · green = correct SPY direction · <em>italic = forecast</em>
+    </div>
     <div class="tbl-wrap">
-      <table id="statsTable">
-        <thead>
-          <tr>
-            <th>Model</th>
-            <th>Days</th>
-            <th>Accuracy</th>
-            <th>Total Return</th>
-            <th>Sharpe</th>
-            <th>Max DD</th>
-            <th>Avg Daily Ret</th>
-            <th>Avg |Ret|</th>
-          </tr>
-        </thead>
-        <tbody></tbody>
-      </table>
+      <table id="weeklyTable"></table>
     </div>
   </div>
 
@@ -957,7 +946,7 @@ function renderTomorrowBanner() {
     <div class="tomorrow-banner">
       <div class="tomorrow-banner-header">
         <span class="tomorrow-banner-title">☕ Tomorrow's Pour</span>
-        <span class="tomorrow-banner-date">Thu Mar 19</span>
+        <span class="tomorrow-banner-date">Fri Mar 20</span>
         ${roastedPill}
         <span style="font-size:11px;color:var(--text-muted);margin-left:auto">Freshly ground at ${p.generated_on}</span>
       </div>
@@ -1012,7 +1001,7 @@ function renderModelPrediction(model) {
     <div class="pred-section" style="border-color:${color}44">
       <div class="pred-section-header">
         <span class="pred-section-title" style="color:${color}">${modelLabel} — Tomorrow's Pour</span>
-        <span class="tomorrow-banner-date">Thu Mar 19</span>
+        <span class="tomorrow-banner-date">Fri Mar 20</span>
         <span class="pred-dir-badge ${dirCls}">${d.direction}</span>
         ${expHtml}
         <div class="pred-meta">
@@ -1176,36 +1165,91 @@ overviewChart && overviewChart.data.datasets.forEach((ds, i) => {
   legendRow.appendChild(pill);
 });
 
-// Stats table
-const statsBody = document.querySelector('#statsTable tbody');
-const statsModels = [
-  ['ZUP',  ALL_DATA.ZUP,  'var(--zup)',  true],
-  ['ZIP',  ALL_DATA.ZIP,  'var(--zip)',  false],
-  ['ZAP',  ALL_DATA.ZAP,  'var(--zap)',  false],
-  ['DRIP', ALL_DATA.DRIP, 'var(--base)', false],
-];
-let bestTotalRet = -Infinity;
-const allStats = statsModels.map(([name, data]) => [name, computeStats(data)]);
-bestTotalRet = Math.max(...allStats.map(([,s]) => s.totalRet));
+// Weekly prediction table
+function renderWeeklyTable() {
+  const today = new Date();
+  const dow = today.getDay();
+  const monday = new Date(today);
+  monday.setDate(today.getDate() - (dow === 0 ? 6 : dow - 1));
 
-statsModels.forEach(([name, data, color, isWinner]) => {
-  const s = computeStats(data);
-  const winner = s.totalRet === bestTotalRet;
-  const tr = document.createElement('tr');
-  if (winner) tr.className = 'winner';
-  const label = name === 'DRIP' ? 'Drip ☕' : (BREW_NAMES[name] ? BREW_NAMES[name] + ' (' + name + ')' : name);
-  tr.innerHTML = `
-    <td><span style="color:${color};font-weight:600">${label}</span>${winner ? '<span class="badge-model">best</span>' : ''}</td>
-    <td>${s.n}</td>
-    <td class="${s.acc>=60?'pos':s.acc>=50?'neutral':'neg'}">${s.acc.toFixed(1)}%</td>
-    <td class="${clsPct(s.totalRet)}">${pct(s.totalRet)}</td>
-    <td class="${s.sharpe>=1?'pos':s.sharpe>=0?'neutral':'neg'}">${s.sharpe.toFixed(2)}</td>
-    <td class="neg">-${s.mdd.toFixed(1)}%</td>
-    <td class="${clsPct(s.avgD)}">${pct(s.avgD,3)}</td>
-    <td>${s.avgAbsRet.toFixed(2)}%</td>
-  `;
-  statsBody.appendChild(tr);
-});
+  const DAY_LABELS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'];
+  const weekDates = [0,1,2,3,4].map(d => {
+    const dt = new Date(monday);
+    dt.setDate(monday.getDate() + d);
+    return dt.toISOString().slice(0, 10);
+  });
+
+  const predToday = {};
+  if (PREDICTIONS?.models) {
+    for (const [m, p] of Object.entries(PREDICTIONS.models)) {
+      if (PREDICTIONS.for_date) predToday[m] = p;
+    }
+  }
+
+  const models = [
+    ['DRIP', 'House Brew ☕', 'var(--base)'],
+    ['ZIP',  'Espresso',     'var(--zip)'],
+    ['ZAP',  'Cold Brew',    'var(--zap)'],
+    ['ZUP',  'Pour Over',    'var(--zup)'],
+  ];
+
+  const lookup = {};
+  for (const [m] of models) {
+    lookup[m] = {};
+    for (const r of (ALL_DATA[m] || [])) lookup[m][r.date] = r;
+  }
+
+  const headerCols = DAY_LABELS.map((lbl, i) => {
+    const short = weekDates[i] ? weekDates[i].slice(5).replace('-', '/') : '';
+    return `<th>${lbl}<br><small style="font-weight:400;opacity:0.6">${short}</small></th>`;
+  }).join('');
+
+  const rows = models.map(([model, brewName, color]) => {
+    let weeklyTotal = 0, tradedDays = 0;
+    const cells = weekDates.map(date => {
+      const rec = lookup[model][date];
+      if (rec) {
+        const ret = rec.return_pct;
+        weeklyTotal += ret;
+        tradedDays++;
+        const cls = rec.spy_correct ? 'pos' : 'neg';
+        const arrow = rec.direction === 'SPXL' ? '↑' : '↓';
+        const tag = rec.direction === 'SPXL' ? 'SPXL' : 'SPXS';
+        return `<td class="${cls}" style="font-size:11px;text-align:center">
+          <div>${arrow} <span style="opacity:0.8">${tag}</span></div>
+          <div style="font-weight:600">${ret >= 0 ? '+' : ''}${ret.toFixed(2)}%</div>
+        </td>`;
+      } else if (date === PREDICTIONS?.for_date && predToday[model]) {
+        const p = predToday[model];
+        const arrow = p.direction === 'SPXL' ? '↑' : '↓';
+        const tag = p.direction === 'SPXL' ? 'SPXL' : 'SPXS';
+        const exp = p.expected_pct != null ? (p.expected_pct >= 0 ? '+' : '') + p.expected_pct.toFixed(2) + '%' : '';
+        return `<td style="font-size:11px;text-align:center;opacity:0.65;font-style:italic">
+          <div>${arrow} <span style="opacity:0.8">${tag}</span></div>
+          <div>${exp}</div>
+        </td>`;
+      } else {
+        return `<td style="text-align:center;opacity:0.3">—</td>`;
+      }
+    }).join('');
+
+    const weekCls = weeklyTotal >= 0 ? 'pos' : 'neg';
+    const avgRet = tradedDays > 0 ? weeklyTotal / tradedDays : 0;
+    const avgCls = avgRet >= 0 ? 'pos' : 'neg';
+    return `<tr>
+      <td><span style="color:${color};font-weight:600">${brewName}</span></td>
+      ${cells}
+      <td class="${weekCls}" style="font-weight:600;text-align:center">${weeklyTotal >= 0 ? '+' : ''}${weeklyTotal.toFixed(2)}%</td>
+      <td class="${avgCls}" style="text-align:center">${avgRet >= 0 ? '+' : ''}${avgRet.toFixed(2)}%</td>
+    </tr>`;
+  }).join('');
+
+  document.getElementById('weeklyTable').innerHTML = `
+    <thead><tr>
+      <th>Brew</th>${headerCols}<th>Weekly</th><th>Avg Daily</th>
+    </tr></thead>
+    <tbody>${rows}</tbody>`;
+}
 
 // ── Mini charts ───────────────────────────────────────────────────────────────
 function initMiniChart(model) {
@@ -1679,7 +1723,7 @@ function initHouseBrewTab() {
       <div class="pred-section" style="border-color:${color}44">
         <div class="pred-section-header">
           <span class="pred-section-title" style="color:${color}">☕ House Brew — Tomorrow's Pour</span>
-          <span class="tomorrow-banner-date">Thu Mar 19</span>
+          <span class="tomorrow-banner-date">Fri Mar 20</span>
           <span class="pred-dir-badge ${dirCls}">${d.direction}</span>
           ${expHtml}
           <div class="pred-meta">
@@ -1804,6 +1848,7 @@ function initHouseBrewTab() {
 try {
   renderTomorrowBanner();
   for (const m of ['ZIP','ZAP','ZUP','DRIP']) renderModelPrediction(m);
+  renderWeeklyTable();
   renderTournamentPanel();
   // House Brew tab is lazily inited on first click (initHouseBrewTab)
 } catch(e) {
