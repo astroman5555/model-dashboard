@@ -152,7 +152,7 @@
 
   /* ── Tooltip ── */
   #tooltip {
-    position: fixed; pointer-events: none;
+    position: absolute; pointer-events: none;
     background: var(--surface); border: 1.5px solid var(--border);
     border-radius: 8px; padding: 10px 14px;
     font-size: 12px; min-width: 180px; z-index: 100;
@@ -1136,10 +1136,10 @@ const overviewChart = typeof Chart !== 'undefined' && new Chart(document.getElem
             }).join('');
           tt.style.display = 'block';
           const rect = document.getElementById('chart').getBoundingClientRect();
-          let x = ctx.tooltip.caretX + rect.left + 16;
-          if (x + 200 > window.innerWidth) x = ctx.tooltip.caretX + rect.left - 216;
+          let x = ctx.tooltip.caretX + rect.left + window.scrollX + 16;
+          if (x + 200 > window.innerWidth + window.scrollX) x = ctx.tooltip.caretX + rect.left + window.scrollX - 216;
           tt.style.left = x + 'px';
-          tt.style.top = (ctx.tooltip.caretY + rect.top) + 'px';
+          tt.style.top = (ctx.tooltip.caretY + rect.top + window.scrollY) + 'px';
         }
       }
     },
