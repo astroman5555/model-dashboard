@@ -1127,7 +1127,7 @@ const todayLinePlugin = {
   }
 };
 
-const overviewChart = new Chart(document.getElementById('chart').getContext('2d'), {
+const overviewChart = typeof Chart !== 'undefined' && new Chart(document.getElementById('chart').getContext('2d'), {
   type: 'line',
   data: { labels: overviewLabels, datasets: buildOverviewDatasets() },
   plugins: [todayLinePlugin],
@@ -1174,7 +1174,7 @@ const overviewChart = new Chart(document.getElementById('chart').getContext('2d'
 
 // Legend pills
 const legendRow = document.getElementById('legendRow');
-overviewChart.data.datasets.forEach((ds, i) => {
+overviewChart && overviewChart.data.datasets.forEach((ds, i) => {
   const pill = document.createElement('div');
   pill.className = 'legend-pill';
   pill.style.borderColor = ds.borderColor;
@@ -1812,12 +1812,16 @@ function initHouseBrewTab() {
 }
 
 // ── Init ──────────────────────────────────────────────────────────────────────
-renderTomorrowBanner();
-for (const m of ['ZIP','ZAP','ZUP','DRIP']) renderModelPrediction(m);
-renderTournamentPanel();
-// House Brew tab is lazily inited on first click (initHouseBrewTab)
+try {
+  renderTomorrowBanner();
+  for (const m of ['ZIP','ZAP','ZUP','DRIP']) renderModelPrediction(m);
+  renderTournamentPanel();
+  // House Brew tab is lazily inited on first click (initHouseBrewTab)
+} catch(e) {
+  console.error('Dashboard init error:', e);
+}
 
-// Remove brewing shimmer once rendered
+// Always remove brewing shimmer — even if a render step failed
 document.body.classList.remove('brewing');
 </script>
 </body>
