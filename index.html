@@ -616,11 +616,26 @@
   }
   .tourn-winner-label { font-size: 15px; font-weight: 700; color: var(--zup); }
   .tourn-winner-score { font-size: 13px; color: var(--text-muted); }
-  .tourn-summary {
-    font-size: 13px; color: var(--text-muted); margin: 0 0 16px;
-    line-height: 1.5;
+  .tourn-run-wrap {
+    display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap;
+    margin-bottom: 16px;
   }
-  .tourn-summary strong { color: var(--text); }
+  .tourn-run-btn {
+    flex-shrink: 0;
+    background: var(--surface2); color: var(--text);
+    border: 1.5px solid var(--border); border-radius: 8px;
+    padding: 7px 16px; font-size: 12px; font-weight: 700;
+    cursor: pointer; transition: background 0.15s, color 0.15s;
+    white-space: nowrap;
+  }
+  .tourn-run-btn:hover:not(:disabled) { background: var(--accent); color: #FDF6EC; border-color: var(--accent); }
+  .tourn-run-btn:disabled { opacity: 0.5; cursor: default; }
+  .tourn-run-desc { font-size: 12px; color: var(--text-muted); line-height: 1.5; }
+  .tourn-run-msg  { font-size: 12px; }
+  .tourn-run-msg.ok  { color: var(--pos); }
+  .tourn-run-msg.err { color: var(--neg); }
+  .tourn-msg-row td { padding: 0 12px 8px; border-bottom: none; }
+  .tourn-msg-row:hover td { background: transparent !important; }
   .tourn-promote-btn {
     background: var(--surface2);
     color: var(--text);
@@ -822,7 +837,7 @@ const SIGNAL_META = {"DRIP":{"vix":{"weight":0.3903,"label":"VIX level","invert"
 const PENDING_PROMOTIONS = [{"model":"BASELINE","current_score":-2.199792,"winner_score":3.853996,"improvement_pct":275.2,"windows_tested":10,"candidates_tested":50,"current_weights":{"vix":1.0,"vol_ratio":1.0,"vol_regime":1.0,"ma20_dist":1.0,"ma60_dist":1.0,"zscore_ret":1.0,"rsi":1.0,"macd_mom":1.0,"macd_cross":1.0,"ret_5d":1.0,"ret_10d":1.0,"vix_trend":1.0,"ma20_slope":1.0,"ma60_slope":1.0,"roc_5d":1.0,"roc_10d":1.0,"atr_expansion":1.0,"obv_trend":1.0,"near_20d_high":1.0,"near_20d_low":1.0,"gap_up":1.0,"gap_down":1.0,"mom_3d_rev":1.0,"vix_spike":1.0},"proposed_weights":{"vix":1.2527,"vol_ratio":1.1348,"vol_regime":1.4375,"ma20_dist":1.0069,"ma60_dist":0.96,"zscore_ret":0.7994,"rsi":1.1532,"macd_mom":1.2882,"macd_cross":0.9227,"ret_5d":0.9154,"ret_10d":0.5854,"vix_trend":0.7831,"ma20_slope":0.8552,"ma60_slope":0.7846,"roc_5d":1.3386,"roc_10d":0.9084,"atr_expansion":0.5464,"obv_trend":1.397,"near_20d_high":0.8696,"near_20d_low":0.6988,"gap_up":1.4117,"gap_down":0.9658,"mom_3d_rev":1.4746,"vix_spike":0.5878},"weight_diff":{"vix":0.2527,"vol_ratio":0.1348,"vol_regime":0.4375,"ma20_dist":0.0069,"ma60_dist":-0.04,"zscore_ret":-0.2006,"rsi":0.1532,"macd_mom":0.2882,"macd_cross":-0.0773,"ret_5d":-0.0846,"ret_10d":-0.4146,"vix_trend":-0.2169,"ma20_slope":-0.1448,"ma60_slope":-0.2154,"roc_5d":0.3386,"roc_10d":-0.0916,"atr_expansion":-0.4536,"obv_trend":0.397,"near_20d_high":-0.1304,"near_20d_low":-0.3012,"gap_up":0.4117,"gap_down":-0.0342,"mom_3d_rev":0.4746,"vix_spike":-0.4122},"proposed_at":"2026-03-18T21:02:25"},{"model":"ZIP","current_score":-2.838733,"winner_score":1.114969,"improvement_pct":139.28,"windows_tested":9,"candidates_tested":50,"current_weights":{"vix":2.0,"vix_spike":2.5,"vix_trend":2.0,"vol_ratio":1.5,"vol_regime":1.5,"ma20_slope":1.5,"ma60_slope":2.0,"ma200_trend":1.5,"gap_up":1.5,"gap_down":1.5,"obv_trend":1.2,"atr_expansion":1.0,"rsi":1.0,"zscore_ret":1.0,"macd_mom":0.5,"macd_cross":0.5,"near_20d_high":0.8,"near_20d_low":0.8,"ma20_dist":0.4,"ma60_dist":0.5,"ret_5d":0.4,"ret_10d":0.5,"roc_5d":0.3,"roc_10d":0.3,"mom_3d_rev":0.3},"proposed_weights":{"vix":1.1611,"vix_spike":3.5061,"vix_trend":2.7956,"vol_ratio":1.5483,"vol_regime":1.9045,"ma20_slope":1.2981,"ma60_slope":2.2284,"ma200_trend":1.367,"gap_up":2.2451,"gap_down":1.4185,"obv_trend":1.0997,"atr_expansion":0.6858,"rsi":1.0525,"zscore_ret":0.9818,"macd_mom":0.6887,"macd_cross":0.573,"near_20d_high":0.4941,"near_20d_low":0.9018,"ma20_dist":0.569,"ma60_dist":0.3844,"ret_5d":0.5531,"ret_10d":0.2632,"roc_5d":0.4191,"roc_10d":0.1703,"mom_3d_rev":0.3438},"weight_diff":{"vix":-0.8389,"vix_spike":1.0061,"vix_trend":0.7956,"vol_ratio":0.0483,"vol_regime":0.4045,"ma20_slope":-0.2019,"ma60_slope":0.2284,"ma200_trend":-0.133,"gap_up":0.7451,"gap_down":-0.0815,"obv_trend":-0.1003,"atr_expansion":-0.3142,"rsi":0.0525,"zscore_ret":-0.0182,"macd_mom":0.1887,"macd_cross":0.073,"near_20d_high":-0.3059,"near_20d_low":0.1018,"ma20_dist":0.169,"ma60_dist":-0.1156,"ret_5d":0.1531,"ret_10d":-0.2368,"roc_5d":0.1191,"roc_10d":-0.1297,"mom_3d_rev":0.0438},"proposed_at":"2026-03-18T21:02:28"},{"model":"ZAP","current_score":-3.095192,"winner_score":1.25508,"improvement_pct":140.55,"windows_tested":10,"candidates_tested":50,"current_weights":{"gap_up":0.847,"ret_10d":0.467,"obv_trend":0.384,"vix":0.288,"rsi":0.269,"vix_spike":0.225,"macd_cross":0.12,"macd_mom":0.06,"ma20_slope":0.06,"ma60_dist":0.056,"vol_regime":0.048,"near_20d_high":0.02},"proposed_weights":{"gap_up":1.0937,"ret_10d":0.6153,"obv_trend":0.3403,"vix":0.2582,"rsi":0.163,"vix_spike":0.1652,"macd_cross":0.1242,"macd_mom":0.0841,"ma20_slope":0.0446,"ma60_dist":0.0599,"vol_regime":0.0507,"near_20d_high":0.0106},"weight_diff":{"gap_up":0.2467,"ret_10d":0.1483,"obv_trend":-0.0437,"vix":-0.0298,"rsi":-0.106,"vix_spike":-0.0598,"macd_cross":0.0042,"macd_mom":0.0241,"ma20_slope":-0.0154,"ma60_dist":0.0039,"vol_regime":0.0027,"near_20d_high":-0.0094},"proposed_at":"2026-03-18T21:02:30"},{"model":"ZUP","current_score":-6.605122,"winner_score":-3.146922,"improvement_pct":52.36,"windows_tested":10,"candidates_tested":50,"current_weights":{"gap_up":0.847,"ret_10d":0.8,"obv_trend":0.384,"vix":0.864,"vix_spike":0.675,"mom_3d_rev":0.272,"rsi":0.269,"atr_expansion":0.152,"macd_cross":0.12,"vol_ratio":0.088,"macd_mom":0.06,"ma20_slope":0.06,"ma60_dist":0.056,"vol_regime":0.048,"near_20d_high":0.02,"ma60_slope":0.4,"ma200_trend":0.3,"near_20d_low":0.15,"gap_fade":0.2,"pc_proxy":0.25},"proposed_weights":{"gap_up":1.1308,"ret_10d":0.5792,"obv_trend":0.5435,"vix":0.793,"vix_spike":0.4596,"mom_3d_rev":0.2326,"rsi":0.2232,"atr_expansion":0.0854,"macd_cross":0.1181,"vol_ratio":0.0971,"macd_mom":0.0859,"ma20_slope":0.056,"ma60_dist":0.032,"vol_regime":0.0538,"near_20d_high":0.0207,"ma60_slope":0.5719,"ma200_trend":0.4381,"near_20d_low":0.1648,"gap_fade":0.2387,"pc_proxy":0.3544},"weight_diff":{"gap_up":0.2838,"ret_10d":-0.2208,"obv_trend":0.1595,"vix":-0.071,"vix_spike":-0.2154,"mom_3d_rev":-0.0394,"rsi":-0.0458,"atr_expansion":-0.0666,"macd_cross":-0.0019,"vol_ratio":0.0091,"macd_mom":0.0259,"ma20_slope":-0.004,"ma60_dist":-0.024,"vol_regime":0.0058,"near_20d_high":0.0007,"ma60_slope":0.1719,"ma200_trend":0.1381,"near_20d_low":0.0148,"gap_fade":0.0387,"pc_proxy":0.1044},"proposed_at":"2026-03-18T21:02:33"}];
 
 // ── Tournament / Barista Battle data ─────────────────────────────────────────
-const TOURNAMENT_DATA = {"run_date":"2026-03-18","windows_tested":3,"candidates_per_model":50,"leaderboard":[{"model":"ZAP","best_sharpe":1.3104,"best_config":{"weights":{"gap_up":0.6031,"ret_10d":0.4567,"obv_trend":0.4579,"vix":0.3903,"rsi":0.2101,"vix_spike":0.1428,"macd_cross":0.0813,"macd_mom":0.0401,"ma20_slope":0.0544,"ma60_dist":0.032,"vol_regime":0.0359,"near_20d_high":0.0298},"thresholds":{"MIN_LOGPOST":0.016,"MIN_ACTIVE_SIGNALS":1}},"all_scores":[-0.543,0.7847,0.2458,-0.0442,0.8825,-0.7107,0.9257,-1.024,0.3729,1.3104,-0.1842,-0.3374,-0.0065,-0.2341,0.3729,0.0466,-0.543,-1.0007,-0.5758,0.1282,0.4125,0.4125,-0.1843,-1.334,-0.4966,0.1059,0.0962,1.1794,0.385,-0.0386,0.0432,0.4421,-0.0153,-0.8787,0.0887,1.0721,0.0306,-0.5157,-0.2743,-0.0377,-0.3796,-0.0934,-1.1528,1.1455,0.1776,0.3705,-0.4261,-0.2341,0.2278,0.0032,0.1776]},{"model":"ZUP","best_sharpe":0.2144,"best_config":{"weights":{"gap_up":0.6857,"ret_10d":0.4849,"obv_trend":0.26,"vix":0.4369,"vix_spike":0.4007,"mom_3d_rev":0.1583,"rsi":0.3175,"atr_expansion":0.1165,"macd_cross":0.1445,"vol_ratio":0.0954,"macd_mom":0.0472,"ma20_slope":0.0659,"ma60_dist":0.0548,"vol_regime":0.0578,"near_20d_high":0.011,"ma60_slope":0.2214,"ma200_trend":0.2446,"near_20d_low":0.1851,"gap_fade":0.2719,"pc_proxy":0.3658},"thresholds":{"MIN_ACTIVE_SIGNALS":0,"CONFIDENCE_THRESHOLD":3}},"all_scores":[-0.7382,-2.0152,-2.3017,-1.3889,-0.6606,-0.4952,-1.085,-2.2377,-2.5422,-0.9926,-0.4268,-0.733,-1.3599,-2.3912,-1.7961,-1.0984,-0.5051,-0.4778,-1.3319,-1.0972,-0.8116,-2.7388,-0.1679,-2.5557,-1.8881,-2.0152,-0.6904,-1.1226,-2.3114,-2.34,-1.7303,0.2144,-0.791,-2.3773,-1.9273,-0.6732,-1.8196,-0.6693,-0.8172,-1.6912,-1.3786,-1.0128,-0.7463,-1.0825,-1.7687,-0.7963,-0.9151,-1.5385,-1.1993,-0.4822,-0.5419]},{"model":"ZIP","best_sharpe":-0.6767,"best_config":{"weights":{"vix":1.9651,"vix_spike":3.7038,"vix_trend":1.2618,"vol_ratio":2.1444,"vol_regime":1.4577,"ma20_slope":2.1031,"ma60_slope":1.2827,"ma200_trend":1.3877,"gap_up":2.1538,"gap_down":1.1406,"obv_trend":0.8832,"atr_expansion":0.5386,"rsi":0.7247,"zscore_ret":1.1849,"macd_mom":0.6489,"macd_cross":0.3454,"near_20d_high":0.8843,"near_20d_low":0.8719,"ma20_dist":0.3702,"ma60_dist":0.4918,"ret_5d":0.3788,"ret_10d":0.2882,"roc_5d":0.1894,"roc_10d":0.3309,"mom_3d_rev":0.1732},"thresholds":{"MIN_ACTIVE_SIGNALS":0,"CONFIDENCE_THRESHOLD":2}},"all_scores":[-2.6128,-2.1187,-1.7334,-1.3603,-2.4989,-2.1062,-1.8118,-1.7246,-2.1985,-0.9178,-1.6648,-1.8994,-2.4455,-1.2737,-1.8976,-1.3985,-2.8983,-1.3189,-1.1361,-1.8928,-2.0257,-2.1333,-0.6767,-1.6752,-2.8376,-1.574,-3.3748,-1.9688,-2.5131,-2.1018,-1.2365,-1.4983,-1.4036,-1.1968,-2.1646,-2.2565,-2.4503,-1.7057,-0.7949,-1.7219,-1.2041,-2.2804,-1.0525,-1.8094,-2.639,-2.3506,-2.4889,-1.3928,-1.4732,-1.6026,-1.6505]}],"baseline_score":-0.1368,"winner":{"model":"ZAP","sharpe":1.3104,"config":{"weights":{"gap_up":0.6031,"ret_10d":0.4567,"obv_trend":0.4579,"vix":0.3903,"rsi":0.2101,"vix_spike":0.1428,"macd_cross":0.0813,"macd_mom":0.0401,"ma20_slope":0.0544,"ma60_dist":0.032,"vol_regime":0.0359,"near_20d_high":0.0298},"thresholds":{"MIN_LOGPOST":0.016,"MIN_ACTIVE_SIGNALS":1}}},"winner_beats_baseline":true};
+const TOURNAMENT_DATA = {"run_date":"2026-03-19","windows_tested":3,"candidates_per_model":50,"leaderboard":[{"model":"ZAP","best_sharpe":1.4892,"best_config":{"weights":{"gap_up":1.1347,"ret_10d":0.4127,"obv_trend":0.5446,"vix":0.22,"rsi":0.3543,"vix_spike":0.1883,"macd_cross":0.0697,"macd_mom":0.07,"ma20_slope":0.0314,"ma60_dist":0.0317,"vol_regime":0.0409,"near_20d_high":0.0269},"thresholds":{"MIN_LOGPOST":0.395,"MIN_ACTIVE_SIGNALS":0}},"all_scores":[0.0886,0.0032,0.9206,-0.2903,0.4626,0.3174,0.1559,0.6605,0.8163,-0.2083,0.8429,0.3412,0.5488,-0.3192,0.2703,1.0214,0.2021,-0.0482,0.6089,1.0982,-0.8771,1.0286,-0.0684,0.2242,0.1559,0.1409,-0.2594,0.2597,0.4145,-0.505,1.0337,0.6349,0.6215,0.1071,0.4188,0.3174,0.9879,0.0588,0.6328,1.0145,0.8868,0.726,0.8988,-0.4372,1.1874,0.3518,-0.0716,1.4892,0.7166,-0.1249,1.0145]},{"model":"ZUP","best_sharpe":1.388,"best_config":{"weights":{"gap_up":1.166,"ret_10d":0.8381,"obv_trend":0.549,"vix":0.5496,"vix_spike":0.3867,"mom_3d_rev":0.2585,"rsi":0.2331,"atr_expansion":0.1271,"macd_cross":0.1586,"vol_ratio":0.0485,"macd_mom":0.0828,"ma20_slope":0.0671,"ma60_dist":0.0407,"vol_regime":0.0263,"near_20d_high":0.0208,"ma60_slope":0.4592,"ma200_trend":0.3295,"near_20d_low":0.0927,"gap_fade":0.1467,"pc_proxy":0.3738},"thresholds":{"MIN_ACTIVE_SIGNALS":0,"CONFIDENCE_THRESHOLD":2}},"all_scores":[-0.6622,-1.1378,-0.0795,0.4428,-1.0816,-0.7686,-0.9369,0.148,-1.2585,0.2488,-0.4543,0.5877,-1.2578,0.381,-0.9473,0.4675,-0.2838,-0.3749,0.6945,0.0635,-0.9651,0.0196,-0.5662,1.388,-1.8546,-1.6292,0.1974,-0.4542,-1.1882,0.5971,-0.0099,-0.9319,-0.842,-1.0767,-1.0322,0.4478,0.1942,-0.155,-0.5711,-1.0767,-0.0766,-1.919,-1.5092,0.6362,-0.8933,-0.9721,0.2727,-1.5619,0.2338,-0.5765,0.5821]},{"model":"ZIP","best_sharpe":-0.1817,"best_config":{"weights":{"vix":1.6123,"vix_spike":3.6069,"vix_trend":2.7823,"vol_ratio":2.0715,"vol_regime":1.4497,"ma20_slope":2.0726,"ma60_slope":2.8199,"ma200_trend":1.5955,"gap_up":1.3258,"gap_down":2.1408,"obv_trend":0.6177,"atr_expansion":0.5563,"rsi":0.715,"zscore_ret":1.0382,"macd_mom":0.2953,"macd_cross":0.6956,"near_20d_high":0.7722,"near_20d_low":1.0083,"ma20_dist":0.5731,"ma60_dist":0.405,"ret_5d":0.58,"ret_10d":0.4132,"roc_5d":0.2671,"roc_10d":0.3769,"mom_3d_rev":0.1674},"thresholds":{"MIN_ACTIVE_SIGNALS":4,"CONFIDENCE_THRESHOLD":4}},"all_scores":[-1.5719,-1.6132,-1.9843,-1.52,-2.1419,-1.5465,-1.3895,-2.0936,-0.6811,-1.9074,-2.4865,-2.7034,-1.2741,-2.4478,-0.9021,-1.677,-2.7011,-1.2656,-1.6666,-1.8736,-1.0252,-1.0529,-0.9455,-1.9181,-2.153,-0.1817,-1.9123,-1.6813,-1.283,-1.5633,-1.8679,-2.5615,-0.7008,-1.1234,-1.0551,-1.545,-1.3609,-1.8276,-1.2158,-0.8652,-1.4135,-1.2013,-1.6826,-2.633,-1.0939,-0.9234,-2.1734,-2.0385,-1.8189,-1.5336,-1.9602]}],"baseline_score":-1.2298,"winner":{"model":"ZAP","sharpe":1.4892,"config":{"weights":{"gap_up":1.1347,"ret_10d":0.4127,"obv_trend":0.5446,"vix":0.22,"rsi":0.3543,"vix_spike":0.1883,"macd_cross":0.0697,"macd_mom":0.07,"ma20_slope":0.0314,"ma60_dist":0.0317,"vol_regime":0.0409,"near_20d_high":0.0269},"thresholds":{"MIN_LOGPOST":0.395,"MIN_ACTIVE_SIGNALS":0}}},"winner_beats_baseline":true};
 
 // ── Colors (coffeehouse palette) ─────────────────────────────────────────────
 const COLORS = {
@@ -1470,6 +1485,17 @@ document.getElementById('promo-backdrop').addEventListener('click', (e) => {
 });
 
 // ── Barista Battle (Tournament) panel ─────────────────────────────────────────
+// Helper: last *closed* trade for a model (entry_price !== exit_price)
+function lastClosedTrade(model) {
+  const data = ALL_DATA[model];
+  if (!data) return null;
+  for (let i = data.length - 1; i >= 0; i--) {
+    const r = data[i];
+    if (r.entry_price !== r.exit_price) return r;
+  }
+  return null;
+}
+
 function renderTournamentPanel() {
   const el = document.getElementById('tournament-panel');
   if (!el) return;
@@ -1480,69 +1506,97 @@ function renderTournamentPanel() {
   const lb       = t.leaderboard || [];
   const winner   = t.winner;
   const MODEL_COLOR = { ZIP: 'var(--zip)', ZAP: 'var(--zap)', ZUP: 'var(--zup)', DRIP: 'var(--base)' };
+  const BEANS = ['🫘', '🫘', '🫘'];
 
-  // ── Summary sentence ──────────────────────────────────────────────────────
-  let summary = '';
-  if (winner) {
-    const winScore  = winner.sharpe ?? 0;
-    const delta     = winScore - baseline;
-    const deltaStr  = (delta >= 0 ? '+' : '') + delta.toFixed(2);
-    const beatsDrip = t.winner_beats_baseline;
-    summary = beatsDrip
-      ? `<strong>${winner.model}</strong> won today's battle — Sharpe <strong>${(winScore >= 0?'+':'')+winScore.toFixed(2)}</strong>, <strong>${deltaStr}</strong> vs DRIP. ${lb.length} models competed across ${t.windows_tested || '?'} windows.`
-      : `No model beat DRIP today — House Blend holds. Best challenger: <strong>${winner.model}</strong> (Sharpe ${(winScore>=0?'+':'')+winScore.toFixed(2)}).`;
-  }
+  // ── "Run Battle" button ───────────────────────────────────────────────────
+  const runBattleHtml = `
+    <div class="tourn-run-wrap">
+      <button class="tourn-run-btn" id="tourn-run-btn" onclick="runTournament()">
+        ⚔️ Run Battle
+      </button>
+      <span class="tourn-run-desc">Pits ZIP, ZAP &amp; ZUP against each other — each generates 50 weight variations, tested across rolling 60-day windows. The best Sharpe per model goes on the leaderboard. Runs automatically at 5pm; click to run now.</span>
+      <span class="tourn-run-msg" id="tourn-run-msg"></span>
+    </div>`;
 
   // ── Table rows ────────────────────────────────────────────────────────────
   const rows = lb.map((entry, i) => {
-    const color     = MODEL_COLOR[entry.model] || 'var(--text)';
-    const s         = ALL_DATA[entry.model] ? computeStats(ALL_DATA[entry.model]) : null;
-    const lastRec   = ALL_DATA[entry.model]?.at(-1);
-    const lastRet   = lastRec?.return_pct ?? null;
-    const accCell   = s ? `<td class="${s.acc>=60?'pos':s.acc>=50?'neutral':'neg'}">${s.acc.toFixed(1)}%</td>` : '<td>—</td>';
-    const shrpCell  = s ? `<td class="${s.sharpe>=1?'pos':s.sharpe>=0?'neutral':'neg'}">${s.sharpe.toFixed(2)}</td>` : '<td>—</td>';
-    const retCell   = lastRet != null
+    const color    = MODEL_COLOR[entry.model] || 'var(--text)';
+    const s        = ALL_DATA[entry.model] ? computeStats(ALL_DATA[entry.model]) : null;
+    const lastTrade = lastClosedTrade(entry.model);
+    const lastRet  = lastTrade?.return_pct ?? null;
+    const lastDate = lastTrade?.date ?? null;
+    const isWinner = winner && entry.model === winner.model && t.winner_beats_baseline;
+    const bean     = BEANS[i] ? `<span style="opacity:${1 - i*0.25}">${BEANS[i]}</span> ` : '';
+    const accCell  = s ? `<td class="${s.acc>=60?'pos':s.acc>=50?'neutral':'neg'}">${s.acc.toFixed(1)}%</td>` : '<td>—</td>';
+    const shrpCell = s ? `<td class="${s.sharpe>=1?'pos':s.sharpe>=0?'neutral':'neg'}">${s.sharpe.toFixed(2)}</td>` : '<td>—</td>';
+    const retCell  = lastRet != null
       ? `<td class="${lastRet>=0?'pos':'neg'}">${lastRet>=0?'+':''}${lastRet.toFixed(2)}%</td>`
       : '<td>—</td>';
-    const isWinner  = winner && entry.model === winner.model && t.winner_beats_baseline;
-    const btnId     = `tourn-promote-btn-${entry.model}`;
-    const msgId     = `tourn-promote-msg-${entry.model}`;
-    const cfg       = JSON.stringify(entry.best_config).replace(/\\/g,'\\\\').replace(/'/g,"\\'");
+    const dateCell = lastDate ? `<td style="color:var(--text-muted);font-size:11px">${lastDate}</td>` : '<td>—</td>';
+    const btnId  = `tourn-promote-btn-${entry.model}`;
+    const msgId  = `tourn-promote-msg-${entry.model}`;
     const promoteBtn = `<button class="tourn-promote-btn${isWinner?' winner-row':''}" id="${btnId}"
-        onclick="tournamentPromoteModel('${entry.model}',JSON.parse(decodeURIComponent('${encodeURIComponent(JSON.stringify(entry.best_config))}')),'${btnId}','${msgId}')">
-        ☕ Set as House Blend</button>`;
+      onclick="tournamentPromoteModel('${entry.model}',JSON.parse(decodeURIComponent('${encodeURIComponent(JSON.stringify(entry.best_config))}')),'${btnId}','${msgId}')">
+      ☕ Set as House Blend</button>`;
     return `<tr>
-      <td><span style="color:${color};font-weight:600">${entry.model}</span>${isWinner ? ' 🏆' : ''}</td>
-      ${accCell}${shrpCell}${retCell}
+      <td>${bean}<span style="color:${color};font-weight:600">${entry.model}</span>${isWinner ? ' 🏆' : ''}</td>
+      ${accCell}${shrpCell}${retCell}${dateCell}
       <td>${promoteBtn}</td>
     </tr>
-    <tr><td colspan="5" style="padding:0 12px 10px"><span class="tourn-promote-msg" id="${msgId}"></span></td></tr>`;
+    <tr class="tourn-msg-row"><td colspan="6"><span class="tourn-promote-msg" id="${msgId}"></span></td></tr>`;
   }).join('');
 
   // DRIP baseline row (no button)
-  const bs      = ALL_DATA.DRIP ? computeStats(ALL_DATA.DRIP) : null;
-  const bsLast  = ALL_DATA.DRIP?.at(-1);
-  const bsRet   = bsLast?.return_pct ?? null;
-  const baselineRow = `<tr style="opacity:0.6">
-    <td style="color:var(--base);font-weight:600">DRIP ☕ <span style="font-size:10px;font-weight:400">(current)</span></td>
-    ${bs ? `<td class="${bs.acc>=60?'pos':bs.acc>=50?'neutral':'neg'}">${bs.acc.toFixed(1)}%</td><td class="${bs.sharpe>=1?'pos':bs.sharpe>=0?'neutral':'neg'}">${bs.sharpe.toFixed(2)}</td>` : '<td>—</td><td>—</td>'}
+  const bs        = ALL_DATA.DRIP ? computeStats(ALL_DATA.DRIP) : null;
+  const bsLast    = lastClosedTrade('DRIP');
+  const bsRet     = bsLast?.return_pct ?? null;
+  const bsDate    = bsLast?.date ?? null;
+  const baselineRow = `<tr style="opacity:0.65">
+    <td style="color:var(--base);font-weight:600">DRIP ☕ <span style="font-size:10px;font-weight:400">(baseline)</span></td>
+    ${bs ? `<td class="${bs.acc>=60?'pos':bs.acc>=50?'neutral':'neg'}">${bs.acc.toFixed(1)}%</td>
+            <td class="${bs.sharpe>=1?'pos':bs.sharpe>=0?'neutral':'neg'}">${bs.sharpe.toFixed(2)}</td>` : '<td>—</td><td>—</td>'}
     ${bsRet != null ? `<td class="${bsRet>=0?'pos':'neg'}">${bsRet>=0?'+':''}${bsRet.toFixed(2)}%</td>` : '<td>—</td>'}
+    <td style="color:var(--text-muted);font-size:11px">${bsDate ?? '—'}</td>
     <td></td>
   </tr>`;
 
   el.innerHTML = `
     <div class="card">
       <div class="card-title">☕ Barista Battle</div>
-      ${summary ? `<p class="tourn-summary">${summary}</p>` : ''}
+      ${runBattleHtml}
       <div class="tbl-wrap">
         <table class="tourn-leaderboard">
           <thead><tr>
-            <th>Model</th><th>Accuracy</th><th>Sharpe</th><th>Last Return</th><th></th>
+            <th>Model</th><th>Accuracy</th><th>Sharpe</th><th>Last Return</th><th>Date</th><th></th>
           </tr></thead>
           <tbody>${rows}${baselineRow}</tbody>
         </table>
       </div>
     </div>`;
+}
+
+function runTournament() {
+  const btn = document.getElementById('tourn-run-btn');
+  const msg = document.getElementById('tourn-run-msg');
+  if (btn) { btn.disabled = true; btn.textContent = '⏳ Running…'; }
+  if (msg) { msg.className = 'tourn-run-msg'; msg.textContent = ''; }
+
+  fetch('https://tabithas-mac-mini.tailcc2d00.ts.net/promote/run-tournament', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer 22a5076abf27bcb598d13bfbb87cbd666eb83f5fa341cb77f082994f3963a5b6',
+    },
+  })
+    .then(r => r.json())
+    .then(data => {
+      if (btn) { btn.disabled = false; btn.textContent = '⚔️ Run Battle'; }
+      if (msg) { msg.className = 'tourn-run-msg ok'; msg.textContent = data.message || 'Started — refresh in ~60s.'; }
+    })
+    .catch(err => {
+      if (btn) { btn.disabled = false; btn.textContent = '⚔️ Run Battle'; }
+      if (msg) { msg.className = 'tourn-run-msg err'; msg.textContent = '❌ ' + err.message; }
+    });
 }
 
 function tournamentPromoteModel(model, config, btnId, msgId) {
