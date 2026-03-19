@@ -616,24 +616,29 @@
   }
   .tourn-winner-label { font-size: 15px; font-weight: 700; color: var(--zup); }
   .tourn-winner-score { font-size: 13px; color: var(--text-muted); }
-  .tourn-promote-btn {
-    margin-left: auto;
-    background: var(--accent);
-    color: #FDF6EC;
-    border: none;
-    border-radius: 8px;
-    padding: 8px 18px;
-    font-size: 13px;
-    font-weight: 700;
-    cursor: pointer;
-    transition: opacity 0.15s, transform 0.1s;
-    display: flex; align-items: center; gap: 6px;
+  .tourn-summary {
+    font-size: 13px; color: var(--text-muted); margin: 0 0 16px;
+    line-height: 1.5;
   }
-  .tourn-promote-btn:hover { opacity: 0.88; transform: translateY(-1px); }
-  .tourn-promote-btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
-  .tourn-promote-msg { font-size: 12px; margin-left: 8px; }
-  .tourn-promote-msg.ok   { color: var(--pos); }
-  .tourn-promote-msg.err  { color: var(--neg); }
+  .tourn-summary strong { color: var(--text); }
+  .tourn-promote-btn {
+    background: var(--surface2);
+    color: var(--text);
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    padding: 6px 14px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s, border-color 0.15s;
+    white-space: nowrap;
+  }
+  .tourn-promote-btn.winner-row { border-color: var(--accent); color: var(--accent); }
+  .tourn-promote-btn:hover:not(:disabled) { background: var(--accent); color: #FDF6EC; border-color: var(--accent); }
+  .tourn-promote-btn:disabled { opacity: 0.45; cursor: not-allowed; }
+  .tourn-promote-msg { font-size: 11px; }
+  .tourn-promote-msg.ok  { color: var(--pos); }
+  .tourn-promote-msg.err { color: var(--neg); }
   .tourn-leaderboard { width: 100%; border-collapse: collapse; font-size: 13px; margin-top: 8px; }
   .tourn-leaderboard th {
     text-align: right; padding: 6px 12px;
@@ -643,17 +648,17 @@
     background: var(--surface2);
   }
   .tourn-leaderboard th:first-child { text-align: left; }
+  .tourn-leaderboard th:last-child  { text-align: right; }
   .tourn-leaderboard td {
     padding: 8px 12px; text-align: right;
     border-bottom: 1px solid var(--border); font-size: 13px;
   }
-  .tourn-leaderboard td:first-child { text-align: left; font-weight: 600; }
+  .tourn-leaderboard td:first-child { text-align: left; }
+  .tourn-leaderboard td:last-child  { text-align: right; }
+  /* suppress hover on the message rows */
+  .tourn-leaderboard tr:nth-child(even):hover td { background: transparent; }
+  .tourn-leaderboard tr:nth-child(odd):hover td  { background: var(--surface2); }
   .tourn-leaderboard tr:last-child td { border-bottom: none; }
-  .tourn-leaderboard tr:hover td { background: var(--surface2); }
-  /* 🫘 bean ranks instead of medals */
-  .tourn-rank-1 td:first-child::before { content: "🫘 "; }
-  .tourn-rank-2 td:first-child::before { content: "🫘 "; opacity: 0.75; }
-  .tourn-rank-3 td:first-child::before { content: "🫘 "; opacity: 0.5; }
   .tourn-no-data { color: var(--text-muted); font-size: 13px; font-style: italic; }
 
   /* ── Promo trigger button in tab bar ── */
@@ -1468,86 +1473,71 @@ document.getElementById('promo-backdrop').addEventListener('click', (e) => {
 function renderTournamentPanel() {
   const el = document.getElementById('tournament-panel');
   if (!el) return;
+  if (!TOURNAMENT_DATA) { el.innerHTML = ''; return; }
 
-  if (!TOURNAMENT_DATA) {
-    el.innerHTML = '';
-    return;
-  }
-
-  const t = TOURNAMENT_DATA;
+  const t        = TOURNAMENT_DATA;
   const baseline = t.baseline_score;
-  const lb = t.leaderboard || [];
-  const winner = t.winner;
-  const beats = t.winner_beats_baseline;
-
+  const lb       = t.leaderboard || [];
+  const winner   = t.winner;
   const MODEL_COLOR = { ZIP: 'var(--zip)', ZAP: 'var(--zap)', ZUP: 'var(--zup)', DRIP: 'var(--base)' };
 
-  let winnerHtml = '';
+  // ── Summary sentence ──────────────────────────────────────────────────────
+  let summary = '';
   if (winner) {
-    const delta = winner.sharpe != null ? winner.sharpe - baseline
-                : (winner.mean_daily_return != null ? winner.mean_daily_return - baseline : 0);
-    const deltaStr = (delta >= 0 ? '+' : '') + delta.toFixed(4) + ' vs DRIP';
-    const winScore = winner.sharpe ?? winner.mean_daily_return ?? 0;
-    const promoteBtn = beats
-      ? `<button class="tourn-promote-btn" id="tourn-promote-btn"
-           onclick="tournamentPromote()">☕ Set as House Blend</button>
-         <span class="tourn-promote-msg" id="tourn-promote-msg"></span>`
-      : '';
-    winnerHtml = `
-      <div class="tourn-winner-banner">
-        <span class="tourn-winner-label">🫘 ${winner.model} wins today</span>
-        <span class="tourn-winner-score">Score ${(winScore >= 0 ? '+' : '') + winScore.toFixed(4)} &nbsp;|&nbsp; ${deltaStr}</span>
-        ${promoteBtn}
-      </div>`;
+    const winScore  = winner.sharpe ?? 0;
+    const delta     = winScore - baseline;
+    const deltaStr  = (delta >= 0 ? '+' : '') + delta.toFixed(2);
+    const beatsDrip = t.winner_beats_baseline;
+    summary = beatsDrip
+      ? `<strong>${winner.model}</strong> won today's battle — Sharpe <strong>${(winScore >= 0?'+':'')+winScore.toFixed(2)}</strong>, <strong>${deltaStr}</strong> vs DRIP. ${lb.length} models competed across ${t.windows_tested || '?'} windows.`
+      : `No model beat DRIP today — House Blend holds. Best challenger: <strong>${winner.model}</strong> (Sharpe ${(winScore>=0?'+':'')+winScore.toFixed(2)}).`;
   }
 
-  function tournStats(model) {
-    const d = ALL_DATA[model];
-    return d ? computeStats(d) : null;
-  }
-
-  const rankClass = ['tourn-rank-1', 'tourn-rank-2', 'tourn-rank-3'];
+  // ── Table rows ────────────────────────────────────────────────────────────
   const rows = lb.map((entry, i) => {
-    const entryScore = entry.best_sharpe ?? entry.best_mean_daily_return ?? 0;
-    const delta = entryScore - baseline;
-    const deltaCol = delta >= 0 ? 'delta-pos' : 'delta-neg';
-    const color = MODEL_COLOR[entry.model] || 'var(--text)';
-    const s = tournStats(entry.model);
-    const accCell  = s ? `<td class="${s.acc>=60?'pos':s.acc>=50?'neutral':'neg'}">${s.acc.toFixed(1)}%</td>` : '<td>—</td>';
-    const shrpCell = s ? `<td class="${s.sharpe>=1?'pos':s.sharpe>=0?'neutral':'neg'}">${s.sharpe.toFixed(2)}</td>` : '<td>—</td>';
-    return `<tr class="${rankClass[i] || ''}">
-      <td style="color:${color}">${entry.model}</td>
-      <td>${(entryScore >= 0 ? '+' : '') + entryScore.toFixed(4)}</td>
-      <td class="${deltaCol}">${(delta >= 0 ? '+' : '') + delta.toFixed(4)}</td>
-      ${accCell}
-      ${shrpCell}
-    </tr>`;
+    const color     = MODEL_COLOR[entry.model] || 'var(--text)';
+    const s         = ALL_DATA[entry.model] ? computeStats(ALL_DATA[entry.model]) : null;
+    const lastRec   = ALL_DATA[entry.model]?.at(-1);
+    const lastRet   = lastRec?.return_pct ?? null;
+    const accCell   = s ? `<td class="${s.acc>=60?'pos':s.acc>=50?'neutral':'neg'}">${s.acc.toFixed(1)}%</td>` : '<td>—</td>';
+    const shrpCell  = s ? `<td class="${s.sharpe>=1?'pos':s.sharpe>=0?'neutral':'neg'}">${s.sharpe.toFixed(2)}</td>` : '<td>—</td>';
+    const retCell   = lastRet != null
+      ? `<td class="${lastRet>=0?'pos':'neg'}">${lastRet>=0?'+':''}${lastRet.toFixed(2)}%</td>`
+      : '<td>—</td>';
+    const isWinner  = winner && entry.model === winner.model && t.winner_beats_baseline;
+    const btnId     = `tourn-promote-btn-${entry.model}`;
+    const msgId     = `tourn-promote-msg-${entry.model}`;
+    const cfg       = JSON.stringify(entry.best_config).replace(/\\/g,'\\\\').replace(/'/g,"\\'");
+    const promoteBtn = `<button class="tourn-promote-btn${isWinner?' winner-row':''}" id="${btnId}"
+        onclick="tournamentPromoteModel('${entry.model}',JSON.parse(decodeURIComponent('${encodeURIComponent(JSON.stringify(entry.best_config))}')),'${btnId}','${msgId}')">
+        ☕ Set as House Blend</button>`;
+    return `<tr>
+      <td><span style="color:${color};font-weight:600">${entry.model}</span>${isWinner ? ' 🏆' : ''}</td>
+      ${accCell}${shrpCell}${retCell}
+      <td>${promoteBtn}</td>
+    </tr>
+    <tr><td colspan="5" style="padding:0 12px 10px"><span class="tourn-promote-msg" id="${msgId}"></span></td></tr>`;
   }).join('');
 
-  const bs = tournStats('DRIP');
+  // DRIP baseline row (no button)
+  const bs      = ALL_DATA.DRIP ? computeStats(ALL_DATA.DRIP) : null;
+  const bsLast  = ALL_DATA.DRIP?.at(-1);
+  const bsRet   = bsLast?.return_pct ?? null;
   const baselineRow = `<tr style="opacity:0.6">
-    <td style="color:var(--base)">DRIP ☕</td>
-    <td>${(baseline >= 0 ? '+' : '') + baseline.toFixed(4)}</td>
-    <td class="delta-zero">—</td>
-    ${bs ? `<td>${bs.acc.toFixed(1)}%</td><td>${bs.sharpe.toFixed(2)}</td>` : '<td>—</td><td>—</td>'}
+    <td style="color:var(--base);font-weight:600">DRIP ☕ <span style="font-size:10px;font-weight:400">(current)</span></td>
+    ${bs ? `<td class="${bs.acc>=60?'pos':bs.acc>=50?'neutral':'neg'}">${bs.acc.toFixed(1)}%</td><td class="${bs.sharpe>=1?'pos':bs.sharpe>=0?'neutral':'neg'}">${bs.sharpe.toFixed(2)}</td>` : '<td>—</td><td>—</td>'}
+    ${bsRet != null ? `<td class="${bsRet>=0?'pos':'neg'}">${bsRet>=0?'+':''}${bsRet.toFixed(2)}%</td>` : '<td>—</td>'}
+    <td></td>
   </tr>`;
-
-  const subtitle = t.candidates_per_model && t.windows_tested
-    ? `${t.run_date} &nbsp;·&nbsp; ${t.candidates_per_model} candidates &times; ${t.windows_tested} windows`
-    : t.run_date || '';
 
   el.innerHTML = `
     <div class="card">
-      <div class="card-title">☕ Barista Battle &nbsp;— ${subtitle}</div>
-      ${winnerHtml}
+      <div class="card-title">☕ Barista Battle</div>
+      ${summary ? `<p class="tourn-summary">${summary}</p>` : ''}
       <div class="tbl-wrap">
         <table class="tourn-leaderboard">
           <thead><tr>
-            <th>Model</th>
-            <th>Best Score</th>
-            <th>vs DRIP</th>
-            <th>Accuracy</th>
-            <th>Sharpe</th>
+            <th>Model</th><th>Accuracy</th><th>Sharpe</th><th>Last Return</th><th></th>
           </tr></thead>
           <tbody>${rows}${baselineRow}</tbody>
         </table>
@@ -1555,11 +1545,9 @@ function renderTournamentPanel() {
     </div>`;
 }
 
-function tournamentPromote() {
-  const t = TOURNAMENT_DATA;
-  if (!t || !t.winner) return;
-  const btn = document.getElementById('tourn-promote-btn');
-  const msg = document.getElementById('tourn-promote-msg');
+function tournamentPromoteModel(model, config, btnId, msgId) {
+  const btn = document.getElementById(btnId);
+  const msg = document.getElementById(msgId);
   if (btn) { btn.disabled = true; btn.innerHTML = '<span style="display:inline-block;animation:spin 0.8s linear infinite">☕</span> Promoting…'; }
   if (msg) { msg.className = 'tourn-promote-msg'; msg.textContent = ''; }
 
@@ -1569,12 +1557,17 @@ function tournamentPromote() {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer 22a5076abf27bcb598d13bfbb87cbd666eb83f5fa341cb77f082994f3963a5b6',
     },
-    body: JSON.stringify({ model: t.winner.model, config: t.winner.config }),
+    body: JSON.stringify({ model, config }),
   })
     .then(r => r.json())
     .then(data => {
-      if (btn) { btn.disabled = true; btn.innerHTML = '✅ House Blend set!'; }
-      if (msg) { msg.className = 'tourn-promote-msg ok'; msg.textContent = 'Rebuilding dashboard…'; }
+      if (data.status === 'ok') {
+        if (btn) { btn.disabled = true; btn.innerHTML = '✅ Applied — rebuilding…'; }
+        if (msg) { msg.className = 'tourn-promote-msg ok'; msg.textContent = `${model} weights saved. Dashboard will update in ~30s.`; }
+      } else {
+        if (btn) { btn.disabled = false; btn.innerHTML = '☕ Set as House Blend'; }
+        if (msg) { msg.className = 'tourn-promote-msg err'; msg.textContent = '❌ ' + (data.detail || JSON.stringify(data)); }
+      }
     })
     .catch(err => {
       if (btn) { btn.disabled = false; btn.innerHTML = '☕ Set as House Blend'; }
