@@ -1514,7 +1514,7 @@ function renderTournamentPanel() {
       <button class="tourn-run-btn" id="tourn-run-btn" onclick="runTournament()">
         ⚔️ Run Battle
       </button>
-      <span class="tourn-run-desc">Pits ZIP, ZAP &amp; ZUP against each other — each generates 50 weight variations, tested across rolling 60-day windows. The best Sharpe per model goes on the leaderboard. Runs automatically at 5pm; click to run now.</span>
+      <span class="tourn-run-desc">Each model generates 50 weight &amp; threshold variations, scored across 20 random 60-day historical windows to find the best config. That config is then validated on the most recent 60-day window — the out-of-sample Sharpe drives the leaderboard. Runs automatically at 5pm ET.</span>
       <span class="tourn-run-msg" id="tourn-run-msg"></span>
     </div>`;
 
@@ -1527,8 +1527,10 @@ function renderTournamentPanel() {
     const lastDate = lastTrade?.date ?? null;
     const isWinner = winner && entry.model === winner.model && t.winner_beats_baseline;
     const bean     = BEANS[i] ? `<span style="opacity:${1 - i*0.25}">${BEANS[i]}</span> ` : '';
+    // prefer validation_sharpe (out-of-sample, current window) if present
+    const dispSharpe = entry.validation_sharpe ?? entry.best_sharpe ?? 0;
     const accCell  = s ? `<td class="${s.acc>=60?'pos':s.acc>=50?'neutral':'neg'}">${s.acc.toFixed(1)}%</td>` : '<td>—</td>';
-    const shrpCell = s ? `<td class="${s.sharpe>=1?'pos':s.sharpe>=0?'neutral':'neg'}">${s.sharpe.toFixed(2)}</td>` : '<td>—</td>';
+    const shrpCell = `<td class="${dispSharpe>=1?'pos':dispSharpe>=0?'neutral':'neg'}">${(dispSharpe>=0?'+':'')}${dispSharpe.toFixed(2)}</td>`;
     const retCell  = lastRet != null
       ? `<td class="${lastRet>=0?'pos':'neg'}">${lastRet>=0?'+':''}${lastRet.toFixed(2)}%</td>`
       : '<td>—</td>';
