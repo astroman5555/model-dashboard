@@ -549,6 +549,28 @@
   .promo-score-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); }
   .promo-score-val { font-weight: 600; font-variant-numeric: tabular-nums; }
   .promo-improve { color: var(--pos); }
+  .promo-apply-btn {
+    margin-left: auto;
+    padding: 6px 16px;
+    border-radius: 8px;
+    border: 1.5px solid var(--border);
+    background: var(--surface2);
+    color: var(--text);
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+    white-space: nowrap;
+  }
+  .promo-apply-btn:hover:not(:disabled) { background: var(--pos); color: #fff; border-color: var(--pos); }
+  .promo-apply-btn:disabled { opacity: 0.5; cursor: default; }
+  .promo-msg {
+    font-size: 12px;
+    margin: -8px 0 10px;
+    min-height: 16px;
+  }
+  .promo-msg.ok { color: var(--pos); }
+  .promo-msg.err { color: var(--neg); }
   .promo-meta {
     font-size: 11px;
     color: var(--text-muted);
@@ -1322,6 +1344,39 @@ function renderSignalMap(model) {
 }
 
 // ── Pending Promotions Modal ───────────────────────────────────────────────────
+function applyPendingPromotion(model, weights, btn) {
+  const msg = document.getElementById('promo-msg-' + model);
+  btn.disabled = true;
+  btn.textContent = '⏳ Applying…';
+  if (msg) { msg.className = 'promo-msg'; msg.textContent = ''; }
+
+  fetch('https://tabithas-mac-mini.tailcc2d00.ts.net/promote', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer 22a5076abf27bcb598d13bfbb87cbd666eb83f5fa341cb77f082994f3963a5b6',
+    },
+    body: JSON.stringify({ model, config: { weights } }),
+  })
+    .then(r => r.json())
+    .then(data => {
+      if (data.status === 'ok') {
+        btn.textContent = '✅ Applied';
+        if (msg) { msg.className = 'promo-msg ok'; msg.textContent = 'Weights applied — dashboard rebuilding…'; }
+      } else {
+        btn.disabled = false;
+        btn.textContent = 'Apply';
+        const detail = data.detail || JSON.stringify(data);
+        if (msg) { msg.className = 'promo-msg err'; msg.textContent = '❌ ' + detail; }
+      }
+    })
+    .catch(err => {
+      btn.disabled = false;
+      btn.textContent = 'Apply';
+      if (msg) { msg.className = 'promo-msg err'; msg.textContent = '❌ ' + err.message; }
+    });
+}
+
 function renderPromoModal() {
   if (!PENDING_PROMOTIONS || PENDING_PROMOTIONS.length === 0) return;
 
@@ -1350,7 +1405,9 @@ function renderPromoModal() {
       </tr>`;
     }).join('');
 
-    return `<div class="promo-card">
+    const modelKey = p.model === 'BASELINE' ? 'BASELINE' : p.model;
+    const safeWeights = JSON.stringify(p.proposed_weights).replace(/'/g, "\\'");
+    return `<div class="promo-card" id="promo-card-${p.model}">
       <div class="promo-card-header">
         <span class="promo-model-badge" style="color:${color}">${p.model}</span>
         <div class="promo-scores">
@@ -1367,7 +1424,12 @@ function renderPromoModal() {
             <span class="promo-score-val promo-improve">${impSign}${p.improvement_pct.toFixed(1)}%</span>
           </div>
         </div>
+        <button class="promo-apply-btn" id="promo-apply-${p.model}"
+          onclick="applyPendingPromotion('${modelKey}', ${safeWeights}, this)">
+          Apply
+        </button>
       </div>
+      <div class="promo-msg" id="promo-msg-${p.model}"></div>
       <div class="promo-meta">Windows tested: ${p.windows_tested} &nbsp;|&nbsp; Candidates: ${p.candidates_tested} &nbsp;|&nbsp; Generated: ${p.proposed_at ? p.proposed_at.slice(0,10) : '—'}</div>
       <div style="overflow-x:auto">
         <table class="promo-diff-table">
