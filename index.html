@@ -1232,8 +1232,16 @@ function renderWeeklyTable() {
           <div style="font-weight:600">${ret >= 0 ? '+' : ''}${ret.toFixed(2)}%</div>
           ${deltaHtml}
         </td>`;
+      } else if (rec && rec.spy_correct === null) {
+        // Open position — direction known, result pending next open
+        const arrow = rec.direction === 'SPXL' ? '↑' : '↓';
+        const tag = rec.direction;
+        return `<td style="font-size:11px;text-align:center;opacity:0.55">
+          <div>${arrow} <span style="opacity:0.8">${tag}</span></div>
+          <div style="font-size:10px">open</div>
+        </td>`;
       } else if (date === PREDICTIONS?.for_date && predToday[model]) {
-        // Today's forecast (not yet traded)
+        // Tomorrow's forecast
         const p = predToday[model];
         const arrow = p.direction === 'SPXL' ? '↑' : '↓';
         const tag = p.direction;
