@@ -1208,11 +1208,11 @@ function renderWeeklyTable() {
   }).join('');
 
   const rows = models.map(([model, brewName, color]) => {
-    let weeklyTotal = 0, totalDelta = 0, deltaCount = 0;
+    let weeklyTotal = 0, weeklyDelta = 0;
     const cells = weekDates.map(date => {
       const rec = lookup[model][date];
       if (rec && rec.spy_correct !== null) {
-        // Closed trading day — show actual return + delta vs prediction
+        // Settled day — show actual return + delta vs logged prediction
         const ret = rec.return_pct;
         weeklyTotal += ret;
         const cls = rec.spy_correct ? 'pos' : 'neg';
@@ -1222,8 +1222,7 @@ function renderWeeklyTable() {
         const logEntry = PRED_LOG?.[date]?.[model];
         if (logEntry?.expected_pct != null) {
           const delta = ret - logEntry.expected_pct;
-          totalDelta += Math.abs(delta);
-          deltaCount++;
+          weeklyDelta += Math.abs(delta);
           const dSign = delta >= 0 ? '+' : '';
           deltaHtml = `<div style="font-size:10px;opacity:0.65">Δ${dSign}${delta.toFixed(2)}%</div>`;
         }
@@ -1232,42 +1231,36 @@ function renderWeeklyTable() {
           <div style="font-weight:600">${ret >= 0 ? '+' : ''}${ret.toFixed(2)}%</div>
           ${deltaHtml}
         </td>`;
-      } else if (rec && rec.spy_correct === null) {
-        // Open position — direction known, result pending next open
-        const arrow = rec.direction === 'SPXL' ? '↑' : '↓';
-        const tag = rec.direction;
-        return `<td style="font-size:11px;text-align:center;opacity:0.55">
-          <div>${arrow} <span style="opacity:0.8">${tag}</span></div>
-          <div style="font-size:10px">open</div>
-        </td>`;
-      } else if (date === PREDICTIONS?.for_date && predToday[model]) {
-        // Tomorrow's forecast
-        const p = predToday[model];
-        const arrow = p.direction === 'SPXL' ? '↑' : '↓';
-        const tag = p.direction;
-        const exp = p.expected_pct != null ? (p.expected_pct >= 0 ? '+' : '') + p.expected_pct.toFixed(2) + '%' : '';
-        return `<td style="font-size:11px;text-align:center;opacity:0.65;font-style:italic">
-          <div>${arrow} <span style="opacity:0.8">${tag}</span></div>
-          <div>${exp}</div>
-        </td>`;
       } else {
+        // Future / unsettled — show prediction from log or PREDICTIONS
+        const logEntry = PRED_LOG?.[date]?.[model];
+        const src = logEntry ?? (date === PREDICTIONS?.for_date ? predToday[model] : null);
+        if (src) {
+          const arrow = src.direction === 'SPXL' ? '↑' : '↓';
+          const tag = src.direction;
+          const exp = src.expected_pct != null ? (src.expected_pct >= 0 ? '+' : '') + src.expected_pct.toFixed(2) + '%' : '';
+          return `<td style="font-size:11px;text-align:center;opacity:0.65;font-style:italic">
+            <div>${arrow} <span style="opacity:0.8">${tag}</span></div>
+            <div>${exp}</div>
+          </td>`;
+        }
         return `<td style="text-align:center;opacity:0.3">—</td>`;
       }
     }).join('');
 
     const weekCls = weeklyTotal >= 0 ? 'pos' : 'neg';
-    const avgMae = deltaCount > 0 ? (totalDelta / deltaCount).toFixed(2) + '%' : '—';
+    const sumDelta = weeklyDelta > 0 ? weeklyDelta.toFixed(2) + '%' : '—';
     return `<tr>
       <td><span style="color:${color};font-weight:600">${brewName}</span></td>
       ${cells}
       <td class="${weekCls}" style="font-weight:600;text-align:center">${weeklyTotal >= 0 ? '+' : ''}${weeklyTotal.toFixed(2)}%</td>
-      <td style="text-align:center;opacity:0.8">${avgMae}</td>
+      <td style="text-align:center;opacity:0.8">${sumDelta}</td>
     </tr>`;
   }).join('');
 
   document.getElementById('weeklyTable').innerHTML = `
     <thead><tr>
-      <th>Brew</th>${headerCols}<th>Weekly</th><th>Avg Δ</th>
+      <th>Brew</th>${headerCols}<th>Weekly</th><th>Σ Δ</th>
     </tr></thead>
     <tbody>${rows}</tbody>`;
 }
