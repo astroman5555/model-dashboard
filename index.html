@@ -1232,16 +1232,19 @@ function renderWeeklyTable() {
           ${deltaHtml}
         </td>`;
       } else {
-        // Future / unsettled — show prediction from log or PREDICTIONS
-        const logEntry = PRED_LOG?.[date]?.[model];
-        const src = logEntry ?? (date === PREDICTIONS?.for_date ? predToday[model] : null);
+        // Future / unsettled — PREDICTIONS.for_date always wins (matches banner); else PRED_LOG
+        const src = date === PREDICTIONS?.for_date
+          ? predToday[model]
+          : (PRED_LOG?.[date]?.[model] ?? null);
         if (src) {
           const arrow = src.direction === 'SPXL' ? '↑' : '↓';
           const tag = src.direction;
+          const conf = src.confidence != null ? `<div style="font-size:10px;opacity:0.55">conf ${src.confidence}/10</div>` : '';
           const exp = src.expected_pct != null ? (src.expected_pct >= 0 ? '+' : '') + src.expected_pct.toFixed(2) + '%' : '';
-          return `<td style="font-size:11px;text-align:center;opacity:0.65;font-style:italic">
+          return `<td style="font-size:11px;text-align:center;opacity:0.7;font-style:italic">
             <div>${arrow} <span style="opacity:0.8">${tag}</span></div>
             <div>${exp}</div>
+            ${conf}
           </td>`;
         }
         return `<td style="text-align:center;opacity:0.3">—</td>`;
