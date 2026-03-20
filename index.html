@@ -1176,10 +1176,16 @@ function renderWeeklyTable() {
   monday.setDate(today.getDate() - (dow === 0 ? 6 : dow - 1));
 
   const DAY_LABELS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'];
+  const toLocalDate = dt => {
+    const y = dt.getFullYear();
+    const m = String(dt.getMonth()+1).padStart(2,'0');
+    const d = String(dt.getDate()).padStart(2,'0');
+    return `${y}-${m}-${d}`;
+  };
   const weekDates = [0,1,2,3,4].map(d => {
     const dt = new Date(monday);
     dt.setDate(monday.getDate() + d);
-    return dt.toISOString().slice(0, 10);
+    return toLocalDate(dt);
   });
 
   const predToday = {};
