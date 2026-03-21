@@ -1713,17 +1713,41 @@ function renderPromoModal() {
       </tr>`;
     }).join('');
 
+    // Threshold rows (present when proposed_thresholds exists)
+    const threshKeys = Array.from(new Set([
+      ...Object.keys(p.current_thresholds || {}),
+      ...Object.keys(p.proposed_thresholds || {})
+    ]));
+    const threshRows = threshKeys.length === 0 ? '' :
+      `<tr><td colspan="4" style="padding:6px 8px 2px;font-size:10px;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-muted);border-top:1px solid var(--border)">Thresholds</td></tr>` +
+      threshKeys.map(param => {
+        const curr  = p.current_thresholds?.[param]  ?? 0;
+        const prop  = p.proposed_thresholds?.[param] ?? 0;
+        const delta = typeof prop === 'number' ? prop - curr : 0;
+        const deltaCls = Math.abs(delta) < 0.0005 ? 'delta-zero'
+                       : delta > 0 ? 'delta-pos' : 'delta-neg';
+        const deltaStr = Math.abs(delta) < 0.0005 ? '—'
+                       : (delta > 0 ? '+' : '') + (Number.isInteger(delta) ? delta : delta.toFixed(3));
+        const fmt = v => (typeof v === 'number' ? (Number.isInteger(v) ? v : v.toFixed(3)) : v);
+        return `<tr>
+          <td style="color:var(--text-muted)">${param.replace(/_/g,' ')}</td>
+          <td class="r">${fmt(curr)}</td>
+          <td class="r">${fmt(prop)}</td>
+          <td class="r ${deltaCls}">${deltaStr}</td>
+        </tr>`;
+      }).join('');
+
     return `<div class="promo-card">
       <div class="promo-card-header">
         <span class="promo-model-badge" style="color:${color}">${p.model}</span>
         <div class="promo-scores">
           <div class="promo-score-item">
-            <span class="promo-score-label">Current</span>
-            <span class="promo-score-val">${(p.current_score >= 0 ? '+' : '')}${p.current_score.toFixed(4)}%/day</span>
+            <span class="promo-score-label">Current blend</span>
+            <span class="promo-score-val">${(p.current_score >= 0 ? '+' : '')}${p.current_score.toFixed(4)}</span>
           </div>
           <div class="promo-score-item">
-            <span class="promo-score-label">Proposed</span>
-            <span class="promo-score-val" style="color:${color}">Sharpe ${(p.winner_score >= 0 ? '+' : '')}${p.winner_score.toFixed(4)}</span>
+            <span class="promo-score-label">Proposed blend</span>
+            <span class="promo-score-val" style="color:${color}">${(p.winner_score >= 0 ? '+' : '')}${p.winner_score.toFixed(4)}</span>
           </div>
           <div class="promo-score-item">
             <span class="promo-score-label">Improvement</span>
@@ -1736,11 +1760,11 @@ function renderPromoModal() {
         <table class="promo-diff-table">
           <thead><tr>
             <th>Signal</th>
-            <th class="r">Current&nbsp;w</th>
-            <th class="r">Proposed&nbsp;w</th>
+            <th class="r">Current</th>
+            <th class="r">Proposed</th>
             <th class="r">Delta</th>
           </tr></thead>
-          <tbody>${tableRows}</tbody>
+          <tbody>${tableRows}${threshRows}</tbody>
         </table>
       </div>
     </div>`;
