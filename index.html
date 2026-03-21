@@ -349,36 +349,57 @@
     border-radius: 12px;
     padding: 18px 20px;
     margin-bottom: 20px;
+    font-size: 13px;
     box-shadow: 0 2px 12px rgba(44,24,16,0.07);
   }
   .pred-section-header {
     display: flex;
-    align-items: center;
-    gap: 12px;
+    flex-direction: column;
+    gap: 6px;
     margin-bottom: 14px;
+  }
+  .pred-brew-title-row {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
     flex-wrap: wrap;
   }
-  .pred-section-title {
+  .pred-brew-name {
     font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 16px;
+  }
+  .pred-section-title {
     font-size: 12px;
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
+    font-weight: 500;
+    letter-spacing: 0.04em;
     color: var(--text-muted);
   }
+  .pred-dir-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
   .pred-dir-badge {
-    font-size: 18px;
+    font-size: 20px;
     font-weight: 700;
     letter-spacing: -0.5px;
   }
   .pred-dir-badge.spxl { color: var(--pos); }
   .pred-dir-badge.spxs { color: var(--neg); }
+  .pred-stat {
+    font-size: 13px;
+    color: var(--text-muted);
+  }
+  .pred-stat strong { color: var(--text); font-weight: 600; }
   .pred-meta {
     font-size: 12px;
     color: var(--text-muted);
     display: flex;
     gap: 10px;
     align-items: center;
+    flex-wrap: wrap;
   }
   .pred-meta strong { color: var(--text); }
   .pred-signals {
@@ -478,13 +499,13 @@
   }
   .sig-meta-table tr:last-child td { border-bottom: none; }
   .sig-meta-table tr:hover td { background: var(--surface2); }
-  .sig-meta-table td.signal-name { font-weight: 600; color: var(--text); font-size: 11px; }
-  .sig-meta-table td.signal-label { color: var(--text-muted); font-size: 11px; }
+  .sig-meta-table td.signal-name { font-weight: 600; color: var(--text); font-size: 12px; }
+  .sig-meta-table td.signal-label { color: var(--text-muted); font-size: 12px; }
   .sig-meta-table td.weight-cell { text-align: right; }
   .weight-bar-wrap { display: flex; align-items: center; gap: 8px; justify-content: flex-end; }
   .weight-bar { height: 6px; border-radius: 3px; min-width: 2px; }
-  .weight-num { font-weight: 600; min-width: 32px; text-align: right; font-size: 11px; }
-  .sig-meta-table td.thresh-cell { color: var(--text-muted); font-size: 11px; max-width: 200px; white-space: normal; }
+  .weight-num { font-weight: 600; min-width: 32px; text-align: right; font-size: 12px; }
+  .sig-meta-table td.thresh-cell { color: var(--text-muted); font-size: 12px; max-width: 200px; white-space: normal; }
   .thresh-bull { color: var(--pos); }
   .thresh-bear { color: var(--neg); }
   .inv-badge {
@@ -1076,65 +1097,89 @@ function _currentPosition(modelKey) {
     .sort((a, b) => b.entry_date.localeCompare(a.entry_date))[0] || null;
 }
 
+function _modelStats(model) {
+  if (TOURNAMENT_DATA) {
+    if (model === 'DRIP') {
+      if (TOURNAMENT_DATA.baseline_sharpe != null)
+        return { sharpe: TOURNAMENT_DATA.baseline_sharpe, acc: TOURNAMENT_DATA.baseline_acc };
+    } else {
+      const entry = (TOURNAMENT_DATA.leaderboard || []).find(function(e) { return e.model === model; });
+      if (entry) return { sharpe: entry.validation_sharpe, acc: entry.validation_acc };
+    }
+  }
+  if (ALL_DATA && ALL_DATA[model] && ALL_DATA[model].length) {
+    const s = computeStats(ALL_DATA[model]);
+    return { sharpe: s.sharpe, acc: s.acc / 100 };
+  }
+  return null;
+}
+
 function _buildPredSectionHtml(model, d, p, color, title, posModelKey) {
-  const dirCls = d.direction === 'SPXL' ? 'spxl' : 'spxs';
+  const dirCls   = d.direction === 'SPXL' ? 'spxl' : 'spxs';
+  const brewName = BREW_NAMES[model] || model;
 
   // Signal pills
-  const pills = (d.signals || []).map(s => {
+  const pills = (d.signals || []).map(function(s) {
     const cls   = s.vote > 0 ? 'bull' : 'bear';
-    const label = s.name.replace(/_/g,' ');
+    const label = s.name.replace(/_/g, ' ');
     const tip   = s.desc.replace(/"/g, '&quot;');
-    return `<span class="sig-pill ${cls}" data-tooltip="${tip}">${label}</span>`;
+    return '<span class="sig-pill ' + cls + '" data-tooltip="' + tip + '">' + label + '</span>';
   }).join('');
 
-  // Hist avg + ATR range
-  const histAvg = d.expected_pct;
-  const atrRng  = p.atr_range_pct;
-  let expHtml = '';
-  if (histAvg != null) expHtml += `<span style="color:var(--text-muted);font-size:13px">Hist avg: ${histAvg >= 0 ? '+' : ''}${histAvg.toFixed(1)}%</span>`;
-  if (atrRng  != null) expHtml += `<span style="color:var(--text-muted);font-size:11px;margin-left:6px">ATR range: ±${atrRng.toFixed(1)}%</span>`;
+  // Accuracy + Sharpe from tournament validation data
+  const stats = _modelStats(model);
+  let statsHtml = '';
+  if (stats) {
+    const accStr    = stats.acc    != null ? (stats.acc * 100).toFixed(1) + '%' : '\u2014';
+    const sharpeStr = stats.sharpe != null ? (stats.sharpe >= 0 ? '+' : '') + stats.sharpe.toFixed(2) : '\u2014';
+    statsHtml = '<span class="pred-stat">Acc <strong>' + accStr + '</strong></span>'
+              + '<span class="pred-stat">Sharpe <strong>' + sharpeStr + '</strong></span>';
+  }
 
   // Regime tag (all models)
   let regimeHtml = '';
   if (d.regime) {
     const rc = d.regime === 'BULL_TREND' ? 'bull-trend' : d.regime === 'BEAR_TREND' ? 'bear-trend' : '';
-    regimeHtml = `<span class="regime-tag ${rc}">${d.regime.replace(/_/g,' ')}</span>`;
+    regimeHtml = '<span class="regime-tag ' + rc + '">' + d.regime.replace(/_/g, ' ') + '</span>';
   }
 
   // Bounce flip (where present)
   const bounceHtml = d.bounce_flipped
-    ? `<span style="color:var(--zip);font-weight:600">⚠ bounce-flip</span>` : '';
+    ? '<span style="color:var(--zip);font-weight:600">\u26a0 bounce-flip</span>' : '';
 
   // L3 position + AUM
   let posHtml = '';
   const pos = _currentPosition(posModelKey);
   if (pos) {
     const pdirCls = pos.direction === 'SPXL' ? 'spxl' : 'spxs';
-    const aumStr  = pos.cost != null ? '$' + Math.round(pos.cost).toLocaleString('en-US') : '—';
-    posHtml = `<span style="color:var(--text-muted);font-size:11px;white-space:nowrap">`
-            + `<span class="${pdirCls}" style="font-weight:700">${pos.direction}</span>`
-            + ` × ${pos.shares} sh &nbsp;·&nbsp; AUM ${aumStr}</span>`;
+    const aumStr  = pos.cost != null ? '$' + Math.round(pos.cost).toLocaleString('en-US') : '\u2014';
+    posHtml = '<span class="pred-stat"><span class="' + pdirCls + '" style="font-weight:700">'
+            + pos.direction + '</span> \u00d7 ' + pos.shares + ' sh \u00b7 AUM ' + aumStr + '</span>';
   }
 
-  return `
-    <div class="pred-section" style="border-color:${color}44">
-      <div class="pred-section-header">
-        <span class="pred-section-title" style="color:${color}">${title}</span>
-        <span class="tomorrow-banner-date">Mon Mar 23</span>
-        <span class="pred-dir-badge ${dirCls}">${d.direction}</span>
-        ${expHtml}
-        <div class="pred-meta">
-          <span>conf <strong>${d.confidence}/10</strong></span>
-          <span><span class="pos">${d.bull_votes}↑</span> <span class="neg">${d.bear_votes}↓</span></span>
-          ${regimeHtml}
-          ${bounceHtml}
-          ${posHtml}
-        </div>
-      </div>
-      <div class="pred-signals">
-        ${pills || "<span style=\"color:var(--text-muted);font-size:12px\">The grinder's quiet today</span>"}
-      </div>
-    </div>`;
+  return '<div class="pred-section" style="border-color:' + color + '44">'
+    + '<div class="pred-section-header">'
+    + '<div class="pred-brew-title-row">'
+    + '<span class="pred-brew-name" style="color:' + color + '">' + brewName + '</span>'
+    + '<span class="pred-section-title">Tomorrow\'s Pour</span>'
+    + '<span class="tomorrow-banner-date">Mon Mar 23</span>'
+    + '</div>'
+    + '<div class="pred-dir-row">'
+    + '<span class="pred-dir-badge ' + dirCls + '">' + d.direction + '</span>'
+    + statsHtml
+    + '</div>'
+    + '<div class="pred-meta">'
+    + '<span>conf <strong>' + d.confidence + '/10</strong></span>'
+    + '<span><span class="pos">' + d.bull_votes + '\u2191</span> <span class="neg">' + d.bear_votes + '\u2193</span></span>'
+    + regimeHtml
+    + bounceHtml
+    + posHtml
+    + '</div>'
+    + '</div>'
+    + '<div class="pred-signals">'
+    + (pills || '<span style="color:var(--text-muted);font-size:12px">The grinder\'s quiet today</span>')
+    + '</div>'
+    + '</div>';
 }
 
 // ── Tomorrow's Pour — Per-model section ───────────────────────────────────────
@@ -1146,9 +1191,7 @@ function renderModelPrediction(model) {
   if (!p || !p.models || !p.models[model]) { el.style.display='none'; return; }
   const d     = p.models[model];
   const color = COLORS[model];
-  const brewLabel = BREW_NAMES[model] || model;
-  const title = (model === 'DRIP' ? 'Drip ☕ (House Blend)' : brewLabel + ' (' + model + ')') + ' — Tomorrow\'s Pour';
-  el.innerHTML = _buildPredSectionHtml(model, d, p, color, title, model);
+  el.innerHTML = _buildPredSectionHtml(model, d, p, color, null, model);
 }
 
 // ── Tab switching ─────────────────────────────────────────────────────────────
