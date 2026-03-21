@@ -1910,7 +1910,8 @@ function tournamentPromote() {
               if (msg) { msg.className = 'tourn-promote-msg err'; msg.textContent = '❌ Rebuild failed'; }
             } else if (Date.now() - pollStart > 60000) {
               clearInterval(poll);
-              if (msg) { msg.className = 'tourn-promote-msg err'; msg.textContent = '⚠️ Timed out — try refreshing'; }
+              if (btn) { btn.disabled = false; btn.innerHTML = '☕ Set as House Blend'; }
+              if (msg) { msg.className = 'tourn-promote-msg err'; msg.textContent = '⚠️ Timed out — try again'; }
             }
           })
           .catch(() => { /* ignore transient poll errors */ });
