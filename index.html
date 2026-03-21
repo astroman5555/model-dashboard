@@ -408,6 +408,26 @@
     flex-wrap: wrap;
     margin-top: 10px;
   }
+  /* ── Chart filter bar ── */
+  .chart-filter-bar {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 10px;
+    flex-wrap: wrap;
+  }
+  .chart-filter-btn {
+    padding: 3px 10px;
+    font-size: 11px;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    background: none;
+    cursor: pointer;
+    color: var(--text-muted);
+    font-family: inherit;
+    transition: all 0.15s;
+  }
+  .chart-filter-btn:hover { border-color: var(--accent); color: var(--text); }
+  .chart-filter-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); font-weight: 600; }
   .sig-pill {
     display: inline-flex;
     align-items: center;
@@ -817,7 +837,16 @@
   <div class="card">
     <div class="card-title">All-Time Cumulative Return</div>
     <div class="legend-row" id="legendRow"></div>
-    <div class="chart-wrap">
+    <div class="chart-filter-bar" id="filter-bar-overview">
+  <button class="chart-filter-btn" data-chart-id="chart" data-period="1d">1D</button>
+  <button class="chart-filter-btn" data-chart-id="chart" data-period="3d">3D</button>
+  <button class="chart-filter-btn" data-chart-id="chart" data-period="1w">1W</button>
+  <button class="chart-filter-btn" data-chart-id="chart" data-period="1m">1M</button>
+  <button class="chart-filter-btn" data-chart-id="chart" data-period="1y">1Y</button>
+  <button class="chart-filter-btn" data-chart-id="chart" data-period="5y">5Y</button>
+  <button class="chart-filter-btn active" data-chart-id="chart" data-period="all">All</button>
+</div>
+<div class="chart-wrap">
       <canvas id="chart"></canvas>
     </div>
   </div>
@@ -837,7 +866,16 @@
   <div id="sigmap-house-brew"></div>
   <div class="card">
     <div class="card-title">☕ House Blend — Cumulative Return</div>
-    <div class="chart-wrap-mini"><canvas id="chart-house-brew"></canvas></div>
+    <div class="chart-filter-bar" id="filter-bar-house-brew">
+  <button class="chart-filter-btn" data-chart-id="chart-house-brew" data-period="1d">1D</button>
+  <button class="chart-filter-btn" data-chart-id="chart-house-brew" data-period="3d">3D</button>
+  <button class="chart-filter-btn" data-chart-id="chart-house-brew" data-period="1w">1W</button>
+  <button class="chart-filter-btn" data-chart-id="chart-house-brew" data-period="1m">1M</button>
+  <button class="chart-filter-btn" data-chart-id="chart-house-brew" data-period="1y">1Y</button>
+  <button class="chart-filter-btn" data-chart-id="chart-house-brew" data-period="5y">5Y</button>
+  <button class="chart-filter-btn active" data-chart-id="chart-house-brew" data-period="all">All</button>
+</div>
+<div class="chart-wrap-mini"><canvas id="chart-house-brew"></canvas></div>
   </div>
   <div class="card">
     <div class="card-title">☕ House Blend — Performance Stats</div>
@@ -861,7 +899,16 @@
   <div id="sigmap-zip"></div>
   <div class="card">
     <div class="card-title">Espresso (ZIP) — Cumulative Return</div>
-    <div class="chart-wrap-mini"><canvas id="chart-zip"></canvas></div>
+    <div class="chart-filter-bar" id="filter-bar-zip">
+  <button class="chart-filter-btn" data-chart-id="chart-zip" data-period="1d">1D</button>
+  <button class="chart-filter-btn" data-chart-id="chart-zip" data-period="3d">3D</button>
+  <button class="chart-filter-btn" data-chart-id="chart-zip" data-period="1w">1W</button>
+  <button class="chart-filter-btn" data-chart-id="chart-zip" data-period="1m">1M</button>
+  <button class="chart-filter-btn" data-chart-id="chart-zip" data-period="1y">1Y</button>
+  <button class="chart-filter-btn" data-chart-id="chart-zip" data-period="5y">5Y</button>
+  <button class="chart-filter-btn active" data-chart-id="chart-zip" data-period="all">All</button>
+</div>
+<div class="chart-wrap-mini"><canvas id="chart-zip"></canvas></div>
   </div>
   <div class="card">
     <div class="card-title">Espresso (ZIP) — Daily Trades</div>
@@ -874,7 +921,16 @@
   <div id="sigmap-zap"></div>
   <div class="card">
     <div class="card-title">Cold Brew (ZAP) — Cumulative Return</div>
-    <div class="chart-wrap-mini"><canvas id="chart-zap"></canvas></div>
+    <div class="chart-filter-bar" id="filter-bar-zap">
+  <button class="chart-filter-btn" data-chart-id="chart-zap" data-period="1d">1D</button>
+  <button class="chart-filter-btn" data-chart-id="chart-zap" data-period="3d">3D</button>
+  <button class="chart-filter-btn" data-chart-id="chart-zap" data-period="1w">1W</button>
+  <button class="chart-filter-btn" data-chart-id="chart-zap" data-period="1m">1M</button>
+  <button class="chart-filter-btn" data-chart-id="chart-zap" data-period="1y">1Y</button>
+  <button class="chart-filter-btn" data-chart-id="chart-zap" data-period="5y">5Y</button>
+  <button class="chart-filter-btn active" data-chart-id="chart-zap" data-period="all">All</button>
+</div>
+<div class="chart-wrap-mini"><canvas id="chart-zap"></canvas></div>
   </div>
   <div class="card">
     <div class="card-title">Cold Brew (ZAP) — Daily Trades</div>
@@ -887,7 +943,16 @@
   <div id="sigmap-zup"></div>
   <div class="card">
     <div class="card-title">Pour Over (ZUP) — Cumulative Return</div>
-    <div class="chart-wrap-mini"><canvas id="chart-zup"></canvas></div>
+    <div class="chart-filter-bar" id="filter-bar-zup">
+  <button class="chart-filter-btn" data-chart-id="chart-zup" data-period="1d">1D</button>
+  <button class="chart-filter-btn" data-chart-id="chart-zup" data-period="3d">3D</button>
+  <button class="chart-filter-btn" data-chart-id="chart-zup" data-period="1w">1W</button>
+  <button class="chart-filter-btn" data-chart-id="chart-zup" data-period="1m">1M</button>
+  <button class="chart-filter-btn" data-chart-id="chart-zup" data-period="1y">1Y</button>
+  <button class="chart-filter-btn" data-chart-id="chart-zup" data-period="5y">5Y</button>
+  <button class="chart-filter-btn active" data-chart-id="chart-zup" data-period="all">All</button>
+</div>
+<div class="chart-wrap-mini"><canvas id="chart-zup"></canvas></div>
   </div>
   <div class="card">
     <div class="card-title">Pour Over (ZUP) — Daily Trades</div>
@@ -1097,15 +1162,6 @@ function _currentPosition(modelKey) {
     .sort((a, b) => b.entry_date.localeCompare(a.entry_date))[0] || null;
 }
 
-function _totalAUM() {
-  if (!L3_POSITIONS || !L3_POSITIONS.length) return null;
-  // Most recent entry date
-  const latest = L3_POSITIONS.map(p => p.entry_date).sort().pop();
-  const total = L3_POSITIONS
-    .filter(p => p.entry_date === latest && p.cost != null)
-    .reduce((sum, p) => sum + p.cost, 0);
-  return total > 0 ? total : null;
-}
 
 function _modelStats(model) {
   if (TOURNAMENT_DATA) {
@@ -1157,14 +1213,13 @@ function _buildPredSectionHtml(model, d, p, color, title, posModelKey) {
   const bounceHtml = d.bounce_flipped
     ? '<span style="color:var(--zip);font-weight:600">\u26a0 bounce-flip</span>' : '';
 
-  // L3 position + total AUM
+  // L3 position + AUM
   let posHtml = '';
   const pos = _currentPosition(posModelKey);
   if (pos) {
     const pdirCls = pos.direction === 'SPXL' ? 'spxl' : 'spxs';
-    const aum     = _totalAUM();
-    const aumStr  = aum != null ? '$' + Math.round(aum).toLocaleString('en-US') : '\u2014';
-    posHtml = '<span class="pred-stat"><span class="' + pdirCls + '" style="font-weight:700">'
+    const aumStr  = pos.cost != null ? '$' + Math.round(pos.cost).toLocaleString('en-US') : '\u2014';
+    posHtml = '<span class="pred-stat">Position <span class="' + pdirCls + '" style="font-weight:700">'
             + pos.direction + '</span> \u00d7 ' + pos.shares + ' sh</span>'
             + '<span class="pred-stat">AUM ' + aumStr + '</span>';
   }
@@ -1235,6 +1290,39 @@ document.querySelectorAll('.tab-btn[data-tab]').forEach(btn => {
 // ── Overview chart ────────────────────────────────────────────────────────────
 const MODELS = ['ZUP','ZIP','ZAP','DRIP'];
 
+// ── Chart instance registry + time filter ────────────────────────────────────
+const CHART_INSTANCES = {};
+
+function _filterByPeriod(records, period) {
+  if (!period || period === 'all' || !records || !records.length) return records;
+  const last = records[records.length - 1].date;
+  const cutoff = new Date(last);
+  const daysMap = { '1d': 1, '3d': 3, '1w': 7, '1m': 30, '1y': 365, '5y': 1825 };
+  cutoff.setDate(cutoff.getDate() - (daysMap[period] || 0));
+  const cutStr = cutoff.toISOString().slice(0, 10);
+  return records.filter(function(r) { return r.date >= cutStr; });
+}
+
+function _wireChartFilters(chartId, getDataFn) {
+  document.querySelectorAll('[data-chart-id="' + chartId + '"]').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      document.querySelectorAll('[data-chart-id="' + chartId + '"]').forEach(function(b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      var inst = CHART_INSTANCES[chartId];
+      if (!inst) return;
+      var result = getDataFn(btn.dataset.period);
+      if (Array.isArray(result.datasets)) {
+        inst.data.labels = result.labels;
+        result.datasets.forEach(function(ds, i) { if (inst.data.datasets[i]) inst.data.datasets[i].data = ds.data; });
+      } else {
+        inst.data.labels = result.labels;
+        inst.data.datasets[0].data = result.data;
+      }
+      inst.update('none');
+    });
+  });
+}
+
 function buildOverviewDatasets() {
   const dateSet = new Set();
   for (const m of MODELS) ALL_DATA[m].forEach(r => dateSet.add(r.date));
@@ -1293,7 +1381,7 @@ const todayLinePlugin = {
   }
 };
 
-const overviewChart = typeof Chart !== 'undefined' && new Chart(document.getElementById('chart').getContext('2d'), {
+CHART_INSTANCES['chart'] = typeof Chart !== 'undefined' && new Chart(document.getElementById('chart').getContext('2d'), {
   type: 'line',
   data: { labels: overviewLabels, datasets: buildOverviewDatasets() },
   plugins: [todayLinePlugin],
@@ -1338,19 +1426,38 @@ const overviewChart = typeof Chart !== 'undefined' && new Chart(document.getElem
   }
 });
 
+// Wire overview chart filters
+(function() {
+  function getOverviewData(period) {
+    var dateSet = new Set();
+    for (var m of MODELS) _filterByPeriod(ALL_DATA[m], period).forEach(function(r) { dateSet.add(r.date); });
+    var labels = [...dateSet].sort();
+    var datasets = MODELS.map(function(m) {
+      var recs = _filterByPeriod(ALL_DATA[m], period);
+      var byDate = {};
+      var cum = 1.0;
+      recs.forEach(function(r) { cum *= (1 + r.return_pct/100); byDate[r.date] = +((cum-1)*100).toFixed(4); });
+      var lastVal = 0;
+      return { data: labels.map(function(d) { if (byDate[d] !== undefined) lastVal = byDate[d]; return lastVal; }) };
+    });
+    return { labels: labels, datasets: datasets };
+  }
+  _wireChartFilters('chart', getOverviewData);
+})();
+
 // Legend pills
 const legendRow = document.getElementById('legendRow');
-overviewChart && overviewChart.data.datasets.forEach((ds, i) => {
+CHART_INSTANCES['chart'] && CHART_INSTANCES['chart'].data.datasets.forEach((ds, i) => {
   const pill = document.createElement('div');
   pill.className = 'legend-pill';
   pill.style.borderColor = ds.borderColor;
   const label = BREW_NAMES[ds.label] ? BREW_NAMES[ds.label] + (ds.label === 'DRIP' ? ' ☕' : '') : ds.label;
   pill.innerHTML = `<span class="dot" style="background:${ds.borderColor}"></span>${label}`;
   pill.addEventListener('click', () => {
-    const meta = overviewChart.getDatasetMeta(i);
+    const meta = CHART_INSTANCES['chart'].getDatasetMeta(i);
     meta.hidden = !meta.hidden;
     pill.classList.toggle('off', meta.hidden);
-    overviewChart.update();
+    CHART_INSTANCES['chart'].update();
   });
   legendRow.appendChild(pill);
 });
@@ -1574,55 +1681,44 @@ function renderWeeklyTable() {
 
 // ── Mini charts ───────────────────────────────────────────────────────────────
 function initMiniChart(model) {
-  const records = ALL_DATA[model];
-  const labels = records.map(r => r.date);
-  const data = cumReturns(records);
-  const color = COLORS[model];
-  new Chart(document.getElementById('chart-' + model.toLowerCase()).getContext('2d'), {
+  var allRecords = ALL_DATA[model];
+  var color = COLORS[model];
+  var canvasId = 'chart-' + model.toLowerCase();
+
+  function getChartData(period) {
+    var recs = _filterByPeriod(allRecords, period);
+    return { labels: recs.map(function(r) { return r.date; }), data: cumReturns(recs) };
+  }
+
+  var initial = getChartData('all');
+  CHART_INSTANCES[canvasId] = new Chart(document.getElementById(canvasId).getContext('2d'), {
     type: 'line',
     data: {
-      labels,
+      labels: initial.labels,
       datasets: [{
         label: model,
-        data,
+        data: initial.data,
         borderColor: color,
-        backgroundColor: (ctx) => {
-          const gradient = ctx.chart.ctx.createLinearGradient(0,0,0,ctx.chart.height);
-          gradient.addColorStop(0, color + '44');
-          gradient.addColorStop(1, color + '08');
-          return gradient;
-        },
-        fill: true,
-        borderWidth: 2.5,
-        pointRadius: 0,
-        tension: 0.3
+        backgroundColor: (function(c) { return function(ctx) {
+          var g = ctx.chart.ctx.createLinearGradient(0,0,0,ctx.chart.height);
+          g.addColorStop(0, c + '44'); g.addColorStop(1, c + '08'); return g;
+        }; })(color),
+        fill: true, borderWidth: 2.5, pointRadius: 0, tension: 0.3
       }]
     },
     options: {
       responsive: true, maintainAspectRatio: false,
       plugins: {
         legend: { display: false },
-        tooltip: { enabled: true,
-          callbacks: {
-            label: ctx => ` ${ctx.raw >= 0 ? '+' : ''}${ctx.raw.toFixed(2)}%`
-          }
-        }
+        tooltip: { enabled: true, callbacks: { label: function(ctx) { return ' ' + (ctx.raw >= 0 ? '+' : '') + ctx.raw.toFixed(2) + '%'; } } }
       },
       scales: {
-        x: {
-          ticks: { color: '#8B6A50', font: { size: 10 }, maxTicksLimit: 10 },
-          grid: { color: 'rgba(44,24,16,0.06)' }
-        },
-        y: {
-          ticks: { color: '#8B6A50', font: { size: 10 },
-            callback: v => (v>=0?'+':'')+v.toFixed(0)+'%'
-          },
-          grid: { color: 'rgba(44,24,16,0.08)' },
-          border: { dash: [3,3] }
-        }
+        x: { ticks: { color: '#8B6A50', font: { size: 10 }, maxTicksLimit: 10 }, grid: { color: 'rgba(44,24,16,0.06)' } },
+        y: { ticks: { color: '#8B6A50', font: { size: 10 }, callback: function(v) { return (v>=0?'+':'') + v.toFixed(0) + '%'; } }, grid: { color: 'rgba(44,24,16,0.08)' }, border: { dash: [3,3] } }
       }
     }
   });
+  _wireChartFilters(canvasId, getChartData);
 }
 
 // ── Trade tables ──────────────────────────────────────────────────────────────
@@ -1654,7 +1750,7 @@ function renderTradeTable(model) {
   const cols = [
     'Date', 'Direction',
     ...(hasRegime  ? ['Regime']  : []),
-    'Conf', 'Signals', 'VIX',
+    'Conf', 'Signals',
     ...(hasBounce  ? ['Bounce']  : []),
     'Entry', 'Exit', 'Ret %', 'Cumul %', '✓?',
     ...(hasCapital ? ['Capital After'] : []),
@@ -1688,7 +1784,6 @@ function renderTradeTable(model) {
       ${regCol}
       <td>${r.confidence ?? '—'}</td>
       <td>${signalStr(r)}</td>
-      <td>${r.vix != null ? r.vix.toFixed(1) : '—'}</td>
       ${bounceCol}
       <td>${r.entry_price != null ? r.entry_price.toFixed(2) : '—'}</td>
       <td>${exitHtml}</td>
@@ -1745,7 +1840,7 @@ function renderSignalMap(model) {
   const smLabel = model === 'DRIP' ? 'Drip (House Blend)' : (BREW_NAMES[model] ? BREW_NAMES[model] + ' (' + model + ')' : model);
   el.innerHTML = `
     <div class="sig-meta-card" style="border-color:${color}44">
-      <div class="sig-meta-title">Blend Weights &amp; Roast Settings — ${smLabel}</div>
+      <div class="sig-meta-title">Settings — ${smLabel}</div>
       <div style="overflow-x:auto">
         <table class="sig-meta-table">
           <thead><tr>
@@ -2120,7 +2215,7 @@ function initHouseBrewTab() {
       }).join('');
       sigEl.innerHTML = `
         <div class="sig-meta-card" style="border-color:${color}44">
-          <div class="sig-meta-title">Blend Weights &amp; Roast Settings — House Blend</div>
+          <div class="sig-meta-title">Settings — House Blend</div>
           <div style="overflow-x:auto">
             <table class="sig-meta-table">
               <thead><tr>
@@ -2136,43 +2231,43 @@ function initHouseBrewTab() {
     }
   }
 
-  // Chart — reuse promoted model's data
+  // Chart — reuse DRIP data
   const records = DRIP_DATA;
   if (records && records.length > 0) {
-    const labels = records.map(r => r.date);
-    const data = cumReturns(records);
-    new Chart(document.getElementById('chart-house-brew').getContext('2d'), {
+    var hbCanvasId = 'chart-house-brew';
+    function getHbData(period) {
+      var recs = _filterByPeriod(records, period);
+      return { labels: recs.map(function(r) { return r.date; }), data: cumReturns(recs) };
+    }
+    var hbInitial = getHbData('all');
+    CHART_INSTANCES[hbCanvasId] = new Chart(document.getElementById(hbCanvasId).getContext('2d'), {
       type: 'line',
       data: {
-        labels,
+        labels: hbInitial.labels,
         datasets: [{
           label: 'House Blend',
-          data,
+          data: hbInitial.data,
           borderColor: color,
-          backgroundColor: (ctx) => {
-            const gradient = ctx.chart.ctx.createLinearGradient(0,0,0,ctx.chart.height);
-            gradient.addColorStop(0, color + '44');
-            gradient.addColorStop(1, color + '08');
-            return gradient;
-          },
-          fill: true,
-          borderWidth: 2.5,
-          pointRadius: 0,
-          tension: 0.3
+          backgroundColor: (function(c) { return function(ctx) {
+            var g = ctx.chart.ctx.createLinearGradient(0,0,0,ctx.chart.height);
+            g.addColorStop(0, c + '44'); g.addColorStop(1, c + '08'); return g;
+          }; })(color),
+          fill: true, borderWidth: 2.5, pointRadius: 0, tension: 0.3
         }]
       },
       options: {
         responsive: true, maintainAspectRatio: false,
         plugins: {
           legend: { display: false },
-          tooltip: { enabled: true, callbacks: { label: ctx => ` ${ctx.raw >= 0 ? '+' : ''}${ctx.raw.toFixed(2)}%` } }
+          tooltip: { enabled: true, callbacks: { label: function(ctx) { return ' ' + (ctx.raw >= 0 ? '+' : '') + ctx.raw.toFixed(2) + '%'; } } }
         },
         scales: {
           x: { ticks: { color: '#8B6A50', font: { size: 10 }, maxTicksLimit: 10 }, grid: { color: 'rgba(44,24,16,0.06)' } },
-          y: { ticks: { color: '#8B6A50', font: { size: 10 }, callback: v => (v>=0?'+':'')+v.toFixed(0)+'%' }, grid: { color: 'rgba(44,24,16,0.08)' }, border: { dash: [3,3] } }
+          y: { ticks: { color: '#8B6A50', font: { size: 10 }, callback: function(v) { return (v>=0?'+':'') + v.toFixed(0) + '%'; } }, grid: { color: 'rgba(44,24,16,0.08)' }, border: { dash: [3,3] } }
         }
       }
     });
+    _wireChartFilters(hbCanvasId, getHbData);
   }
 
   // Stats table
