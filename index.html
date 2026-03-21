@@ -2078,8 +2078,10 @@ function renderL2Panel() {
     const tick  = r.correct ? '<span class="correct">✓</span>' : '<span class="incorrect">✗</span>';
     const predSign = (r.predicted_pct ?? 0) >= 0 ? '+' : '';
     const actSign  = (r.actual_pct   ?? 0) >= 0 ? '+' : '';
+    const tickerCls = (r.direction === 'SPXL') ? 'pos' : 'neg';
     return `<tr>
       <td><span style="color:${color};font-weight:600">${BREW[m]}</span></td>
+      <td><span class="${tickerCls}" style="font-size:11px;font-weight:600">${r.direction ?? '—'}</span></td>
       <td style="text-align:right">${predSign}${(r.predicted_pct ?? 0).toFixed(2)}%</td>
       <td style="text-align:right" class="${(r.actual_pct ?? 0) >= 0 ? 'pos' : 'neg'}">${actSign}${(r.actual_pct ?? 0).toFixed(2)}%</td>
       <td style="text-align:right;opacity:0.75">${r.e_delta != null ? r.e_delta.toFixed(2)+'%' : '—'}</td>
@@ -2090,7 +2092,7 @@ function renderL2Panel() {
   el.innerHTML = `
     <div style="font-size:11px;color:var(--text-muted);margin-bottom:8px">Settled ${date}</div>
     <div class="tbl-wrap"><table>
-      <thead><tr><th>Brew</th><th style="text-align:right">Predicted</th>
+      <thead><tr><th>Brew</th><th>Ticker</th><th style="text-align:right">Predicted</th>
         <th style="text-align:right">Actual</th>
         <th style="text-align:right">e-δ</th><th style="text-align:right">✓?</th></tr></thead>
       <tbody>${rows}</tbody>
