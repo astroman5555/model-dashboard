@@ -1930,8 +1930,12 @@ document.head.appendChild(spinStyle);
 
 // ── House Blend tab ────────────────────────────────────────────────────────────
 function initHouseBrewTab() {
-  const DRIP_DATA = ALL_DATA['DRIP'];
-  const color = COLORS['DRIP'];
+  // If a challenger won the tournament, House Blend shows that model's data
+  const activeModel = (TOURNAMENT_DATA && TOURNAMENT_DATA.winner_beats_baseline && TOURNAMENT_DATA.winner)
+    ? TOURNAMENT_DATA.winner.model
+    : 'DRIP';
+  const DRIP_DATA = ALL_DATA[activeModel];
+  const color = COLORS[activeModel] || COLORS['DRIP'];
 
   // Info card
   const infoEl = document.getElementById('house-brew-info-card');
@@ -1974,10 +1978,10 @@ function initHouseBrewTab() {
       </div>`;
   }
 
-  // Prediction section (reuse DRIP prediction)
+  // Prediction section (reuse promoted model's prediction)
   const predEl = document.getElementById('pred-section-house-brew');
-  if (predEl && PREDICTIONS && PREDICTIONS.models && PREDICTIONS.models['DRIP']) {
-    const d = PREDICTIONS.models['DRIP'];
+  if (predEl && PREDICTIONS && PREDICTIONS.models && PREDICTIONS.models[activeModel]) {
+    const d = PREDICTIONS.models[activeModel];
     const dirCls = d.direction === 'SPXL' ? 'spxl' : 'spxs';
     const pills = (d.signals || []).map(s => {
       const cls = s.vote > 0 ? 'bull' : 'bear';
@@ -2008,10 +2012,10 @@ function initHouseBrewTab() {
       </div>`;
   }
 
-  // Signal weights (reuse DRIP signal map)
+  // Signal weights (reuse promoted model's signal map)
   const sigEl = document.getElementById('sigmap-house-brew');
   if (sigEl) {
-    const meta = SIGNAL_META['DRIP'];
+    const meta = SIGNAL_META[activeModel];
     if (!meta) { sigEl.style.display = 'none'; }
     else {
       const entries = Object.entries(meta).sort(([,a],[,b]) => {
@@ -2057,7 +2061,7 @@ function initHouseBrewTab() {
     }
   }
 
-  // Chart — reuse DRIP data
+  // Chart — reuse promoted model's data
   const records = DRIP_DATA;
   if (records && records.length > 0) {
     const labels = records.map(r => r.date);
