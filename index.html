@@ -107,7 +107,7 @@
   .tab-btn[data-model="ZAP"].active  { border-bottom-color: var(--zap);  background: rgba(184,96,64,0.07);   color: var(--zap);  }
   .tab-btn[data-model="ZUP"].active  { border-bottom-color: var(--zup);  background: rgba(106,138,56,0.07);  color: var(--zup);  }
   .tab-btn[data-model="DRIP"].active { border-bottom-color: var(--base); background: rgba(200,136,58,0.07);  color: var(--base); }
-  /* House Brew tab uses same color as DRIP/base */
+  /* House Blend tab uses same color as DRIP/base */
   .tab-btn[data-tab="house-brew"].active { border-bottom-color: var(--accent); background: rgba(200,112,58,0.10); color: var(--accent); }
 
   .tab-content { display: none; }
@@ -606,7 +606,7 @@
   .delta-neg { color: var(--neg); font-weight: 600; }
   .delta-zero { color: var(--text-muted); }
 
-  /* ── House Brew Today banner ── */
+  /* ── House Blend Today banner ── */
   .house-brew-banner {
     display: flex;
     align-items: center;
@@ -714,10 +714,10 @@
   <span class="freshly-ground" id="freshly-ground-ts">Freshly ground at 7:26 pm ET</span>
 </header>
 
-<!-- ── House Brew Today banner ── -->
+<!-- ── House Blend Today banner ── -->
 <div class="house-brew-banner" id="house-brew-banner">
   <span class="house-brew-icon">☕</span>
-  <span class="house-brew-label">House Brew Today:</span>
+  <span class="house-brew-label">House Blend Today:</span>
   <span class="house-brew-name">Cold Brew</span>
   <span class="house-brew-sep">|</span>
   <span class="house-brew-dir-wrap">
@@ -731,7 +731,7 @@
 
 <div class="tab-bar">
   <button class="tab-btn active" data-tab="overview">Overview</button>
-  <button class="tab-btn" data-tab="house-brew" data-model="DRIP">☕ House Brew</button>
+  <button class="tab-btn" data-tab="house-brew" data-model="DRIP">☕ House Blend</button>
   <button class="tab-btn" data-tab="zip" data-model="ZIP">Espresso</button>
   <button class="tab-btn" data-tab="zap" data-model="ZAP">Cold Brew</button>
   <button class="tab-btn" data-tab="zup" data-model="ZUP">Pour Over</button>
@@ -815,11 +815,11 @@
   <!-- Signal weights table for house brew (reuses DRIP signal map slot) -->
   <div id="sigmap-house-brew"></div>
   <div class="card">
-    <div class="card-title">☕ House Brew — Cumulative Return</div>
+    <div class="card-title">☕ House Blend — Cumulative Return</div>
     <div class="chart-wrap-mini"><canvas id="chart-house-brew"></canvas></div>
   </div>
   <div class="card">
-    <div class="card-title">☕ House Brew — Performance Stats</div>
+    <div class="card-title">☕ House Blend — Performance Stats</div>
     <div class="tbl-wrap">
       <table id="table-house-brew-stats">
         <thead>
@@ -1356,7 +1356,7 @@ function renderWeeklyTable() {
   }
 
   const models = [
-    ['DRIP', 'House Brew ☕', 'var(--base)'],
+    ['DRIP', 'House Blend ☕', 'var(--base)'],
     ['ZIP',  'Espresso',     'var(--zip)'],
     ['ZAP',  'Cold Brew',    'var(--zap)'],
     ['ZUP',  'Pour Over',    'var(--zup)'],
@@ -1902,7 +1902,7 @@ const spinStyle = document.createElement('style');
 spinStyle.textContent = '@keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }';
 document.head.appendChild(spinStyle);
 
-// ── House Brew tab ────────────────────────────────────────────────────────────
+// ── House Blend tab ────────────────────────────────────────────────────────────
 function initHouseBrewTab() {
   const DRIP_DATA = ALL_DATA['DRIP'];
   const color = COLORS['DRIP'];
@@ -1914,13 +1914,13 @@ function initHouseBrewTab() {
     const beats = t.winner_beats_baseline;
     const winnerModel = t.winner ? t.winner.model : 'DRIP';
     const winBrewName = BREW_NAMES[winnerModel] || winnerModel;
-    const hbSource = t.house_blend_source || (beats ? winBrewName : 'Drip (original blend)');
-    const hbDisplay = beats ? hbSource : 'Drip (original blend)';
+    const hbSource = t.house_blend_source || (beats ? winBrewName : 'House Blend (original)');
+    const hbDisplay = beats ? hbSource : 'House Blend (original)';
     const sharpeVal = t.winner ? (t.winner.blend ?? t.winner.sharpe) : t.baseline_score;
     const sharpeStr = sharpeVal != null ? (sharpeVal >= 0 ? '+' : '') + sharpeVal.toFixed(4) : '—';
     infoEl.innerHTML = `
       <div class="card" style="border-color:${color}44">
-        <div class="card-title">☕ House Brew — ${hbDisplay}</div>
+        <div class="card-title">☕ House Blend — ${hbDisplay}</div>
         <div style="display:flex;gap:24px;flex-wrap:wrap;font-size:13px">
           <div>
             <div style="font-size:10px;text-transform:uppercase;letter-spacing:0.07em;color:var(--text-muted);margin-bottom:4px">Sourced from</div>
@@ -1943,7 +1943,7 @@ function initHouseBrewTab() {
   } else if (infoEl) {
     infoEl.innerHTML = `
       <div class="card" style="border-color:${color}44">
-        <div class="card-title">☕ House Brew — Drip (original blend)</div>
+        <div class="card-title">☕ House Blend — House Blend (original)</div>
         <div style="font-size:13px;color:var(--text-muted)">No cupping session has run yet. Showing current Drip blend.</div>
       </div>`;
   }
@@ -1967,7 +1967,7 @@ function initHouseBrewTab() {
     predEl.innerHTML = `
       <div class="pred-section" style="border-color:${color}44">
         <div class="pred-section-header">
-          <span class="pred-section-title" style="color:${color}">☕ House Brew — Tomorrow's Pour</span>
+          <span class="pred-section-title" style="color:${color}">☕ House Blend — Tomorrow's Pour</span>
           <span class="tomorrow-banner-date">Mon Mar 23</span>
           <span class="pred-dir-badge ${dirCls}">${d.direction}</span>
           ${expHtml}
@@ -2015,7 +2015,7 @@ function initHouseBrewTab() {
       }).join('');
       sigEl.innerHTML = `
         <div class="sig-meta-card" style="border-color:${color}44">
-          <div class="sig-meta-title">Blend Weights &amp; Roast Settings — House Brew</div>
+          <div class="sig-meta-title">Blend Weights &amp; Roast Settings — House Blend</div>
           <div style="overflow-x:auto">
             <table class="sig-meta-table">
               <thead><tr>
@@ -2041,7 +2041,7 @@ function initHouseBrewTab() {
       data: {
         labels,
         datasets: [{
-          label: 'House Brew',
+          label: 'House Blend',
           data,
           borderColor: color,
           backgroundColor: (ctx) => {
@@ -2098,7 +2098,7 @@ function renderL2Panel() {
     card.style.display = 'none'; return;
   }
 
-  const BREW = { DRIP:'House Brew ☕', ZIP:'Espresso', ZAP:'Cold Brew', ZUP:'Pour Over' };
+  const BREW = { DRIP:'House Blend ☕', ZIP:'Espresso', ZAP:'Cold Brew', ZUP:'Pour Over' };
   const MODEL_COLORS = { ZUP:'#6A8A38', ZIP:'#C8A030', ZAP:'#B86040', DRIP:'#C8883A' };
 
   const dates = Object.keys(L2_ACCURACY).sort();
@@ -2218,7 +2218,7 @@ try {
   renderL2Panel();
   renderL3Panel();
   renderTournamentPanel();
-  // House Brew tab is lazily inited on first click (initHouseBrewTab)
+  // House Blend tab is lazily inited on first click (initHouseBrewTab)
 } catch(e) {
   console.error('Dashboard init error:', e);
 }
