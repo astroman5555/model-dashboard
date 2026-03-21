@@ -1097,6 +1097,16 @@ function _currentPosition(modelKey) {
     .sort((a, b) => b.entry_date.localeCompare(a.entry_date))[0] || null;
 }
 
+function _totalAUM() {
+  if (!L3_POSITIONS || !L3_POSITIONS.length) return null;
+  // Most recent entry date
+  const latest = L3_POSITIONS.map(p => p.entry_date).sort().pop();
+  const total = L3_POSITIONS
+    .filter(p => p.entry_date === latest && p.cost != null)
+    .reduce((sum, p) => sum + p.cost, 0);
+  return total > 0 ? total : null;
+}
+
 function _modelStats(model) {
   if (TOURNAMENT_DATA) {
     if (model === 'DRIP') {
@@ -1147,14 +1157,16 @@ function _buildPredSectionHtml(model, d, p, color, title, posModelKey) {
   const bounceHtml = d.bounce_flipped
     ? '<span style="color:var(--zip);font-weight:600">\u26a0 bounce-flip</span>' : '';
 
-  // L3 position + AUM
+  // L3 position + total AUM
   let posHtml = '';
   const pos = _currentPosition(posModelKey);
   if (pos) {
     const pdirCls = pos.direction === 'SPXL' ? 'spxl' : 'spxs';
-    const aumStr  = pos.cost != null ? '$' + Math.round(pos.cost).toLocaleString('en-US') : '\u2014';
+    const aum     = _totalAUM();
+    const aumStr  = aum != null ? '$' + Math.round(aum).toLocaleString('en-US') : '\u2014';
     posHtml = '<span class="pred-stat"><span class="' + pdirCls + '" style="font-weight:700">'
-            + pos.direction + '</span> \u00d7 ' + pos.shares + ' sh \u00b7 AUM ' + aumStr + '</span>';
+            + pos.direction + '</span> \u00d7 ' + pos.shares + ' sh</span>'
+            + '<span class="pred-stat">AUM ' + aumStr + '</span>';
   }
 
   return '<div class="pred-section" style="border-color:' + color + '44">'
