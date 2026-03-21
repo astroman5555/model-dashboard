@@ -729,13 +729,25 @@
   </div>
 
   <div class="card">
-    <div class="card-title">This Week's Pour</div>
+    <div class="card-title" style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px">
+      <span id="weekly-title">This Week's Pour</span>
+      <span style="display:flex;gap:6px">
+        <button id="week-prev" onclick="shiftWeek(-1)" style="background:var(--surface2);border:1.5px solid var(--border);border-radius:6px;padding:2px 10px;cursor:pointer;font-size:14px;color:var(--text-muted)">←</button>
+        <button id="week-next" onclick="shiftWeek(+1)" style="background:var(--surface2);border:1.5px solid var(--border);border-radius:6px;padding:2px 10px;cursor:pointer;font-size:14px;color:var(--text-muted)">→</button>
+      </span>
+    </div>
     <div style="font-size:11px;color:var(--text-muted);margin-bottom:8px">
       Model return % per day · green = correct direction · <em>italic = forecast</em> · E-Δ = cumulative error, lower is better
     </div>
     <div class="tbl-wrap">
       <table id="weeklyTable"></table>
     </div>
+  </div>
+
+  <!-- L3 Positions & P&L panel -->
+  <div class="card" id="l3-card">
+    <div class="card-title">L3 — Positions &amp; P&amp;L</div>
+    <div id="l3-panel"></div>
   </div>
 
   <!-- The Cupping Room tournament panel (rendered by JS from TOURNAMENT_DATA) -->
@@ -853,6 +865,9 @@ const TOURNAMENT_DATA = {"run_date":"2026-03-20","windows_tested":20,"candidates
 
 // ── L2 accuracy (EOD settled: predicted vs actual per day) ───────────────────
 let L2_ACCURACY = {"2026-03-20":{"DRIP":{"direction":"SPXS","predicted_pct":-0.99,"actual_pct":4.4377,"correct":true,"e_delta":5.4277},"ZIP":{"direction":"SPXS","predicted_pct":-0.96,"actual_pct":4.4377,"correct":true,"e_delta":5.3977},"ZAP":{"direction":"SPXL","predicted_pct":0.99,"actual_pct":-4.4542,"correct":false,"e_delta":5.4442},"ZUP":{"direction":"SPXS","predicted_pct":0.48,"actual_pct":4.4377,"correct":true,"e_delta":3.9577}}};
+
+// ── L3 positions (entry/exit prices, shares, P&L) ────────────────────────────
+const L3_POSITIONS = [{"entry_date":"2026-03-20","exit_date":"2026-03-23","model":"ZUP","direction":"SPXS","confidence":7,"entry_price":41.705,"exit_price":null,"shares":209,"cost":8716.3454,"pnl":null,"return_pct":null},{"entry_date":"2026-03-20","exit_date":"2026-03-23","model":"ZAP","direction":"SPXL","confidence":1,"entry_price":183.8301,"exit_price":null,"shares":6,"cost":1102.9806,"pnl":null,"return_pct":null},{"entry_date":"2026-03-20","exit_date":"2026-03-23","model":"ZIP","direction":"SPXS","confidence":10,"entry_price":41.705,"exit_price":null,"shares":299,"cost":12469.7955,"pnl":null,"return_pct":null},{"entry_date":"2026-03-20","exit_date":"2026-03-23","model":"DRIP","direction":"SPXS","confidence":10,"entry_price":41.705,"exit_price":null,"shares":299,"cost":12469.7955,"pnl":null,"return_pct":null}];
 
 // ── L3 locked positions (direction locked at 3:35pm for next trading day) ────
 const L3_LOCKED = {"2026-03-23":{"DRIP":{"direction":"SPXS","confidence":10},"ZIP":{"direction":"SPXS","confidence":10},"ZAP":{"direction":"SPXL","confidence":1},"ZUP":{"direction":"SPXS","confidence":7}}};
@@ -1213,12 +1228,37 @@ overviewChart && overviewChart.data.datasets.forEach((ds, i) => {
   legendRow.appendChild(pill);
 });
 
+// ── Week navigation state ─────────────────────────────────────────────────────
+let weekOffset = 0;
+function shiftWeek(delta) {
+  const newOffset = weekOffset + delta;
+  if (newOffset > 1) return;   // can't go beyond next week (no data)
+  weekOffset = newOffset;
+  renderWeeklyTable();
+}
+
 // Weekly prediction table
 function renderWeeklyTable() {
   const today = new Date();
   const dow = today.getDay();
-  const monday = new Date(today);
-  monday.setDate(today.getDate() - (dow === 0 ? 6 : dow - 1));
+  const thisMonday = new Date(today);
+  thisMonday.setDate(today.getDate() - (dow === 0 ? 6 : dow - 1));
+
+  // Apply week offset
+  const monday = new Date(thisMonday);
+  monday.setDate(thisMonday.getDate() + weekOffset * 7);
+
+  // Update title + arrow state
+  const titleEl = document.getElementById('weekly-title');
+  const prevBtn = document.getElementById('week-prev');
+  const nextBtn = document.getElementById('week-next');
+  if (titleEl) {
+    if (weekOffset === 0) titleEl.textContent = "This Week's Pour";
+    else if (weekOffset === 1) titleEl.textContent = "Next Week's Preview";
+    else titleEl.textContent = `Week of ${monday.toLocaleDateString('en-US',{month:'short',day:'numeric'})}`;
+  }
+  if (nextBtn) nextBtn.style.opacity = weekOffset >= 1 ? '0.3' : '1';
+  if (prevBtn) prevBtn.style.opacity = weekOffset <= -8 ? '0.3' : '1';
 
   const DAY_LABELS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'];
   const toLocalDate = dt => {
@@ -1232,6 +1272,10 @@ function renderWeeklyTable() {
     dt.setDate(monday.getDate() + d);
     return toLocalDate(dt);
   });
+
+  // Next-week preview: use NEXT_WEEK_PRED.days for all cells (all italic/preview)
+  const isNextWeek = weekOffset === 1;
+  const nextWeekDays = isNextWeek ? (NEXT_WEEK_PRED?.days ?? {}) : {};
 
   const predToday = {};
   if (PREDICTIONS?.models) {
@@ -1325,6 +1369,25 @@ function renderWeeklyTable() {
           <div>${exp}</div>
           ${conf}
         </td>`;
+      }
+
+      // ── Next-week preview: from NEXT_WEEK_PRED ───────────────────────────
+      if (isNextWeek) {
+        const dayData = nextWeekDays[date];
+        const nwModel = dayData?.models?.[model];
+        if (nwModel) {
+          const arrow = nwModel.direction === 'SPXL' ? '↑' : '↓';
+          const exp   = nwModel.expected_pct != null
+            ? (nwModel.expected_pct >= 0 ? '+' : '') + nwModel.expected_pct.toFixed(2) + '%' : '';
+          const conf  = nwModel.confidence != null
+            ? `<div style="font-size:10px;opacity:0.55">conf ${nwModel.confidence}/10</div>` : '';
+          return `<td style="font-size:11px;text-align:center;opacity:0.65;font-style:italic">
+            <div>${arrow} <span style="opacity:0.8">${nwModel.direction}</span></div>
+            <div>${exp}</div>
+            ${conf}
+          </td>`;
+        }
+        return `<td style="text-align:center;opacity:0.3">—</td>`;
       }
 
       return `<td style="text-align:center;opacity:0.3">—</td>`;
@@ -1955,11 +2018,70 @@ function initHouseBrewTab() {
   }
 }
 
+// ── L3 Positions & P&L panel ─────────────────────────────────────────────────
+function renderL3Panel() {
+  const el = document.getElementById('l3-panel');
+  const card = document.getElementById('l3-card');
+  if (!el) return;
+
+  if (!L3_POSITIONS || L3_POSITIONS.length === 0) {
+    card.style.display = 'none';
+    return;
+  }
+
+  const MODEL_COLORS = { ZUP:'#6A8A38', ZIP:'#C8A030', ZAP:'#B86040', DRIP:'#C8883A' };
+  const open   = L3_POSITIONS.filter(p => p.exit_price == null);
+  const closed = L3_POSITIONS.filter(p => p.exit_price != null);
+
+  // Summary: total closed P&L
+  const totalPnl = closed.reduce((s, p) => s + (p.pnl ?? 0), 0);
+  const totalCost = open.reduce((s, p) => s + (p.cost ?? 0), 0);
+  const summaryHtml = `
+    <div style="display:flex;gap:24px;margin-bottom:12px;font-size:13px">
+      <span>Open positions: <strong>${open.length}</strong> · Cost basis <strong>$${totalCost.toLocaleString('en-US',{minimumFractionDigits:0,maximumFractionDigits:0})}</strong></span>
+      ${closed.length > 0 ? `<span>Closed P&L: <strong class="${totalPnl >= 0 ? 'pos' : 'neg'}">${totalPnl >= 0 ? '+' : ''}$${totalPnl.toFixed(2)}</strong></span>` : ''}
+    </div>`;
+
+  const rowHtml = (pos, isOpen) => {
+    const color = MODEL_COLORS[pos.model] ?? 'var(--accent)';
+    const dirCls = pos.direction === 'SPXL' ? 'pos' : 'neg';
+    const arrow  = pos.direction === 'SPXL' ? '↑' : '↓';
+    const exitCell = isOpen
+      ? `<td style="color:var(--text-muted);font-style:italic">Holding</td><td>—</td><td>—</td>`
+      : `<td>${pos.exit_price?.toFixed(2) ?? '—'}</td>
+         <td class="${(pos.pnl ?? 0) >= 0 ? 'pos' : 'neg'}">${(pos.pnl ?? 0) >= 0 ? '+' : ''}$${(pos.pnl ?? 0).toFixed(2)}</td>
+         <td class="${(pos.return_pct ?? 0) >= 0 ? 'pos' : 'neg'}">${(pos.return_pct ?? 0) >= 0 ? '+' : ''}${(pos.return_pct ?? 0).toFixed(2)}%</td>`;
+    return `<tr${isOpen ? ' style="background:var(--surface2)"' : ''}>
+      <td style="font-size:11px;opacity:0.7">${pos.entry_date} → ${pos.exit_date}</td>
+      <td><span style="color:${color};font-weight:600">${pos.model}</span></td>
+      <td><span class="${dirCls}">${arrow} ${pos.direction}</span></td>
+      <td style="opacity:0.7">${pos.confidence}/10</td>
+      <td>${pos.shares}</td>
+      <td>${pos.entry_price?.toFixed(2) ?? '—'}</td>
+      ${exitCell}
+    </tr>`;
+  };
+
+  const thead = `<thead><tr>
+    <th>Period</th><th>Model</th><th>Dir</th><th>Conf</th>
+    <th style="text-align:right">Shares</th><th style="text-align:right">Entry</th>
+    <th style="text-align:right">Exit</th><th style="text-align:right">P&amp;L</th><th style="text-align:right">Ret%</th>
+  </tr></thead>`;
+
+  const rows = [
+    ...open.map(p => rowHtml(p, true)),
+    ...closed.slice(0, 20).map(p => rowHtml(p, false)),
+  ].join('');
+
+  el.innerHTML = summaryHtml + `<div class="tbl-wrap"><table class="trade-table">${thead}<tbody>${rows}</tbody></table></div>`;
+}
+
 // ── Init ──────────────────────────────────────────────────────────────────────
 try {
   renderTomorrowBanner();
   for (const m of ['ZIP','ZAP','ZUP','DRIP']) renderModelPrediction(m);
   renderWeeklyTable();
+  renderL3Panel();
   renderTournamentPanel();
   // House Brew tab is lazily inited on first click (initHouseBrewTab)
 } catch(e) {
