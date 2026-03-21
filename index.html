@@ -1878,18 +1878,43 @@ function tournamentPromote() {
   if (btn) { btn.disabled = true; btn.innerHTML = '<span style="display:inline-block;animation:spin 0.8s linear infinite">☕</span> Promoting…'; }
   if (msg) { msg.className = 'tourn-promote-msg'; msg.textContent = ''; }
 
-  fetch('https://tabithas-mac-mini.tailcc2d00.ts.net/promote', {
+  const PROMOTE_BASE = 'https://tabithas-mac-mini.tailcc2d00.ts.net';
+  const PROMOTE_HEADERS = {
+    'Content-Type': 'application/json',
+    'Authorization': 'Bearer 22a5076abf27bcb598d13bfbb87cbd666eb83f5fa341cb77f082994f3963a5b6',
+  };
+
+  fetch(PROMOTE_BASE + '/promote', {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer 22a5076abf27bcb598d13bfbb87cbd666eb83f5fa341cb77f082994f3963a5b6',
-    },
+    headers: PROMOTE_HEADERS,
     body: JSON.stringify({ model: t.winner.model, config: t.winner.config }),
   })
     .then(r => r.json())
     .then(data => {
-      if (btn) { btn.disabled = true; btn.innerHTML = '✅ House Blend set!'; }
-      if (msg) { msg.className = 'tourn-promote-msg ok'; msg.textContent = 'Rebuilding dashboard…'; }
+      if (btn) { btn.disabled = true; btn.innerHTML = '<span style="display:inline-block;animation:spin 0.8s linear infinite">☕</span> Rebuilding…'; }
+      if (msg) { msg.className = 'tourn-promote-msg ok'; msg.textContent = ''; }
+      // Poll /promote/status until rebuild completes, then reload
+      const pollStart = Date.now();
+      const poll = setInterval(() => {
+        fetch(PROMOTE_BASE + '/promote/status', { headers: PROMOTE_HEADERS })
+          .then(r => r.json())
+          .then(s => {
+            const rb = s.rebuild ?? {};
+            if (rb.status === 'done') {
+              clearInterval(poll);
+              if (msg) { msg.className = 'tourn-promote-msg ok'; msg.textContent = '✅ Done — reloading…'; }
+              setTimeout(() => location.reload(), 800);
+            } else if (rb.status === 'error') {
+              clearInterval(poll);
+              if (btn) { btn.disabled = false; btn.innerHTML = '☕ Set as House Blend'; }
+              if (msg) { msg.className = 'tourn-promote-msg err'; msg.textContent = '❌ Rebuild failed'; }
+            } else if (Date.now() - pollStart > 60000) {
+              clearInterval(poll);
+              if (msg) { msg.className = 'tourn-promote-msg err'; msg.textContent = '⚠️ Timed out — try refreshing'; }
+            }
+          })
+          .catch(() => { /* ignore transient poll errors */ });
+      }, 1000);
     })
     .catch(err => {
       if (btn) { btn.disabled = false; btn.innerHTML = '☕ Set as House Blend'; }
