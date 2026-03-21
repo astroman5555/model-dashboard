@@ -1077,40 +1077,40 @@ function _currentPosition(modelKey) {
 }
 
 function _buildPredSectionHtml(model, d, p, color, title, posModelKey) {
-  const dirCls = d.direction === ‘SPXL’ ? ‘spxl’ : ‘spxs’;
+  const dirCls = d.direction === 'SPXL' ? 'spxl' : 'spxs';
 
   // Signal pills
   const pills = (d.signals || []).map(s => {
-    const cls   = s.vote > 0 ? ‘bull’ : ‘bear’;
-    const label = s.name.replace(/_/g,’ ‘);
-    const tip   = s.desc.replace(/"/g, ‘&quot;’);
+    const cls   = s.vote > 0 ? 'bull' : 'bear';
+    const label = s.name.replace(/_/g,' ');
+    const tip   = s.desc.replace(/"/g, '&quot;');
     return `<span class="sig-pill ${cls}" data-tooltip="${tip}">${label}</span>`;
-  }).join(‘’);
+  }).join('');
 
   // Hist avg + ATR range
   const histAvg = d.expected_pct;
   const atrRng  = p.atr_range_pct;
-  let expHtml = ‘’;
-  if (histAvg != null) expHtml += `<span style="color:var(--text-muted);font-size:13px">Hist avg: ${histAvg >= 0 ? ‘+’ : ‘’}${histAvg.toFixed(1)}%</span>`;
+  let expHtml = '';
+  if (histAvg != null) expHtml += `<span style="color:var(--text-muted);font-size:13px">Hist avg: ${histAvg >= 0 ? '+' : ''}${histAvg.toFixed(1)}%</span>`;
   if (atrRng  != null) expHtml += `<span style="color:var(--text-muted);font-size:11px;margin-left:6px">ATR range: ±${atrRng.toFixed(1)}%</span>`;
 
   // Regime tag (all models)
-  let regimeHtml = ‘’;
+  let regimeHtml = '';
   if (d.regime) {
-    const rc = d.regime === ‘BULL_TREND’ ? ‘bull-trend’ : d.regime === ‘BEAR_TREND’ ? ‘bear-trend’ : ‘’;
-    regimeHtml = `<span class="regime-tag ${rc}">${d.regime.replace(/_/g,’ ‘)}</span>`;
+    const rc = d.regime === 'BULL_TREND' ? 'bull-trend' : d.regime === 'BEAR_TREND' ? 'bear-trend' : '';
+    regimeHtml = `<span class="regime-tag ${rc}">${d.regime.replace(/_/g,' ')}</span>`;
   }
 
   // Bounce flip (where present)
   const bounceHtml = d.bounce_flipped
-    ? `<span style="color:var(--zip);font-weight:600">⚠ bounce-flip</span>` : ‘’;
+    ? `<span style="color:var(--zip);font-weight:600">⚠ bounce-flip</span>` : '';
 
   // L3 position + AUM
-  let posHtml = ‘’;
+  let posHtml = '';
   const pos = _currentPosition(posModelKey);
   if (pos) {
-    const pdirCls = pos.direction === ‘SPXL’ ? ‘spxl’ : ‘spxs’;
-    const aumStr  = pos.cost != null ? ‘$’ + Math.round(pos.cost).toLocaleString(‘en-US’) : ‘—‘;
+    const pdirCls = pos.direction === 'SPXL' ? 'spxl' : 'spxs';
+    const aumStr  = pos.cost != null ? '$' + Math.round(pos.cost).toLocaleString('en-US') : '—';
     posHtml = `<span style="color:var(--text-muted);font-size:11px;white-space:nowrap">`
             + `<span class="${pdirCls}" style="font-weight:700">${pos.direction}</span>`
             + ` × ${pos.shares} sh &nbsp;·&nbsp; AUM ${aumStr}</span>`;
@@ -1132,22 +1132,22 @@ function _buildPredSectionHtml(model, d, p, color, title, posModelKey) {
         </div>
       </div>
       <div class="pred-signals">
-        ${pills || "<span style=\"color:var(--text-muted);font-size:12px\">The grinder’s quiet today</span>"}
+        ${pills || "<span style=\"color:var(--text-muted);font-size:12px\">The grinder's quiet today</span>"}
       </div>
     </div>`;
 }
 
-// ── Tomorrow’s Pour — Per-model section ───────────────────────────────────────
+// ── Tomorrow's Pour — Per-model section ───────────────────────────────────────
 function renderModelPrediction(model) {
   const key = model.toLowerCase();
-  const el  = document.getElementById(‘pred-section-’ + key);
+  const el  = document.getElementById('pred-section-' + key);
   if (!el) return;
   const p = PREDICTIONS;
-  if (!p || !p.models || !p.models[model]) { el.style.display=’none’; return; }
+  if (!p || !p.models || !p.models[model]) { el.style.display='none'; return; }
   const d     = p.models[model];
   const color = COLORS[model];
   const brewLabel = BREW_NAMES[model] || model;
-  const title = (model === ‘DRIP’ ? ‘Drip ☕ (House Blend)’ : brewLabel + ‘ (‘ + model + ‘)’) + ‘ — Tomorrow\’s Pour’;
+  const title = (model === 'DRIP' ? 'Drip ☕ (House Blend)' : brewLabel + ' (' + model + ')') + ' — Tomorrow\'s Pour';
   el.innerHTML = _buildPredSectionHtml(model, d, p, color, title, model);
 }
 
@@ -2023,12 +2023,12 @@ function initHouseBrewTab() {
       </div>`;
   }
 
-  // Prediction section (reuse promoted model’s prediction)
-  const predEl = document.getElementById(‘pred-section-house-brew’);
+  // Prediction section (reuse promoted model's prediction)
+  const predEl = document.getElementById('pred-section-house-brew');
   if (predEl && PREDICTIONS && PREDICTIONS.models && PREDICTIONS.models[activeModel]) {
     predEl.innerHTML = _buildPredSectionHtml(
       activeModel, PREDICTIONS.models[activeModel], PREDICTIONS,
-      color, ‘☕ House Blend — Tomorrow\’s Pour’, ‘DRIP’
+      color, '☕ House Blend — Tomorrow\'s Pour', 'DRIP'
     );
   }
 
