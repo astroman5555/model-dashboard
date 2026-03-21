@@ -766,7 +766,13 @@
   <!-- L2 — Accuracy -->
   <div class="layer-header">Accuracy Check <span class="layer-tag">L2 — Accuracy</span></div>
   <div class="card" id="l2-card">
-    <div class="card-title">☕ Tasting Notes</div>
+    <div class="card-title" style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px">
+      <span id="l2-title">☕ Tasting Notes</span>
+      <span style="display:flex;gap:6px">
+        <button id="l2-prev" onclick="shiftL2(-1)" style="background:var(--surface2);border:1.5px solid var(--border);border-radius:6px;padding:2px 10px;cursor:pointer;font-size:14px;color:var(--text-muted)">←</button>
+        <button id="l2-next" onclick="shiftL2(+1)" style="background:var(--surface2);border:1.5px solid var(--border);border-radius:6px;padding:2px 10px;cursor:pointer;font-size:14px;color:var(--text-muted)">→</button>
+      </span>
+    </div>
     <div id="l2-panel"></div>
   </div>
 
@@ -774,7 +780,13 @@
   <div class="layer-header">Open Positions <span class="layer-tag">L3 — Positioning</span></div>
 
   <div class="card" id="l3-card">
-    <div class="card-title">☕ The Till</div>
+    <div class="card-title" style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px">
+      <span id="l3-title">☕ The Till</span>
+      <span style="display:flex;gap:6px">
+        <button id="l3-prev" onclick="shiftL3(-1)" style="background:var(--surface2);border:1.5px solid var(--border);border-radius:6px;padding:2px 10px;cursor:pointer;font-size:14px;color:var(--text-muted)">←</button>
+        <button id="l3-next" onclick="shiftL3(+1)" style="background:var(--surface2);border:1.5px solid var(--border);border-radius:6px;padding:2px 10px;cursor:pointer;font-size:14px;color:var(--text-muted)">→</button>
+      </span>
+    </div>
     <div id="l3-panel"></div>
   </div>
 
@@ -1269,6 +1281,26 @@ overviewChart && overviewChart.data.datasets.forEach((ds, i) => {
 
 // ── Week navigation state ─────────────────────────────────────────────────────
 let weekOffset = 0;
+
+// ── L2 day navigation state ───────────────────────────────────────────────────
+let l2DayOffset = 0;
+function shiftL2(delta) {
+  const dates = Object.keys(L2_ACCURACY ?? {}).sort();
+  const newOffset = l2DayOffset + delta;
+  if (newOffset > 0 || newOffset < -(dates.length - 1)) return;
+  l2DayOffset = newOffset;
+  renderL2Panel();
+}
+
+// ── L3 day navigation state ───────────────────────────────────────────────────
+let l3DayOffset = 0;
+function shiftL3(delta) {
+  const dates = [...new Set((L3_POSITIONS ?? []).map(p => p.entry_date))].sort();
+  const newOffset = l3DayOffset + delta;
+  if (newOffset > 0 || newOffset < -(dates.length - 1)) return;
+  l3DayOffset = newOffset;
+  renderL3Panel();
+}
 function shiftWeek(delta) {
   const newOffset = weekOffset + delta;
   if (newOffset > 1) return;   // can't go beyond next week (no data)
@@ -2069,8 +2101,15 @@ function renderL2Panel() {
   const BREW = { DRIP:'House Brew ☕', ZIP:'Espresso', ZAP:'Cold Brew', ZUP:'Pour Over' };
   const MODEL_COLORS = { ZUP:'#6A8A38', ZIP:'#C8A030', ZAP:'#B86040', DRIP:'#C8883A' };
 
-  const date = Object.keys(L2_ACCURACY).sort().at(-1);
-  const day  = L2_ACCURACY[date];
+  const dates = Object.keys(L2_ACCURACY).sort();
+  const date  = dates.at(dates.length - 1 + l2DayOffset);
+  const day   = L2_ACCURACY[date];
+
+  // Arrow opacity
+  const prevBtn2 = document.getElementById('l2-prev');
+  const nextBtn2 = document.getElementById('l2-next');
+  if (prevBtn2) prevBtn2.style.opacity = l2DayOffset <= -(dates.length - 1) ? '0.3' : '1';
+  if (nextBtn2) nextBtn2.style.opacity = l2DayOffset >= 0 ? '0.3' : '1';
 
   const rows = ['DRIP','ZIP','ZAP','ZUP'].map(m => {
     const r = day[m]; if (!r) return '';
@@ -2111,8 +2150,20 @@ function renderL3Panel() {
   }
 
   const MODEL_COLORS = { ZUP:'#6A8A38', ZIP:'#C8A030', ZAP:'#B86040', DRIP:'#C8883A' };
-  const open   = L3_POSITIONS.filter(p => p.exit_price == null);
-  const closed = L3_POSITIONS.filter(p => p.exit_price != null);
+
+  // Navigate by entry_date
+  const entryDates = [...new Set(L3_POSITIONS.map(p => p.entry_date))].sort();
+  const selDate    = entryDates.at(entryDates.length - 1 + l3DayOffset);
+  const dayPositions = L3_POSITIONS.filter(p => p.entry_date === selDate);
+
+  // Arrow opacity
+  const prevBtn3 = document.getElementById('l3-prev');
+  const nextBtn3 = document.getElementById('l3-next');
+  if (prevBtn3) prevBtn3.style.opacity = l3DayOffset <= -(entryDates.length - 1) ? '0.3' : '1';
+  if (nextBtn3) nextBtn3.style.opacity = l3DayOffset >= 0 ? '0.3' : '1';
+
+  const open   = dayPositions.filter(p => p.exit_price == null);
+  const closed = dayPositions.filter(p => p.exit_price != null);
 
   const fmtMoney = v => v != null ? '$' + v.toLocaleString('en-US', {minimumFractionDigits:2,maximumFractionDigits:2}) : '—';
 
