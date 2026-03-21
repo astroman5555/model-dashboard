@@ -1896,7 +1896,7 @@ function tournamentPromote() {
       // Poll /promote/status until rebuild completes, then reload
       const pollStart = Date.now();
       const poll = setInterval(() => {
-        fetch(PROMOTE_BASE + '/promote/status', { headers: PROMOTE_HEADERS })
+        fetch(PROMOTE_BASE + '/promote', { headers: PROMOTE_HEADERS })
           .then(r => r.json())
           .then(s => {
             const rb = s.rebuild ?? {};
