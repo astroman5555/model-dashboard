@@ -763,6 +763,13 @@
     </div>
   </div>
 
+  <!-- L2 — Accuracy -->
+  <div class="layer-header">Accuracy Check <span class="layer-tag">L2 — Accuracy</span></div>
+  <div class="card" id="l2-card">
+    <div class="card-title">☕ Tasting Notes</div>
+    <div id="l2-panel"></div>
+  </div>
+
   <!-- L3 — Positioning -->
   <div class="layer-header">Open Positions <span class="layer-tag">L3 — Positioning</span></div>
 
@@ -2050,6 +2057,46 @@ function initHouseBrewTab() {
   }
 }
 
+// ── L2 Accuracy panel ────────────────────────────────────────────────────────
+function renderL2Panel() {
+  const el   = document.getElementById('l2-panel');
+  const card = document.getElementById('l2-card');
+  if (!el) return;
+  if (!L2_ACCURACY || Object.keys(L2_ACCURACY).length === 0) {
+    card.style.display = 'none'; return;
+  }
+
+  const BREW = { DRIP:'House Brew ☕', ZIP:'Espresso', ZAP:'Cold Brew', ZUP:'Pour Over' };
+  const MODEL_COLORS = { ZUP:'#6A8A38', ZIP:'#C8A030', ZAP:'#B86040', DRIP:'#C8883A' };
+
+  const date = Object.keys(L2_ACCURACY).sort().at(-1);
+  const day  = L2_ACCURACY[date];
+
+  const rows = ['DRIP','ZIP','ZAP','ZUP'].map(m => {
+    const r = day[m]; if (!r) return '';
+    const color = MODEL_COLORS[m];
+    const tick  = r.correct ? '<span class="correct">✓</span>' : '<span class="incorrect">✗</span>';
+    const predSign = (r.predicted_pct ?? 0) >= 0 ? '+' : '';
+    const actSign  = (r.actual_pct   ?? 0) >= 0 ? '+' : '';
+    return `<tr>
+      <td><span style="color:${color};font-weight:600">${BREW[m]}</span></td>
+      <td style="text-align:right">${predSign}${(r.predicted_pct ?? 0).toFixed(2)}%</td>
+      <td style="text-align:right" class="${(r.actual_pct ?? 0) >= 0 ? 'pos' : 'neg'}">${actSign}${(r.actual_pct ?? 0).toFixed(2)}%</td>
+      <td style="text-align:right;opacity:0.75">${r.e_delta != null ? r.e_delta.toFixed(2)+'%' : '—'}</td>
+      <td style="text-align:right">${tick}</td>
+    </tr>`;
+  }).join('');
+
+  el.innerHTML = `
+    <div style="font-size:11px;color:var(--text-muted);margin-bottom:8px">Settled ${date}</div>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>Brew</th><th style="text-align:right">Predicted</th>
+        <th style="text-align:right">Actual</th>
+        <th style="text-align:right">e-δ</th><th style="text-align:right">✓?</th></tr></thead>
+      <tbody>${rows}</tbody>
+    </table></div>`;
+}
+
 // ── L3 Positions & P&L panel ─────────────────────────────────────────────────
 function renderL3Panel() {
   const el = document.getElementById('l3-panel');
@@ -2115,6 +2162,7 @@ try {
   renderTomorrowBanner();
   for (const m of ['ZIP','ZAP','ZUP','DRIP']) renderModelPrediction(m);
   renderWeeklyTable();
+  renderL2Panel();
   renderL3Panel();
   renderTournamentPanel();
   // House Brew tab is lazily inited on first click (initHouseBrewTab)
