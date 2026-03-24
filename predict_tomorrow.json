@@ -1,6 +1,6 @@
 {
   "for_date": "2026-03-24",
-  "generated_on": "2026-03-24T12:02:38.991721-04:00",
+  "generated_on": "2026-03-24T12:02:46.742626-04:00",
   "atr_range_pct": 3.74,
   "models": {
     "DRIP": {
@@ -101,7 +101,7 @@
     "ZUP": {
       "direction": "SPXL",
       "confidence": 10,
-      "expected_pct": -0.01,
+      "expected_pct": 0.03,
       "signals": [
         {
           "name": "vix",
