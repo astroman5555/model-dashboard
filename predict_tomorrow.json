@@ -1,6 +1,6 @@
 {
   "for_date": "2026-03-25",
-  "generated_on": "2026-03-24T18:00:42.535778-04:00",
+  "generated_on": "2026-03-24T19:50:48.675424-04:00",
   "atr_range_pct": 3.74,
   "models": {
     "DRIP": {
@@ -126,7 +126,7 @@
       "bear_votes": 2,
       "log_posterior": 0.6695,
       "adx": 53.8,
-      "regime": "EXT_HOURS"
+      "regime": "TRANSITION\u2192EXT_HOURS (0%)"
     },
     "ZUP": {
       "direction": "SPXL",
@@ -166,7 +166,7 @@
         {
           "name": "obv_trend",
           "vote": 1,
-          "weight": 6.286,
+          "weight": 3.5393,
           "desc": "OBV falling with price \u2014 capitulation/bull"
         },
         {
@@ -179,9 +179,9 @@
       "bull_votes": 3,
       "bear_votes": 4,
       "regime": "TRANSITION",
-      "zap_score": 7.7553,
+      "zap_score": 3.9099,
       "zip_norm": -0.6222,
-      "final_score": 4.1554,
+      "final_score": 1.8482,
       "bounce_risk": 1,
       "bounce_flipped": false
     }
