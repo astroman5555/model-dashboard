@@ -1,6 +1,6 @@
 {
   "for_date": "2026-03-25",
-  "generated_on": "2026-03-25T11:39:14.284009-04:00",
+  "generated_on": "2026-03-25T11:47:41.189548-04:00",
   "atr_range_pct": 3.74,
   "models": {
     "DRIP": {
@@ -88,20 +88,14 @@
     },
     "ZAP": {
       "direction": "SPXL",
-      "confidence": 5,
-      "expected_pct": 0.15,
+      "confidence": 3,
+      "expected_pct": 0.4,
       "signals": [
         {
           "name": "rsi",
           "vote": -1,
           "weight": 0.6855,
           "desc": "RSI oversold (29.2) \u2014 bear"
-        },
-        {
-          "name": "vix",
-          "vote": 1,
-          "weight": 0.1913,
-          "desc": "VIX elevated (25.8) \u2014 risk-off/bear [inv]"
         },
         {
           "name": "ma60_dist",
@@ -122,9 +116,9 @@
           "desc": "OBV falling with price \u2014 capitulation/bull"
         }
       ],
-      "bull_votes": 3,
+      "bull_votes": 2,
       "bear_votes": 2,
-      "log_posterior": 0.6695,
+      "log_posterior": 0.4017,
       "adx": 53.8,
       "regime": "TRANSITION\u2192EXT_HOURS (0%)"
     },
