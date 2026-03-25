@@ -1,7 +1,7 @@
 {
-  "for_date": "2026-03-25",
-  "generated_on": "2026-03-25T15:00:56.883930-04:00",
-  "atr_range_pct": 3.74,
+  "for_date": "2026-03-26",
+  "generated_on": "2026-03-25T17:02:38.767826-04:00",
+  "atr_range_pct": 3.66,
   "models": {
     "DRIP": {
       "direction": "SPXS",
@@ -34,57 +34,39 @@
     },
     "ZIP": {
       "direction": "SPXS",
-      "confidence": 3,
-      "expected_pct": 0.51,
+      "confidence": 1,
+      "expected_pct": -0.65,
       "signals": [
-        {
-          "name": "rsi",
-          "vote": -1,
-          "weight": 2.9852,
-          "desc": "RSI oversold (29.2) \u2014 momentum cont/bear [modVIX\u2193]"
-        },
         {
           "name": "vix",
           "vote": -1,
           "weight": 1.2325,
-          "desc": "VIX elevated (25.8) \u2014 risk-off/bear [modVIX\u2193]"
-        },
-        {
-          "name": "ma60_dist",
-          "vote": 1,
-          "weight": 0.3893,
-          "desc": "Price -4.17% below MA60 \u2014 discount (bull)"
+          "desc": "VIX elevated (25.3) \u2014 risk-off/bear [modVIX\u2193]"
         },
         {
           "name": "ma20_slope",
           "vote": -1,
           "weight": 4.2307,
-          "desc": "MA20 falling (slope -0.228%/d, bot 10%) [modVIX\u2193]"
+          "desc": "MA20 falling (slope -0.238%/d, bot 10%) [modVIX\u2193]"
         },
         {
           "name": "ma60_slope",
           "vote": -1,
           "weight": 2.2843,
-          "desc": "MA60 falling (slope -0.043%/d) [modVIX\u2193]"
+          "desc": "MA60 falling (slope -0.050%/d) [modVIX\u2193]"
         },
         {
           "name": "obv_trend",
           "vote": 1,
           "weight": 5.8753,
           "desc": "OBV falling with price \u2014 capitulation/bull"
-        },
-        {
-          "name": "near_20d_low",
-          "vote": -1,
-          "weight": 0.1441,
-          "desc": "Price within 1.0% of 20d low (+0.71%) \u2014 breakdown (bear) [modVIX\u2193]"
         }
       ],
-      "bull_votes": 2,
-      "bear_votes": 5,
-      "net_score": -4.6122,
+      "bull_votes": 1,
+      "bear_votes": 3,
+      "net_score": -1.8722,
       "regime": "TRANSITION",
-      "bounce_risk": 1
+      "bounce_risk": 0
     },
     "ZAP": {
       "direction": "SPXL",
@@ -95,19 +77,13 @@
           "name": "rsi",
           "vote": -1,
           "weight": 0.6855,
-          "desc": "RSI oversold (29.2) \u2014 bear"
-        },
-        {
-          "name": "ma60_dist",
-          "vote": -1,
-          "weight": 0.0361,
-          "desc": "Price -4.17% below MA60 \u2014 discount (bull) [inv]"
+          "desc": "RSI oversold (34.3) \u2014 bear"
         },
         {
           "name": "ma20_slope",
           "vote": 1,
           "weight": 0.017,
-          "desc": "MA20 falling (slope -0.228%/d, bot 10%) [inv]"
+          "desc": "MA20 falling (slope -0.238%/d, bot 10%) [inv]"
         },
         {
           "name": "obv_trend",
@@ -117,60 +93,48 @@
         }
       ],
       "bull_votes": 2,
-      "bear_votes": 2,
-      "log_posterior": 0.4017,
-      "adx": 53.8,
+      "bear_votes": 1,
+      "log_posterior": 0.4522,
+      "adx": 51.8,
       "regime": "TRANSITION\u2192EXT_HOURS (0%)"
     },
     "ZUP": {
       "direction": "SPXL",
       "confidence": 10,
-      "expected_pct": 0.07,
+      "expected_pct": 0.14,
       "signals": [
         {
           "name": "rsi",
           "vote": -1,
           "weight": 0.9225,
-          "desc": "RSI oversold (29.2) \u2014 bear"
-        },
-        {
-          "name": "ma60_dist",
-          "vote": -1,
-          "weight": 0.054,
-          "desc": "Price -4.17% below MA60 \u2014 discount (bull) [inv]"
+          "desc": "RSI oversold (34.3) \u2014 bear"
         },
         {
           "name": "ma20_slope",
           "vote": 1,
           "weight": 0.0115,
-          "desc": "MA20 falling (slope -0.228%/d, bot 10%) [inv]"
+          "desc": "MA20 falling (slope -0.238%/d, bot 10%) [inv]"
         },
         {
           "name": "ma60_slope",
           "vote": -1,
           "weight": 0.4051,
-          "desc": "MA60 falling (slope -0.043%/d)"
+          "desc": "MA60 falling (slope -0.050%/d)"
         },
         {
           "name": "obv_trend",
           "vote": 1,
           "weight": 3.5393,
           "desc": "OBV falling with price \u2014 capitulation/bull"
-        },
-        {
-          "name": "near_20d_low",
-          "vote": -1,
-          "weight": 0.0562,
-          "desc": "Near 20d low (+0.71%) \u2014 breakdown/bear"
         }
       ],
       "bull_votes": 2,
-      "bear_votes": 4,
+      "bear_votes": 2,
       "regime": "TRANSITION",
-      "zap_score": 2.9582,
-      "zip_norm": -0.5143,
-      "final_score": 1.3635,
-      "bounce_risk": 1,
+      "zap_score": 3.1125,
+      "zip_norm": -0.5789,
+      "final_score": 1.4043,
+      "bounce_risk": 0,
       "bounce_flipped": false
     }
   },
