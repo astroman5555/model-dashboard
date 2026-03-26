@@ -1,7 +1,7 @@
 {
   "for_date": "2026-03-27",
-  "generated_on": "2026-03-26T16:10:11.212311-04:00",
-  "atr_range_pct": 3.61,
+  "generated_on": "2026-03-26T16:30:16.800022-04:00",
+  "atr_range_pct": 3.74,
   "models": {
     "DRIP": {
       "direction": "SPXS",
@@ -34,8 +34,8 @@
     },
     "ZIP": {
       "direction": "SPXL",
-      "confidence": 9,
-      "expected_pct": 0.81,
+      "confidence": 1,
+      "expected_pct": 0.65,
       "signals": [
         {
           "name": "vix",
@@ -47,25 +47,31 @@
           "name": "ma60_dist",
           "vote": 1,
           "weight": 0.3893,
-          "desc": "Price -4.58% below MA60 \u2014 discount (bull)"
+          "desc": "Price -5.19% below MA60 \u2014 discount (bull)"
         },
         {
           "name": "ma20_slope",
           "vote": -1,
           "weight": 4.2307,
-          "desc": "MA20 falling (slope -0.245%/d, bot 10%) [modVIX\u2193]"
+          "desc": "MA20 falling (slope -0.251%/d, bot 10%) [modVIX\u2193]"
         },
         {
           "name": "ma60_slope",
           "vote": -1,
           "weight": 2.2843,
-          "desc": "MA60 falling (slope -0.059%/d) [modVIX\u2193]"
+          "desc": "MA60 falling (slope -0.060%/d) [modVIX\u2193]"
+        },
+        {
+          "name": "zscore_ret",
+          "vote": 1,
+          "weight": 5.6106,
+          "desc": "Z-score -1.66 \u2014 oversold (bull)"
         },
         {
           "name": "near_20d_low",
           "vote": -1,
           "weight": 0.1441,
-          "desc": "Price within 1.0% of 20d low (+0.12%) \u2014 breakdown (bear) [modVIX\u2193]"
+          "desc": "Price within 1.0% of 20d low (+0.00%) \u2014 breakdown (bear) [modVIX\u2193]"
         },
         {
           "name": "gap_down",
@@ -74,9 +80,9 @@
           "desc": "Gap down -0.72% closed negative \u2014 bear continuation [modVIX\u2193]"
         }
       ],
-      "bull_votes": 1,
+      "bull_votes": 2,
       "bear_votes": 5,
-      "net_score": -7.662,
+      "net_score": -2.0514,
       "regime": "TRANSITION",
       "bounce_risk": 1
     },
@@ -89,26 +95,26 @@
           "name": "rsi",
           "vote": -1,
           "weight": 0.6855,
-          "desc": "RSI oversold (35.0) \u2014 bear"
+          "desc": "RSI oversold (33.0) \u2014 bear"
         },
         {
           "name": "ma60_dist",
           "vote": -1,
           "weight": 0.0361,
-          "desc": "Price -4.58% below MA60 \u2014 discount (bull) [inv]"
+          "desc": "Price -5.19% below MA60 \u2014 discount (bull) [inv]"
         },
         {
           "name": "ma20_slope",
           "vote": 1,
           "weight": 0.017,
-          "desc": "MA20 falling (slope -0.245%/d, bot 10%) [inv]"
+          "desc": "MA20 falling (slope -0.251%/d, bot 10%) [inv]"
         }
       ],
       "bull_votes": 1,
       "bear_votes": 2,
       "log_posterior": -0.9864,
-      "adx": 51.2,
-      "regime": "TRANSITION\u2192EXT_HOURS (60%)"
+      "adx": 51.9,
+      "regime": "TRANSITION\u2192BEAR_TREND (20%)"
     },
     "ZUP": {
       "direction": "SPXS",
@@ -119,39 +125,39 @@
           "name": "rsi",
           "vote": -1,
           "weight": 0.9225,
-          "desc": "RSI oversold (35.0) \u2014 bear"
+          "desc": "RSI oversold (33.0) \u2014 bear"
         },
         {
           "name": "ma60_dist",
           "vote": -1,
           "weight": 0.054,
-          "desc": "Price -4.58% below MA60 \u2014 discount (bull) [inv]"
+          "desc": "Price -5.19% below MA60 \u2014 discount (bull) [inv]"
         },
         {
           "name": "ma20_slope",
           "vote": 1,
           "weight": 0.0115,
-          "desc": "MA20 falling (slope -0.245%/d, bot 10%) [inv]"
+          "desc": "MA20 falling (slope -0.251%/d, bot 10%) [inv]"
         },
         {
           "name": "ma60_slope",
           "vote": -1,
           "weight": 0.4051,
-          "desc": "MA60 falling (slope -0.059%/d)"
+          "desc": "MA60 falling (slope -0.060%/d)"
         },
         {
           "name": "near_20d_low",
           "vote": -1,
           "weight": 0.0562,
-          "desc": "Near 20d low (+0.12%) \u2014 breakdown/bear"
+          "desc": "Near 20d low (+0.00%) \u2014 breakdown/bear"
         }
       ],
       "bull_votes": 1,
       "bear_votes": 4,
       "regime": "TRANSITION",
       "zap_score": -1.9968,
-      "zip_norm": -0.863,
-      "final_score": -1.8885,
+      "zip_norm": -0.5632,
+      "final_score": -1.6487,
       "bounce_risk": 1,
       "bounce_flipped": false
     }
