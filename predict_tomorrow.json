@@ -1,6 +1,6 @@
 {
   "for_date": "2026-03-27",
-  "generated_on": "2026-03-26T16:08:39.517656-04:00",
+  "generated_on": "2026-03-26T16:10:11.212311-04:00",
   "atr_range_pct": 3.61,
   "models": {
     "DRIP": {
@@ -108,7 +108,7 @@
       "bear_votes": 2,
       "log_posterior": -0.9864,
       "adx": 51.2,
-      "regime": "TRANSITION\u2192EXT_HOURS (0%)"
+      "regime": "TRANSITION\u2192EXT_HOURS (60%)"
     },
     "ZUP": {
       "direction": "SPXS",
