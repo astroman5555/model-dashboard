@@ -1,7 +1,7 @@
 {
   "for_date": "2026-03-30",
-  "generated_on": "2026-03-27T16:28:13.046099-04:00",
-  "atr_range_pct": 3.62,
+  "generated_on": "2026-03-27T16:30:12.968937-04:00",
+  "atr_range_pct": 3.66,
   "models": {
     "DRIP": {
       "direction": "SPXS",
@@ -12,13 +12,13 @@
           "name": "vix_level",
           "vote": -1,
           "weight": 1.0,
-          "desc": "VIX 31.2 \u2014 elevated/bear week"
+          "desc": "VIX 31.0 \u2014 elevated/bear week"
         },
         {
           "name": "vix_spike",
           "vote": -1,
           "weight": 0.1284,
-          "desc": "VIX spike 31.2 vs 3d avg 26.6 (+17%)"
+          "desc": "VIX spike 31.0 vs 3d avg 26.6 (+17%)"
         },
         {
           "name": "ma60_slope",
@@ -30,7 +30,7 @@
           "name": "ma200_trend",
           "vote": -1,
           "weight": 0.9055,
-          "desc": "Price -3.57% below MA200 \u2014 bear regime"
+          "desc": "Price -3.61% below MA200 \u2014 bear regime"
         }
       ],
       "bull_votes": 0,
@@ -53,31 +53,31 @@
           "name": "rsi",
           "vote": -1,
           "weight": 2.9852,
-          "desc": "RSI oversold (23.7) \u2014 momentum cont/bear"
+          "desc": "RSI oversold (23.6) \u2014 momentum cont/bear"
         },
         {
           "name": "vix",
           "vote": -1,
           "weight": 1.2325,
-          "desc": "VIX elevated (31.2) \u2014 risk-off/bear"
+          "desc": "VIX elevated (31.0) \u2014 risk-off/bear"
         },
         {
           "name": "vix_spike",
           "vote": -1,
           "weight": 0.1284,
-          "desc": "VIX spike 31.2 vs 3d avg 26.6 (+17%)"
+          "desc": "VIX spike 31.0 vs 3d avg 26.6 (+17%)"
         },
         {
           "name": "ma20_dist",
           "vote": 1,
           "weight": 0.4976,
-          "desc": "Price -4.55% below MA20 \u2014 discount (bull)"
+          "desc": "Price -4.59% below MA20 \u2014 discount (bull)"
         },
         {
           "name": "ma60_dist",
           "vote": 1,
           "weight": 0.3893,
-          "desc": "Price -6.63% below MA60 \u2014 discount (bull)"
+          "desc": "Price -6.68% below MA60 \u2014 discount (bull)"
         },
         {
           "name": "ma20_slope",
@@ -113,19 +113,19 @@
           "name": "rsi",
           "vote": -1,
           "weight": 0.6855,
-          "desc": "RSI oversold (23.7) \u2014 bear"
+          "desc": "RSI oversold (23.6) \u2014 bear"
         },
         {
           "name": "vix_spike",
           "vote": -1,
           "weight": 0.0149,
-          "desc": "VIX spike 31.2 vs 3d avg 26.6 (+17%)"
+          "desc": "VIX spike 31.0 vs 3d avg 26.6 (+17%)"
         },
         {
           "name": "ma60_dist",
           "vote": -1,
           "weight": 0.0361,
-          "desc": "Price -6.63% below MA60 \u2014 discount (bull) [inv]"
+          "desc": "Price -6.68% below MA60 \u2014 discount (bull) [inv]"
         },
         {
           "name": "ma20_slope",
@@ -137,7 +137,7 @@
       "bull_votes": 1,
       "bear_votes": 3,
       "log_posterior": -1.0073,
-      "adx": 53.4,
+      "adx": 53.5,
       "regime": "TRANSITION\u2192BEAR_TREND (40%)"
     },
     "ZUP": {
@@ -149,31 +149,31 @@
           "name": "rsi",
           "vote": -1,
           "weight": 0.9225,
-          "desc": "RSI oversold (23.7) \u2014 bear"
+          "desc": "RSI oversold (23.6) \u2014 bear"
         },
         {
           "name": "vix",
           "vote": 1,
           "weight": 0.6798,
-          "desc": "VIX elevated (31.2) \u2014 risk-off/bear [inv]"
+          "desc": "VIX elevated (31.0) \u2014 risk-off/bear [inv]"
         },
         {
           "name": "vix_spike",
           "vote": -1,
           "weight": 0.0807,
-          "desc": "VIX spike 31.2 vs 3d avg 26.6 (+17%)"
+          "desc": "VIX spike 31.0 vs 3d avg 26.6 (+17%)"
         },
         {
           "name": "mom_3d_rev",
           "vote": -1,
           "weight": 0.0379,
-          "desc": "3d return -2.87% \u2014 oversold bounce [inv]"
+          "desc": "3d return -2.91% \u2014 oversold bounce [inv]"
         },
         {
           "name": "ma60_dist",
           "vote": -1,
           "weight": 0.054,
-          "desc": "Price -6.63% below MA60 \u2014 discount (bull) [inv]"
+          "desc": "Price -6.68% below MA60 \u2014 discount (bull) [inv]"
         },
         {
           "name": "ma20_slope",
