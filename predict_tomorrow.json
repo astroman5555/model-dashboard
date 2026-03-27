@@ -1,6 +1,6 @@
 {
   "for_date": "2026-03-27",
-  "generated_on": "2026-03-27T15:32:47.930835-04:00",
+  "generated_on": "2026-03-27T15:36:32.563733-04:00",
   "atr_range_pct": 3.74,
   "models": {
     "DRIP": {
@@ -137,7 +137,7 @@
     "ZUP": {
       "direction": "SPXS",
       "confidence": 10,
-      "expected_pct": 0.67,
+      "expected_pct": 0.78,
       "signals": [
         {
           "name": "rsi",
@@ -189,27 +189,27 @@
   "accuracy_context": {
     "DRIP": {
       "weeks_of_data": 2,
-      "avg_weekly_e_delta": 8.4631,
-      "avg_direction_accuracy": 0.3,
-      "last_week_e_delta": 7.0845
+      "avg_weekly_e_delta": 11.0759,
+      "avg_direction_accuracy": 0.425,
+      "last_week_e_delta": 12.3101
     },
     "ZIP": {
       "weeks_of_data": 2,
-      "avg_weekly_e_delta": 10.411,
-      "avg_direction_accuracy": 0.5333,
-      "last_week_e_delta": 6.0901
+      "avg_weekly_e_delta": 13.464,
+      "avg_direction_accuracy": 0.45,
+      "last_week_e_delta": 12.1959
     },
     "ZAP": {
       "weeks_of_data": 2,
-      "avg_weekly_e_delta": 8.8192,
-      "avg_direction_accuracy": 0.3667,
-      "last_week_e_delta": 6.2396
+      "avg_weekly_e_delta": 12.2837,
+      "avg_direction_accuracy": 0.325,
+      "last_week_e_delta": 13.1686
     },
     "ZUP": {
       "weeks_of_data": 2,
-      "avg_weekly_e_delta": 8.584,
-      "avg_direction_accuracy": 0.6333,
-      "last_week_e_delta": 4.9501
+      "avg_weekly_e_delta": 11.567,
+      "avg_direction_accuracy": 0.55,
+      "last_week_e_delta": 10.9159
     }
   }
 }
