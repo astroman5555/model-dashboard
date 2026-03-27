@@ -1,6 +1,6 @@
 {
   "for_date": "2026-03-27",
-  "generated_on": "2026-03-27T14:54:14.473658-04:00",
+  "generated_on": "2026-03-27T15:00:10.844759-04:00",
   "atr_range_pct": 3.74,
   "models": {
     "DRIP": {
@@ -12,24 +12,30 @@
           "name": "vix_level",
           "vote": -1,
           "weight": 1.0,
-          "desc": "VIX 26.5 \u2014 elevated/bear week"
+          "desc": "VIX 29.7 \u2014 elevated/bear week"
+        },
+        {
+          "name": "vix_spike",
+          "vote": -1,
+          "weight": 0.1284,
+          "desc": "VIX spike 29.7 vs 3d avg 26.6 (+12%)"
         },
         {
           "name": "ma60_slope",
           "vote": -1,
           "weight": 2.2843,
-          "desc": "MA60 falling -0.035%/d \u2014 bear week"
+          "desc": "MA60 falling -0.060%/d \u2014 bear week"
         }
       ],
       "bull_votes": 0,
-      "bear_votes": 2,
-      "net_score": -3.2843,
+      "bear_votes": 3,
+      "net_score": -3.4127,
       "regime": "TRANSITION",
       "bounce_risk": 0,
       "adx": null,
       "log_posterior": null,
       "final_score": null,
-      "weekly_lock": true,
+      "weekly_lock": false,
       "week_of": "2026-03-23"
     },
     "ZIP": {
