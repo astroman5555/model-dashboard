@@ -1,6 +1,6 @@
 {
   "for_date": "2026-03-27",
-  "generated_on": "2026-03-26T21:13:41.154728-04:00",
+  "generated_on": "2026-03-27T14:11:03.194677-04:00",
   "atr_range_pct": 3.74,
   "models": {
     "DRIP": {
@@ -34,14 +34,20 @@
     },
     "ZIP": {
       "direction": "SPXL",
-      "confidence": 1,
-      "expected_pct": 0.65,
+      "confidence": 2,
+      "expected_pct": 0.49,
       "signals": [
         {
           "name": "vix",
           "vote": -1,
           "weight": 1.2325,
-          "desc": "VIX elevated (27.4) \u2014 risk-off/bear [modVIX\u2193]"
+          "desc": "VIX elevated (29.7) \u2014 risk-off/bear"
+        },
+        {
+          "name": "vix_spike",
+          "vote": -1,
+          "weight": 0.1284,
+          "desc": "VIX spike 29.7 vs 3d avg 26.6 (+12%)"
         },
         {
           "name": "ma60_dist",
@@ -53,13 +59,13 @@
           "name": "ma20_slope",
           "vote": -1,
           "weight": 4.2307,
-          "desc": "MA20 falling (slope -0.251%/d, bot 10%) [modVIX\u2193]"
+          "desc": "MA20 falling (slope -0.251%/d, bot 10%)"
         },
         {
           "name": "ma60_slope",
           "vote": -1,
           "weight": 2.2843,
-          "desc": "MA60 falling (slope -0.060%/d) [modVIX\u2193]"
+          "desc": "MA60 falling (slope -0.060%/d)"
         },
         {
           "name": "zscore_ret",
@@ -71,18 +77,18 @@
           "name": "near_20d_low",
           "vote": -1,
           "weight": 0.1441,
-          "desc": "Price within 1.0% of 20d low (+0.00%) \u2014 breakdown (bear) [modVIX\u2193]"
+          "desc": "Price within 1.0% of 20d low (+0.00%) \u2014 breakdown (bear)"
         },
         {
           "name": "gap_down",
           "vote": -1,
           "weight": 0.1597,
-          "desc": "Gap down -0.72% closed negative \u2014 bear continuation [modVIX\u2193]"
+          "desc": "Gap down -0.72% closed negative \u2014 bear continuation"
         }
       ],
       "bull_votes": 2,
-      "bear_votes": 5,
-      "net_score": -2.0514,
+      "bear_votes": 6,
+      "net_score": -2.1798,
       "regime": "TRANSITION",
       "bounce_risk": 1
     },
@@ -98,6 +104,12 @@
           "desc": "RSI oversold (33.0) \u2014 bear"
         },
         {
+          "name": "vix_spike",
+          "vote": -1,
+          "weight": 0.0149,
+          "desc": "VIX spike 29.7 vs 3d avg 26.6 (+12%)"
+        },
+        {
           "name": "ma60_dist",
           "vote": -1,
           "weight": 0.0361,
@@ -111,8 +123,8 @@
         }
       ],
       "bull_votes": 1,
-      "bear_votes": 2,
-      "log_posterior": -0.9864,
+      "bear_votes": 3,
+      "log_posterior": -1.0073,
       "adx": 51.9,
       "regime": "TRANSITION\u2192BEAR_TREND (20%)"
     },
@@ -126,6 +138,12 @@
           "vote": -1,
           "weight": 0.9225,
           "desc": "RSI oversold (33.0) \u2014 bear"
+        },
+        {
+          "name": "vix_spike",
+          "vote": -1,
+          "weight": 0.0807,
+          "desc": "VIX spike 29.7 vs 3d avg 26.6 (+12%)"
         },
         {
           "name": "ma60_dist",
@@ -153,11 +171,11 @@
         }
       ],
       "bull_votes": 1,
-      "bear_votes": 4,
+      "bear_votes": 5,
       "regime": "TRANSITION",
-      "zap_score": -1.9968,
-      "zip_norm": -0.5632,
-      "final_score": -1.6487,
+      "zap_score": -2.1098,
+      "zip_norm": -0.6607,
+      "final_score": -1.7945,
       "bounce_risk": 1,
       "bounce_flipped": false
     }
@@ -165,27 +183,27 @@
   "accuracy_context": {
     "DRIP": {
       "weeks_of_data": 2,
-      "avg_weekly_e_delta": 6.7289,
+      "avg_weekly_e_delta": 8.4631,
       "avg_direction_accuracy": 0.3,
-      "last_week_e_delta": 3.6161
+      "last_week_e_delta": 7.0845
     },
     "ZIP": {
       "weeks_of_data": 2,
-      "avg_weekly_e_delta": 8.559,
-      "avg_direction_accuracy": 0.2,
-      "last_week_e_delta": 2.3861
+      "avg_weekly_e_delta": 10.411,
+      "avg_direction_accuracy": 0.5333,
+      "last_week_e_delta": 6.0901
     },
     "ZAP": {
       "weeks_of_data": 2,
-      "avg_weekly_e_delta": 7.3874,
-      "avg_direction_accuracy": 0.2,
-      "last_week_e_delta": 3.3761
+      "avg_weekly_e_delta": 8.8192,
+      "avg_direction_accuracy": 0.3667,
+      "last_week_e_delta": 6.2396
     },
     "ZUP": {
       "weeks_of_data": 2,
-      "avg_weekly_e_delta": 7.782,
-      "avg_direction_accuracy": 0.3,
-      "last_week_e_delta": 3.3461
+      "avg_weekly_e_delta": 8.584,
+      "avg_direction_accuracy": 0.6333,
+      "last_week_e_delta": 4.9501
     }
   }
 }
