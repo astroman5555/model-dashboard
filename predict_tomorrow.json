@@ -1,12 +1,12 @@
 {
   "for_date": "2026-03-30",
-  "generated_on": "2026-03-27T16:03:30.641696-04:00",
+  "generated_on": "2026-03-27T16:08:39.859761-04:00",
   "atr_range_pct": 3.62,
   "models": {
     "DRIP": {
       "direction": "SPXS",
       "confidence": 10,
-      "expected_pct": 0.58,
+      "expected_pct": 0.48,
       "signals": [
         {
           "name": "vix_level",
@@ -47,7 +47,7 @@
     "ZIP": {
       "direction": "SPXL",
       "confidence": 9,
-      "expected_pct": 0.81,
+      "expected_pct": 0.56,
       "signals": [
         {
           "name": "rsi",
@@ -105,9 +105,9 @@
       "bounce_risk": 3
     },
     "ZAP": {
-      "direction": "SPXL",
+      "direction": "SPXS",
       "confidence": 7,
-      "expected_pct": 1.4,
+      "expected_pct": 2.3,
       "signals": [
         {
           "name": "rsi",
@@ -141,9 +141,9 @@
       "regime": "TRANSITION\u2192BEAR_TREND (40%)"
     },
     "ZUP": {
-      "direction": "SPXS",
+      "direction": "SPXL",
       "confidence": 9,
-      "expected_pct": 0.37,
+      "expected_pct": 0.28,
       "signals": [
         {
           "name": "rsi",
@@ -207,27 +207,27 @@
   "accuracy_context": {
     "DRIP": {
       "weeks_of_data": 2,
-      "avg_weekly_e_delta": 13.3981,
-      "avg_direction_accuracy": 0.5,
-      "last_week_e_delta": 16.9545
+      "avg_weekly_e_delta": 9.6044,
+      "avg_direction_accuracy": 0.6,
+      "last_week_e_delta": 9.3669
     },
     "ZIP": {
       "weeks_of_data": 2,
-      "avg_weekly_e_delta": 15.5811,
+      "avg_weekly_e_delta": 11.9713,
       "avg_direction_accuracy": 0.5,
-      "last_week_e_delta": 16.4303
+      "last_week_e_delta": 9.2107
     },
     "ZAP": {
       "weeks_of_data": 2,
-      "avg_weekly_e_delta": 15.5205,
+      "avg_weekly_e_delta": 12.0572,
       "avg_direction_accuracy": 0.3,
-      "last_week_e_delta": 19.6421
+      "last_week_e_delta": 12.7156
     },
     "ZUP": {
       "weeks_of_data": 2,
-      "avg_weekly_e_delta": 14.2887,
-      "avg_direction_accuracy": 0.5,
-      "last_week_e_delta": 16.3594
+      "avg_weekly_e_delta": 11.0609,
+      "avg_direction_accuracy": 0.6,
+      "last_week_e_delta": 9.9038
     }
   }
 }
