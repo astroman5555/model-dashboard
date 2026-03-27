@@ -1,6 +1,6 @@
 {
   "for_date": "2026-03-27",
-  "generated_on": "2026-03-27T15:00:10.844759-04:00",
+  "generated_on": "2026-03-27T15:00:35.024557-04:00",
   "atr_range_pct": 3.74,
   "models": {
     "DRIP": {
@@ -35,7 +35,7 @@
       "adx": null,
       "log_posterior": null,
       "final_score": null,
-      "weekly_lock": false,
+      "weekly_lock": true,
       "week_of": "2026-03-23"
     },
     "ZIP": {
