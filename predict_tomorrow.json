@@ -1,42 +1,48 @@
 {
-  "for_date": "2026-03-27",
-  "generated_on": "2026-03-27T15:57:42.927772-04:00",
+  "for_date": "2026-03-30",
+  "generated_on": "2026-03-27T16:03:30.641696-04:00",
   "atr_range_pct": 3.62,
   "models": {
     "DRIP": {
       "direction": "SPXS",
       "confidence": 10,
-      "expected_pct": 0.4,
+      "expected_pct": 0.58,
       "signals": [
         {
           "name": "vix_level",
           "vote": -1,
           "weight": 1.0,
-          "desc": "VIX 29.7 \u2014 elevated/bear week"
+          "desc": "VIX 31.2 \u2014 elevated/bear week"
         },
         {
           "name": "vix_spike",
           "vote": -1,
           "weight": 0.1284,
-          "desc": "VIX spike 29.7 vs 3d avg 26.6 (+12%)"
+          "desc": "VIX spike 31.2 vs 3d avg 26.6 (+17%)"
         },
         {
           "name": "ma60_slope",
           "vote": -1,
           "weight": 2.2843,
-          "desc": "MA60 falling -0.060%/d \u2014 bear week"
+          "desc": "MA60 falling -0.072%/d \u2014 bear week"
+        },
+        {
+          "name": "ma200_trend",
+          "vote": -1,
+          "weight": 0.9055,
+          "desc": "Price -3.57% below MA200 \u2014 bear regime"
         }
       ],
       "bull_votes": 0,
-      "bear_votes": 3,
-      "net_score": -3.4127,
+      "bear_votes": 4,
+      "net_score": -4.3182,
       "regime": "TRANSITION",
       "bounce_risk": 0,
       "adx": null,
       "log_posterior": null,
       "final_score": null,
-      "weekly_lock": true,
-      "week_of": "2026-03-23"
+      "weekly_lock": false,
+      "week_of": "2026-03-30"
     },
     "ZIP": {
       "direction": "SPXL",
@@ -201,27 +207,27 @@
   "accuracy_context": {
     "DRIP": {
       "weeks_of_data": 2,
-      "avg_weekly_e_delta": 11.0759,
-      "avg_direction_accuracy": 0.425,
-      "last_week_e_delta": 12.3101
+      "avg_weekly_e_delta": 13.3981,
+      "avg_direction_accuracy": 0.5,
+      "last_week_e_delta": 16.9545
     },
     "ZIP": {
       "weeks_of_data": 2,
-      "avg_weekly_e_delta": 13.464,
-      "avg_direction_accuracy": 0.45,
-      "last_week_e_delta": 12.1959
+      "avg_weekly_e_delta": 15.5811,
+      "avg_direction_accuracy": 0.5,
+      "last_week_e_delta": 16.4303
     },
     "ZAP": {
       "weeks_of_data": 2,
-      "avg_weekly_e_delta": 12.2837,
-      "avg_direction_accuracy": 0.325,
-      "last_week_e_delta": 13.1686
+      "avg_weekly_e_delta": 15.5205,
+      "avg_direction_accuracy": 0.3,
+      "last_week_e_delta": 19.6421
     },
     "ZUP": {
       "weeks_of_data": 2,
-      "avg_weekly_e_delta": 11.567,
-      "avg_direction_accuracy": 0.55,
-      "last_week_e_delta": 10.9159
+      "avg_weekly_e_delta": 14.2887,
+      "avg_direction_accuracy": 0.5,
+      "last_week_e_delta": 16.3594
     }
   }
 }
