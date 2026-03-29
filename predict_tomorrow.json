@@ -1,6 +1,6 @@
 {
   "for_date": "2026-03-30",
-  "generated_on": "2026-03-29T16:30:10.647712-04:00",
+  "generated_on": "2026-03-29T17:06:25.614091-04:00",
   "atr_range_pct": 3.66,
   "models": {
     "DRIP": {
@@ -46,8 +46,8 @@
     },
     "ZIP": {
       "direction": "SPXL",
-      "confidence": 9,
-      "expected_pct": 0.56,
+      "confidence": 3,
+      "expected_pct": 0.11,
       "signals": [
         {
           "name": "rsi",
@@ -82,7 +82,7 @@
         {
           "name": "ma20_slope",
           "vote": -1,
-          "weight": 4.2307,
+          "weight": 4.6998,
           "desc": "MA20 falling (slope -0.297%/d, bot 10%)"
         },
         {
@@ -92,34 +92,34 @@
           "desc": "MA60 falling (slope -0.072%/d)"
         },
         {
+          "name": "zscore_ret",
+          "vote": 1,
+          "weight": 5.6106,
+          "desc": "Z-score -1.41 \u2014 oversold (bull)"
+        },
+        {
           "name": "near_20d_low",
           "vote": -1,
           "weight": 0.1441,
           "desc": "Price within 1.0% of 20d low (+0.00%) \u2014 breakdown (bear)"
         }
       ],
-      "bull_votes": 2,
+      "bull_votes": 3,
       "bear_votes": 6,
-      "net_score": -10.1183,
+      "net_score": -4.9768,
       "regime": "TRANSITION",
       "bounce_risk": 3
     },
     "ZAP": {
-      "direction": "SPXL",
-      "confidence": 5,
-      "expected_pct": 0.24,
+      "direction": "SPXS",
+      "confidence": 7,
+      "expected_pct": 2.3,
       "signals": [
         {
           "name": "rsi",
           "vote": -1,
           "weight": 0.6855,
           "desc": "RSI oversold (23.6) \u2014 bear"
-        },
-        {
-          "name": "vix",
-          "vote": 1,
-          "weight": 0.1913,
-          "desc": "VIX elevated (31.0) \u2014 risk-off/bear [inv]"
         },
         {
           "name": "vix_spike",
@@ -140,16 +140,16 @@
           "desc": "MA20 falling (slope -0.297%/d, bot 10%) [inv]"
         }
       ],
-      "bull_votes": 2,
+      "bull_votes": 1,
       "bear_votes": 3,
-      "log_posterior": -0.7395,
+      "log_posterior": -1.0073,
       "adx": 53.5,
       "regime": "TRANSITION\u2192BEAR_TREND (40%)"
     },
     "ZUP": {
-      "direction": "SPXL",
-      "confidence": 4,
-      "expected_pct": 0.49,
+      "direction": "SPXS",
+      "confidence": 6,
+      "expected_pct": 0.45,
       "signals": [
         {
           "name": "vix",
@@ -197,9 +197,9 @@
       "bull_votes": 2,
       "bear_votes": 5,
       "regime": "TRANSITION",
-      "zap_score": 0.0804,
+      "zap_score": -0.3662,
       "zip_norm": -0.76,
-      "final_score": -0.5598,
+      "final_score": -0.8277,
       "bounce_risk": 3,
       "bounce_flipped": false
     }
