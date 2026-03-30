@@ -1,6 +1,6 @@
 {
   "for_date": "2026-03-30",
-  "generated_on": "2026-03-30T13:08:31.843701-04:00",
+  "generated_on": "2026-03-30T13:11:54.855402-04:00",
   "atr_range_pct": 3.66,
   "models": {
     "DRIP": {
@@ -93,9 +93,9 @@
       "bounce_risk": 3
     },
     "ZAP": {
-      "direction": "SPXL",
-      "confidence": 6,
-      "expected_pct": 0.16,
+      "direction": "SPXS",
+      "confidence": 7,
+      "expected_pct": 1.84,
       "signals": [
         {
           "name": "rsi",
@@ -111,22 +111,28 @@
         },
         {
           "name": "ma20_slope",
-          "vote": 1,
+          "vote": -1,
           "weight": 0.017,
-          "desc": "MA20 falling (slope -0.297%/d, bot 10%) [inv]"
+          "desc": "MA20 falling (slope -0.297%/d, bot 10%)"
         }
       ],
-      "bull_votes": 2,
-      "bear_votes": 1,
-      "log_posterior": -0.8854,
+      "bull_votes": 1,
+      "bear_votes": 2,
+      "log_posterior": -0.933,
       "adx": 53.5,
       "regime": "TRANSITION\u2192BEAR_TREND (40%)"
     },
     "ZUP": {
-      "direction": "SPXL",
-      "confidence": 6,
-      "expected_pct": 1.35,
+      "direction": "SPXS",
+      "confidence": 3,
+      "expected_pct": 0.15,
       "signals": [
+        {
+          "name": "vix",
+          "vote": 1,
+          "weight": 0.6798,
+          "desc": "VIX elevated (29.9) \u2014 risk-off/bear [inv]"
+        },
         {
           "name": "mom_3d_rev",
           "vote": -1,
@@ -158,12 +164,12 @@
           "desc": "Near 20d low (+0.00%) \u2014 breakdown/bear"
         }
       ],
-      "bull_votes": 1,
+      "bull_votes": 2,
       "bear_votes": 4,
       "regime": "TRANSITION",
-      "zap_score": -0.7584,
-      "zip_norm": -0.5636,
-      "final_score": -0.9059,
+      "zap_score": 0.1933,
+      "zip_norm": -0.68,
+      "final_score": -0.428,
       "bounce_risk": 3,
       "bounce_flipped": false
     }
