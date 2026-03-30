@@ -1,6 +1,6 @@
 {
   "for_date": "2026-03-30",
-  "generated_on": "2026-03-29T20:51:37.803221-04:00",
+  "generated_on": "2026-03-29T21:22:15.751480-04:00",
   "atr_range_pct": 3.66,
   "models": {
     "DRIP": {
@@ -129,34 +129,22 @@
         },
         {
           "name": "ma20_slope",
-          "vote": -1,
+          "vote": 1,
           "weight": 0.017,
-          "desc": "MA20 falling (slope -0.297%/d, bot 10%)"
+          "desc": "MA20 falling (slope -0.297%/d, bot 10%) [inv]"
         }
       ],
-      "bull_votes": 0,
-      "bear_votes": 4,
-      "log_posterior": -1.0549,
+      "bull_votes": 1,
+      "bear_votes": 3,
+      "log_posterior": -1.0073,
       "adx": 53.5,
       "regime": "TRANSITION\u2192BEAR_TREND (40%)"
     },
     "ZUP": {
       "direction": "SPXL",
-      "confidence": 9,
-      "expected_pct": 0.28,
+      "confidence": 7,
+      "expected_pct": 0.13,
       "signals": [
-        {
-          "name": "rsi",
-          "vote": -1,
-          "weight": 0.9225,
-          "desc": "RSI oversold (23.6) \u2014 bear"
-        },
-        {
-          "name": "vix",
-          "vote": 1,
-          "weight": 0.6798,
-          "desc": "VIX elevated (31.0) \u2014 risk-off/bear [inv]"
-        },
         {
           "name": "vix_spike",
           "vote": -1,
@@ -194,12 +182,12 @@
           "desc": "Near 20d low (+0.00%) \u2014 breakdown/bear"
         }
       ],
-      "bull_votes": 2,
-      "bear_votes": 6,
+      "bull_votes": 1,
+      "bear_votes": 5,
       "regime": "TRANSITION",
-      "zap_score": -1.2111,
-      "zip_norm": -0.7818,
-      "final_score": -1.3521,
+      "zap_score": -0.8457,
+      "zip_norm": -0.7,
+      "final_score": -1.0674,
       "bounce_risk": 3,
       "bounce_flipped": false
     }
