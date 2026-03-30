@@ -1,6 +1,6 @@
 {
   "for_date": "2026-03-30",
-  "generated_on": "2026-03-29T22:02:43.254375-04:00",
+  "generated_on": "2026-03-29T22:24:18.838356-04:00",
   "atr_range_pct": 3.66,
   "models": {
     "DRIP": {
@@ -46,8 +46,8 @@
     },
     "ZIP": {
       "direction": "SPXL",
-      "confidence": 9,
-      "expected_pct": 0.56,
+      "confidence": 3,
+      "expected_pct": 0.11,
       "signals": [
         {
           "name": "rsi",
@@ -82,7 +82,7 @@
         {
           "name": "ma20_slope",
           "vote": -1,
-          "weight": 4.2307,
+          "weight": 4.6998,
           "desc": "MA20 falling (slope -0.297%/d, bot 10%)"
         },
         {
@@ -92,15 +92,21 @@
           "desc": "MA60 falling (slope -0.072%/d)"
         },
         {
+          "name": "zscore_ret",
+          "vote": 1,
+          "weight": 5.6106,
+          "desc": "Z-score -1.41 \u2014 oversold (bull)"
+        },
+        {
           "name": "near_20d_low",
           "vote": -1,
           "weight": 0.1441,
           "desc": "Price within 1.0% of 20d low (+0.00%) \u2014 breakdown (bear)"
         }
       ],
-      "bull_votes": 2,
+      "bull_votes": 3,
       "bear_votes": 6,
-      "net_score": -10.1183,
+      "net_score": -4.9768,
       "regime": "TRANSITION",
       "bounce_risk": 3
     },
@@ -141,9 +147,9 @@
       "regime": "TRANSITION\u2192BEAR_TREND (40%)"
     },
     "ZUP": {
-      "direction": "SPXL",
-      "confidence": 7,
-      "expected_pct": 0.13,
+      "direction": "SPXS",
+      "confidence": 8,
+      "expected_pct": 1.11,
       "signals": [
         {
           "name": "vix_spike",
@@ -185,9 +191,9 @@
       "bull_votes": 1,
       "bear_votes": 5,
       "regime": "TRANSITION",
-      "zap_score": -0.8457,
+      "zap_score": -0.8714,
       "zip_norm": -0.7,
-      "final_score": -1.0674,
+      "final_score": -1.0828,
       "bounce_risk": 3,
       "bounce_flipped": false
     }
