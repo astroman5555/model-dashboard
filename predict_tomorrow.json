@@ -1,6 +1,6 @@
 {
   "for_date": "2026-03-30",
-  "generated_on": "2026-03-30T09:00:39.758507-04:00",
+  "generated_on": "2026-03-30T09:54:51.943110-04:00",
   "atr_range_pct": 3.66,
   "models": {
     "DRIP": {
@@ -12,7 +12,7 @@
           "name": "vix_level",
           "vote": -1,
           "weight": 1.0,
-          "desc": "VIX 30.0 \u2014 elevated/bear week"
+          "desc": "VIX 29.9 \u2014 elevated/bear week"
         },
         {
           "name": "ma60_slope",
