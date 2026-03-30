@@ -1,6 +1,6 @@
 {
   "for_date": "2026-03-30",
-  "generated_on": "2026-03-29T17:06:25.614091-04:00",
+  "generated_on": "2026-03-29T20:04:05.580130-04:00",
   "atr_range_pct": 3.66,
   "models": {
     "DRIP": {
@@ -46,8 +46,8 @@
     },
     "ZIP": {
       "direction": "SPXL",
-      "confidence": 3,
-      "expected_pct": 0.11,
+      "confidence": 9,
+      "expected_pct": 0.56,
       "signals": [
         {
           "name": "rsi",
@@ -82,7 +82,7 @@
         {
           "name": "ma20_slope",
           "vote": -1,
-          "weight": 4.6998,
+          "weight": 4.2307,
           "desc": "MA20 falling (slope -0.297%/d, bot 10%)"
         },
         {
@@ -92,21 +92,15 @@
           "desc": "MA60 falling (slope -0.072%/d)"
         },
         {
-          "name": "zscore_ret",
-          "vote": 1,
-          "weight": 5.6106,
-          "desc": "Z-score -1.41 \u2014 oversold (bull)"
-        },
-        {
           "name": "near_20d_low",
           "vote": -1,
           "weight": 0.1441,
           "desc": "Price within 1.0% of 20d low (+0.00%) \u2014 breakdown (bear)"
         }
       ],
-      "bull_votes": 3,
+      "bull_votes": 2,
       "bear_votes": 6,
-      "net_score": -4.9768,
+      "net_score": -10.1183,
       "regime": "TRANSITION",
       "bounce_risk": 3
     },
@@ -135,22 +129,28 @@
         },
         {
           "name": "ma20_slope",
-          "vote": 1,
+          "vote": -1,
           "weight": 0.017,
-          "desc": "MA20 falling (slope -0.297%/d, bot 10%) [inv]"
+          "desc": "MA20 falling (slope -0.297%/d, bot 10%)"
         }
       ],
-      "bull_votes": 1,
-      "bear_votes": 3,
-      "log_posterior": -1.0073,
+      "bull_votes": 0,
+      "bear_votes": 4,
+      "log_posterior": -1.0549,
       "adx": 53.5,
       "regime": "TRANSITION\u2192BEAR_TREND (40%)"
     },
     "ZUP": {
-      "direction": "SPXS",
-      "confidence": 6,
-      "expected_pct": 0.45,
+      "direction": "SPXL",
+      "confidence": 9,
+      "expected_pct": 0.28,
       "signals": [
+        {
+          "name": "rsi",
+          "vote": -1,
+          "weight": 0.9225,
+          "desc": "RSI oversold (23.6) \u2014 bear"
+        },
         {
           "name": "vix",
           "vote": 1,
@@ -195,11 +195,11 @@
         }
       ],
       "bull_votes": 2,
-      "bear_votes": 5,
+      "bear_votes": 6,
       "regime": "TRANSITION",
-      "zap_score": -0.3662,
-      "zip_norm": -0.76,
-      "final_score": -0.8277,
+      "zap_score": -1.2111,
+      "zip_norm": -0.7818,
+      "final_score": -1.3521,
       "bounce_risk": 3,
       "bounce_flipped": false
     }
