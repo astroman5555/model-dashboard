@@ -1,6 +1,6 @@
 {
   "for_date": "2026-04-01",
-  "generated_on": "2026-03-31T16:52:22.665504-04:00",
+  "generated_on": "2026-03-31T16:54:13.855931-04:00",
   "atr_range_pct": 3.97,
   "models": {
     "DRIP": {
@@ -112,7 +112,7 @@
         {
           "name": "obv_trend",
           "vote": 1,
-          "weight": 1.6135,
+          "weight": 0.9915,
           "desc": "OBV falling with price \u2014 capitulation/bull"
         },
         {
@@ -124,7 +124,7 @@
       ],
       "bull_votes": 2,
       "bear_votes": 2,
-      "log_posterior": 3.2161,
+      "log_posterior": 2.3453,
       "adx": 52.0,
       "regime": "TRANSITION\u2192BEAR_TREND (80%)"
     },
