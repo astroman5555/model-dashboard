@@ -1,6 +1,6 @@
 {
   "for_date": "2026-03-31",
-  "generated_on": "2026-03-30T17:01:09.529939-04:00",
+  "generated_on": "2026-03-30T23:35:40.285835-04:00",
   "atr_range_pct": 3.74,
   "models": {
     "DRIP": {
@@ -40,13 +40,13 @@
     },
     "ZIP": {
       "direction": "SPXL",
-      "confidence": 3,
-      "expected_pct": 0.02,
+      "confidence": 2,
+      "expected_pct": 0.81,
       "signals": [
         {
           "name": "rsi",
           "vote": -1,
-          "weight": 3.3652,
+          "weight": 2.9852,
           "desc": "RSI oversold (23.3) \u2014 momentum cont/bear"
         },
         {
@@ -76,7 +76,7 @@
         {
           "name": "ma20_slope",
           "vote": -1,
-          "weight": 7.6562,
+          "weight": 4.2307,
           "desc": "MA20 falling (slope -0.341%/d, bot 10%)"
         },
         {
@@ -100,14 +100,14 @@
       ],
       "bull_votes": 4,
       "bear_votes": 5,
-      "net_score": -7.5343,
+      "net_score": -3.7288,
       "regime": "TRANSITION",
       "bounce_risk": 8
     },
     "ZAP": {
-      "direction": "SPXL",
-      "confidence": 6,
-      "expected_pct": 0.13,
+      "direction": "SPXS",
+      "confidence": 3,
+      "expected_pct": 0.84,
       "signals": [
         {
           "name": "rsi",
@@ -117,9 +117,9 @@
         },
         {
           "name": "ma60_dist",
-          "vote": -1,
+          "vote": 1,
           "weight": 0.0361,
-          "desc": "Price -6.89% below MA60 \u2014 discount (bull) [inv]"
+          "desc": "Price -6.89% below MA60 \u2014 discount (bull)"
         },
         {
           "name": "ma20_slope",
@@ -130,13 +130,13 @@
         {
           "name": "obv_trend",
           "vote": 1,
-          "weight": 1.3006,
+          "weight": 0.9915,
           "desc": "OBV falling with price \u2014 capitulation/bull"
         }
       ],
-      "bull_votes": 1,
-      "bear_votes": 3,
-      "log_posterior": 0.7867,
+      "bull_votes": 2,
+      "bear_votes": 2,
+      "log_posterior": 0.4551,
       "adx": 55.4,
       "regime": "TRANSITION\u2192BEAR_TREND (60%)"
     },
