@@ -1,6 +1,6 @@
 {
   "for_date": "2026-04-01",
-  "generated_on": "2026-03-31T16:58:15.040474-04:00",
+  "generated_on": "2026-03-31T17:01:15.704752-04:00",
   "atr_range_pct": 3.97,
   "models": {
     "DRIP": {
@@ -39,9 +39,9 @@
       "week_of": "2026-03-30"
     },
     "ZIP": {
-      "direction": "SPXS",
+      "direction": "SPXL",
       "confidence": 2,
-      "expected_pct": 0.05,
+      "expected_pct": 0.1,
       "signals": [
         {
           "name": "vix",
@@ -131,7 +131,7 @@
     "ZUP": {
       "direction": "SPXL",
       "confidence": 10,
-      "expected_pct": 0.27,
+      "expected_pct": 0.33,
       "signals": [
         {
           "name": "vol_ratio",
