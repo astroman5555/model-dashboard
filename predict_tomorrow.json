@@ -1,6 +1,6 @@
 {
   "for_date": "2026-04-02",
-  "generated_on": "2026-04-01T16:30:12.429537-04:00",
+  "generated_on": "2026-04-01T17:00:46.909551-04:00",
   "atr_range_pct": 3.88,
   "models": {
     "DRIP": {
@@ -41,7 +41,7 @@
     "ZIP": {
       "direction": "SPXS",
       "confidence": 6,
-      "expected_pct": 0.17,
+      "expected_pct": 0.16,
       "signals": [
         {
           "name": "mom_3d_rev",
@@ -77,7 +77,7 @@
     "ZAP": {
       "direction": "SPXL",
       "confidence": 7,
-      "expected_pct": 0.07,
+      "expected_pct": 0.16,
       "signals": [
         {
           "name": "ma20_slope",
