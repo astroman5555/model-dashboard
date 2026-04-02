@@ -1,7 +1,7 @@
 {
-  "for_date": "2026-04-02",
-  "generated_on": "2026-04-01T17:00:46.909551-04:00",
-  "atr_range_pct": 3.88,
+  "for_date": "2026-04-03",
+  "generated_on": "2026-04-02T16:30:15.557810-04:00",
+  "atr_range_pct": 3.93,
   "models": {
     "DRIP": {
       "direction": "SPXS",
@@ -30,7 +30,7 @@
       "bull_votes": 0,
       "bear_votes": 3,
       "net_score": -4.1898,
-      "regime": "TRANSITION",
+      "regime": "BEAR_TREND",
       "bounce_risk": 0,
       "adx": null,
       "log_posterior": null,
@@ -40,106 +40,130 @@
     },
     "ZIP": {
       "direction": "SPXS",
-      "confidence": 6,
-      "expected_pct": 0.16,
+      "confidence": 10,
+      "expected_pct": 0.94,
       "signals": [
+        {
+          "name": "macd_mom",
+          "vote": -1,
+          "weight": 0.9339,
+          "desc": "MACD hist rising (+0.8950  dir-flip) \u2014 momentum cont/bear [modVIX\u2193]"
+        },
+        {
+          "name": "macd_cross",
+          "vote": -1,
+          "weight": 2.0576,
+          "desc": "MACD crossed above signal (last 2d) \u2014 momentum cont/bear [modVIX\u2193]"
+        },
         {
           "name": "mom_3d_rev",
           "vote": -1,
           "weight": 0.3858,
-          "desc": "3d return +3.34% \u2014 overbought fade setup [modVIX\u2193]"
+          "desc": "3d return +3.78% \u2014 overbought fade setup [modVIX\u2193]"
         },
         {
           "name": "ma20_slope",
           "vote": -1,
           "weight": 4.2307,
-          "desc": "MA20 falling (slope -0.302%/d, bot 10%) [modVIX\u2193]"
+          "desc": "MA20 falling (slope -0.244%/d, bot 10%) [modVIX\u2193]"
         },
         {
           "name": "ma60_slope",
           "vote": -1,
           "weight": 2.2843,
-          "desc": "MA60 falling (slope -0.094%/d) [modVIX\u2193]"
-        },
-        {
-          "name": "gap_up",
-          "vote": 1,
-          "weight": 1.9031,
-          "desc": "Gap up +0.55% closed positive \u2014 bull continuation"
+          "desc": "MA60 falling (slope -0.095%/d) [modVIX\u2193]"
         }
       ],
-      "bull_votes": 1,
-      "bear_votes": 3,
-      "net_score": -4.9977,
-      "regime": "BEAR_TREND\u2192TRANSITION (0%)",
+      "bull_votes": 0,
+      "bear_votes": 5,
+      "net_score": -9.8923,
+      "regime": "BEAR_TREND",
       "bounce_risk": 0
     },
     "ZAP": {
       "direction": "SPXL",
-      "confidence": 7,
-      "expected_pct": 0.16,
+      "confidence": 3,
+      "expected_pct": 0.2,
       "signals": [
+        {
+          "name": "macd_mom",
+          "vote": -1,
+          "weight": 0.1253,
+          "desc": "MACD hist rising (+0.8950) \u2014 bear"
+        },
+        {
+          "name": "macd_cross",
+          "vote": -1,
+          "weight": 0.1926,
+          "desc": "MACD crossed above signal \u2014 bear"
+        },
         {
           "name": "ma20_slope",
           "vote": -1,
           "weight": 0.017,
-          "desc": "MA20 falling (slope -0.302%/d, bot 10%)"
-        },
-        {
-          "name": "gap_up",
-          "vote": 1,
-          "weight": 0.7368,
-          "desc": "Gap up +0.55% closed positive \u2014 bull"
+          "desc": "MA20 falling (slope -0.244%/d, bot 10%)"
         }
       ],
-      "bull_votes": 1,
-      "bear_votes": 1,
-      "log_posterior": 1.0077,
-      "adx": 46.7,
+      "bull_votes": 0,
+      "bear_votes": 3,
+      "log_posterior": -0.4689,
+      "adx": 43.9,
       "regime": "BEAR_TREND"
     },
     "ZUP": {
       "direction": "SPXL",
-      "confidence": 10,
-      "expected_pct": 0.39,
+      "confidence": 7,
+      "expected_pct": 0.14,
       "signals": [
+        {
+          "name": "macd_mom",
+          "vote": -1,
+          "weight": 0.1254,
+          "desc": "MACD hist rising (+0.8950) \u2014 bear"
+        },
+        {
+          "name": "macd_cross",
+          "vote": -1,
+          "weight": 0.2334,
+          "desc": "MACD crossed above signal \u2014 bear"
+        },
         {
           "name": "mom_3d_rev",
           "vote": 1,
           "weight": 0.0379,
-          "desc": "3d return +3.34% \u2014 overbought fade [inv]"
+          "desc": "3d return +3.78% \u2014 overbought fade [inv]"
         },
         {
           "name": "ma20_slope",
           "vote": 1,
           "weight": 0.0115,
-          "desc": "MA20 falling (slope -0.302%/d, bot 10%) [inv]"
+          "desc": "MA20 falling (slope -0.244%/d, bot 10%) [inv]"
         },
         {
           "name": "ma60_slope",
           "vote": -1,
           "weight": 0.4051,
-          "desc": "MA60 falling (slope -0.094%/d)"
+          "desc": "MA60 falling (slope -0.095%/d)"
         },
         {
-          "name": "gap_up",
+          "name": "gap_fade",
           "vote": 1,
-          "weight": 2.7042,
-          "desc": "Gap up +0.55% closed positive \u2014 bull"
+          "weight": 0.1811,
+          "desc": "Gap down -1.35% faded \u2014 bull fade cont"
         },
         {
           "name": "pc_proxy",
           "vote": -1,
           "weight": 0.0718,
-          "desc": "P/C proxy bearish: VIX 24.5 + vol_reg 1.30"
+          "desc": "P/C proxy bearish: VIX 23.9 + vol_reg 1.30"
         }
       ],
       "bull_votes": 3,
-      "bear_votes": 2,
-      "regime": "BEAR_TREND\u2192TRANSITION (0%)",
-      "zap_score": 3.1874,
-      "zip_norm": -0.4828,
-      "final_score": 1.5262,
+      "bear_votes": 4,
+      "regime": "BEAR_TREND",
+      "zap_score": -0.6786,
+      "zip_norm": -0.7297,
+      "final_score": -0.991,
       "bounce_risk": 0,
       "bounce_flipped": false
     }
