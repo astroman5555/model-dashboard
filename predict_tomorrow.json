@@ -1,7 +1,7 @@
 {
-  "for_date": "2026-04-03",
-  "generated_on": "2026-04-02T17:01:16.942275-04:00",
-  "atr_range_pct": 3.93,
+  "for_date": "2026-04-06",
+  "generated_on": "2026-04-03T16:30:17.652655-04:00",
+  "atr_range_pct": 3.94,
   "models": {
     "DRIP": {
       "direction": "SPXS",
@@ -9,34 +9,22 @@
       "expected_pct": 0.48,
       "signals": [
         {
-          "name": "vix_level",
-          "vote": -1,
-          "weight": 1.0,
-          "desc": "VIX 29.9 \u2014 elevated/bear week"
-        },
-        {
           "name": "ma60_slope",
           "vote": -1,
           "weight": 2.2843,
-          "desc": "MA60 falling -0.072%/d \u2014 bear week"
-        },
-        {
-          "name": "ma200_trend",
-          "vote": -1,
-          "weight": 0.9055,
-          "desc": "Price -3.63% below MA200 \u2014 bear regime"
+          "desc": "MA60 falling -0.095%/d \u2014 bear week"
         }
       ],
       "bull_votes": 0,
-      "bear_votes": 3,
-      "net_score": -4.1898,
+      "bear_votes": 1,
+      "net_score": -2.2843,
       "regime": "BEAR_TREND",
       "bounce_risk": 0,
       "adx": null,
       "log_posterior": null,
       "final_score": null,
-      "weekly_lock": true,
-      "week_of": "2026-03-30"
+      "weekly_lock": false,
+      "week_of": "2026-04-06"
     },
     "ZIP": {
       "direction": "SPXS",
@@ -170,28 +158,28 @@
   },
   "accuracy_context": {
     "DRIP": {
-      "weeks_of_data": 2,
-      "avg_weekly_e_delta": 9.6873,
-      "avg_direction_accuracy": 0.6,
-      "last_week_e_delta": 9.5329
+      "weeks_of_data": 3,
+      "avg_weekly_e_delta": 11.1014,
+      "avg_direction_accuracy": 0.5667,
+      "last_week_e_delta": 13.9295
     },
     "ZIP": {
-      "weeks_of_data": 2,
-      "avg_weekly_e_delta": 12.0415,
-      "avg_direction_accuracy": 0.5,
-      "last_week_e_delta": 9.351
+      "weeks_of_data": 3,
+      "avg_weekly_e_delta": 13.1178,
+      "avg_direction_accuracy": 0.4167,
+      "last_week_e_delta": 15.2704
     },
     "ZAP": {
-      "weeks_of_data": 2,
-      "avg_weekly_e_delta": 12.1273,
-      "avg_direction_accuracy": 0.3,
-      "last_week_e_delta": 12.8559
+      "weeks_of_data": 3,
+      "avg_weekly_e_delta": 11.6767,
+      "avg_direction_accuracy": 0.5333,
+      "last_week_e_delta": 10.7753
     },
     "ZUP": {
-      "weeks_of_data": 2,
-      "avg_weekly_e_delta": 11.1439,
-      "avg_direction_accuracy": 0.6,
-      "last_week_e_delta": 10.0698
+      "weeks_of_data": 3,
+      "avg_weekly_e_delta": 11.946,
+      "avg_direction_accuracy": 0.65,
+      "last_week_e_delta": 13.5503
     }
   }
 }
