@@ -1,6 +1,6 @@
 {
   "for_date": "2026-04-06",
-  "generated_on": "2026-04-03T16:30:17.652655-04:00",
+  "generated_on": "2026-04-03T17:00:45.848507-04:00",
   "atr_range_pct": 3.94,
   "models": {
     "DRIP": {
@@ -171,15 +171,15 @@
     },
     "ZAP": {
       "weeks_of_data": 3,
-      "avg_weekly_e_delta": 11.6767,
+      "avg_weekly_e_delta": 11.6748,
       "avg_direction_accuracy": 0.5333,
-      "last_week_e_delta": 10.7753
+      "last_week_e_delta": 10.7698
     },
     "ZUP": {
       "weeks_of_data": 3,
-      "avg_weekly_e_delta": 11.946,
+      "avg_weekly_e_delta": 11.9442,
       "avg_direction_accuracy": 0.65,
-      "last_week_e_delta": 13.5503
+      "last_week_e_delta": 13.5448
     }
   }
 }
