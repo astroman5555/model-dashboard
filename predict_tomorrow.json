@@ -1,12 +1,12 @@
 {
   "for_date": "2026-04-07",
-  "generated_on": "2026-04-06T16:30:14.960214-04:00",
+  "generated_on": "2026-04-06T17:00:48.162446-04:00",
   "atr_range_pct": 3.77,
   "models": {
     "DRIP": {
       "direction": "SPXS",
       "confidence": 10,
-      "expected_pct": 0.48,
+      "expected_pct": 0.4,
       "signals": [
         {
           "name": "vix_level",
@@ -35,7 +35,7 @@
     "ZIP": {
       "direction": "SPXS",
       "confidence": 10,
-      "expected_pct": 0.94,
+      "expected_pct": 0.84,
       "signals": [
         {
           "name": "macd_cross",
@@ -71,7 +71,7 @@
     "ZAP": {
       "direction": "SPXS",
       "confidence": 10,
-      "expected_pct": 0.07,
+      "expected_pct": 0.06,
       "signals": [
         {
           "name": "macd_cross",
