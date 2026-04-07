@@ -1,7 +1,7 @@
 {
-  "for_date": "2026-04-07",
-  "generated_on": "2026-04-06T17:00:48.162446-04:00",
-  "atr_range_pct": 3.77,
+  "for_date": "2026-04-08",
+  "generated_on": "2026-04-07T16:30:18.468136-04:00",
+  "atr_range_pct": 3.85,
   "models": {
     "DRIP": {
       "direction": "SPXS",
@@ -38,22 +38,22 @@
       "expected_pct": 0.84,
       "signals": [
         {
-          "name": "macd_cross",
+          "name": "vix",
           "vote": -1,
-          "weight": 2.0576,
-          "desc": "MACD crossed above signal (last 2d) \u2014 momentum cont/bear [modVIX\u2193]"
+          "weight": 1.2325,
+          "desc": "VIX elevated (25.8) \u2014 risk-off/bear [modVIX\u2193]"
         },
         {
           "name": "ma20_slope",
           "vote": -1,
           "weight": 4.2307,
-          "desc": "MA20 falling (slope -0.179%/d, bot 10%) [modVIX\u2193]"
+          "desc": "MA20 falling (slope -0.149%/d, bot 10%) [modVIX\u2193]"
         },
         {
           "name": "ma60_slope",
           "vote": -1,
           "weight": 2.2843,
-          "desc": "MA60 falling (slope -0.094%/d) [modVIX\u2193]"
+          "desc": "MA60 falling (slope -0.091%/d) [modVIX\u2193]"
         },
         {
           "name": "obv_trend",
@@ -64,7 +64,7 @@
       ],
       "bull_votes": 0,
       "bear_votes": 4,
-      "net_score": -14.4479,
+      "net_score": -13.6228,
       "regime": "BEAR_TREND\u2192TRANSITION (0%)",
       "bounce_risk": 0
     },
@@ -74,16 +74,10 @@
       "expected_pct": 0.06,
       "signals": [
         {
-          "name": "macd_cross",
-          "vote": -1,
-          "weight": 0.1926,
-          "desc": "MACD crossed above signal \u2014 bear"
-        },
-        {
           "name": "ma20_slope",
           "vote": -1,
           "weight": 0.017,
-          "desc": "MA20 falling (slope -0.179%/d, bot 10%)"
+          "desc": "MA20 falling (slope -0.149%/d, bot 10%)"
         },
         {
           "name": "obv_trend",
@@ -93,9 +87,9 @@
         }
       ],
       "bull_votes": 0,
-      "bear_votes": 3,
-      "log_posterior": -1.6815,
-      "adx": 40.9,
+      "bear_votes": 2,
+      "log_posterior": -1.4119,
+      "adx": 39.3,
       "regime": "BEAR_TREND"
     },
     "ZUP": {
@@ -104,22 +98,22 @@
       "expected_pct": 0.07,
       "signals": [
         {
-          "name": "macd_cross",
-          "vote": -1,
-          "weight": 0.2334,
-          "desc": "MACD crossed above signal \u2014 bear"
+          "name": "vix",
+          "vote": 1,
+          "weight": 0.6798,
+          "desc": "VIX elevated (25.8) \u2014 risk-off/bear [inv]"
         },
         {
           "name": "ma20_slope",
           "vote": 1,
           "weight": 0.0115,
-          "desc": "MA20 falling (slope -0.179%/d, bot 10%) [inv]"
+          "desc": "MA20 falling (slope -0.149%/d, bot 10%) [inv]"
         },
         {
           "name": "ma60_slope",
           "vote": -1,
           "weight": 0.4051,
-          "desc": "MA60 falling (slope -0.094%/d)"
+          "desc": "MA60 falling (slope -0.091%/d)"
         },
         {
           "name": "obv_trend",
@@ -131,15 +125,15 @@
           "name": "pc_proxy",
           "vote": -1,
           "weight": 0.0718,
-          "desc": "P/C proxy bearish: VIX 24.2 + vol_reg 1.27"
+          "desc": "P/C proxy bearish: VIX 25.8 + vol_reg 1.25"
         }
       ],
-      "bull_votes": 1,
-      "bear_votes": 4,
+      "bull_votes": 2,
+      "bear_votes": 3,
       "regime": "BEAR_TREND\u2192TRANSITION (0%)",
-      "zap_score": -5.9333,
+      "zap_score": -4.6549,
       "zip_norm": -1.0,
-      "final_score": -4.36,
+      "final_score": -3.5929,
       "bounce_risk": 0,
       "bounce_flipped": false
     }
