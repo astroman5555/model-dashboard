@@ -1,36 +1,30 @@
 {
-  "for_date": "2026-04-10",
-  "generated_on": "2026-04-10T15:00:11.813124-04:00",
-  "atr_range_pct": 3.64,
+  "for_date": "2026-04-13",
+  "generated_on": "2026-04-10T16:30:14.637669-04:00",
+  "atr_range_pct": 3.69,
   "models": {
     "DRIP": {
-      "direction": "SPXL",
-      "confidence": 4,
-      "expected_pct": 0.6,
+      "direction": "SPXS",
+      "confidence": 10,
+      "expected_pct": 0.27,
       "signals": [
         {
           "name": "ma60_slope",
           "vote": -1,
           "weight": 2.2843,
-          "desc": "MA60 falling -0.066%/d \u2014 bear week"
-        },
-        {
-          "name": "ma200_trend",
-          "vote": 1,
-          "weight": 0.9055,
-          "desc": "Price +3.13% above MA200 \u2014 bull regime"
+          "desc": "MA60 falling -0.067%/d \u2014 bear week"
         }
       ],
-      "bull_votes": 1,
+      "bull_votes": 0,
       "bear_votes": 1,
-      "net_score": -1.3788,
+      "net_score": -2.2843,
       "regime": "TRANSITION",
       "bounce_risk": 0,
       "adx": null,
       "log_posterior": null,
       "final_score": null,
       "weekly_lock": false,
-      "week_of": "2026-04-06"
+      "week_of": "2026-04-13"
     },
     "ZIP": {
       "direction": "SPXS",
@@ -41,13 +35,13 @@
           "name": "mom_3d_rev",
           "vote": -1,
           "weight": 0.3858,
-          "desc": "3d return +3.40% \u2014 overbought fade setup [modVIX\u2193]"
+          "desc": "3d return +3.08% \u2014 overbought fade setup [modVIX\u2193]"
         },
         {
           "name": "ma60_slope",
           "vote": -1,
           "weight": 2.2843,
-          "desc": "MA60 falling (slope -0.066%/d) [modVIX\u2193]"
+          "desc": "MA60 falling (slope -0.067%/d) [modVIX\u2193]"
         },
         {
           "name": "obv_trend",
@@ -59,7 +53,7 @@
           "name": "near_20d_high",
           "vote": -1,
           "weight": 2.7733,
-          "desc": "Price within 0.3% of 20d high (+0.00%) \u2014 fading high (bear) [modVIX\u2193]"
+          "desc": "Price within 0.3% of 20d high (-0.06%) \u2014 fading high (bear) [modVIX\u2193]"
         }
       ],
       "bull_votes": 0,
@@ -77,7 +71,7 @@
           "name": "rsi",
           "vote": 1,
           "weight": 0.6855,
-          "desc": "RSI overbought (69.0) \u2014 bull"
+          "desc": "RSI overbought (68.0) \u2014 bull"
         },
         {
           "name": "obv_trend",
@@ -89,13 +83,13 @@
           "name": "near_20d_high",
           "vote": 1,
           "weight": 0.0071,
-          "desc": "Price within 0.3% of 20d high (+0.00%) \u2014 bear [inv]"
+          "desc": "Price within 0.3% of 20d high (-0.06%) \u2014 bear [inv]"
         }
       ],
       "bull_votes": 2,
       "bear_votes": 1,
       "log_posterior": -0.4185,
-      "adx": 31.3,
+      "adx": 31.4,
       "regime": "BEAR_TREND\u2192TRANSITION (60%)"
     },
     "ZUP": {
@@ -107,13 +101,13 @@
           "name": "mom_3d_rev",
           "vote": 1,
           "weight": 0.0379,
-          "desc": "3d return +3.40% \u2014 overbought fade [inv]"
+          "desc": "3d return +3.08% \u2014 overbought fade [inv]"
         },
         {
           "name": "ma60_slope",
           "vote": -1,
           "weight": 0.4051,
-          "desc": "MA60 falling (slope -0.066%/d)"
+          "desc": "MA60 falling (slope -0.067%/d)"
         },
         {
           "name": "obv_trend",
@@ -125,7 +119,7 @@
           "name": "near_20d_high",
           "vote": 1,
           "weight": 0.0047,
-          "desc": "Near 20d high (+0.00%) \u2014 bear [inv]"
+          "desc": "Near 20d high (-0.06%) \u2014 bear [inv]"
         }
       ],
       "bull_votes": 2,
