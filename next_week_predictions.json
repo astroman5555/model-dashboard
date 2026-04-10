@@ -1,1079 +1,839 @@
 {
-  "week_of": "2026-03-30",
-  "generated_on": "2026-03-27",
+  "week_of": "2026-04-13",
+  "generated_on": "2026-04-10",
   "days": {
-    "2026-03-30": {
-      "for_date": "2026-03-30",
-      "generated_on": "2026-03-27T15:00:02.305209-04:00",
-      "atr_range_pct": 3.74,
+    "2026-04-13": {
+      "for_date": "2026-04-13",
+      "generated_on": "2026-04-10T15:00:02.947119-04:00",
+      "atr_range_pct": 3.64,
       "models": {
         "DRIP": {
-          "direction": "SPXS",
-          "confidence": 10,
-          "expected_pct": 0.4,
+          "direction": "SPXL",
+          "confidence": 4,
+          "expected_pct": 0.6,
           "signals": [
-            {
-              "name": "vix_level",
-              "vote": -1,
-              "weight": 1.0,
-              "desc": "VIX 29.7 \u2014 elevated/bear week"
-            },
-            {
-              "name": "vix_spike",
-              "vote": -1,
-              "weight": 0.1284,
-              "desc": "VIX spike 29.7 vs 3d avg 26.6 (+12%)"
-            },
             {
               "name": "ma60_slope",
               "vote": -1,
               "weight": 2.2843,
-              "desc": "MA60 falling -0.060%/d \u2014 bear week"
+              "desc": "MA60 falling -0.066%/d \u2014 bear week"
+            },
+            {
+              "name": "ma200_trend",
+              "vote": 1,
+              "weight": 0.9055,
+              "desc": "Price +3.13% above MA200 \u2014 bull regime"
             }
           ],
-          "bull_votes": 0,
-          "bear_votes": 3,
-          "net_score": -3.4127,
+          "bull_votes": 1,
+          "bear_votes": 1,
+          "net_score": -1.3788,
           "regime": "TRANSITION",
           "bounce_risk": 0,
           "adx": null,
           "log_posterior": null,
           "final_score": null,
           "weekly_lock": false,
-          "week_of": "2026-03-30"
+          "week_of": "2026-04-13"
         },
         "ZIP": {
-          "direction": "SPXL",
-          "confidence": 2,
-          "expected_pct": 0.49,
+          "direction": "SPXS",
+          "confidence": 10,
+          "expected_pct": 0.66,
           "signals": [
             {
-              "name": "vix",
+              "name": "mom_3d_rev",
               "vote": -1,
-              "weight": 1.2325,
-              "desc": "VIX elevated (29.7) \u2014 risk-off/bear"
-            },
-            {
-              "name": "vix_spike",
-              "vote": -1,
-              "weight": 0.1284,
-              "desc": "VIX spike 29.7 vs 3d avg 26.6 (+12%)"
-            },
-            {
-              "name": "ma60_dist",
-              "vote": 1,
-              "weight": 0.3893,
-              "desc": "Price -5.19% below MA60 \u2014 discount (bull)"
-            },
-            {
-              "name": "ma20_slope",
-              "vote": -1,
-              "weight": 4.2307,
-              "desc": "MA20 falling (slope -0.251%/d, bot 10%)"
+              "weight": 0.3858,
+              "desc": "3d return +3.40% \u2014 overbought fade setup [modVIX\u2193]"
             },
             {
               "name": "ma60_slope",
               "vote": -1,
               "weight": 2.2843,
-              "desc": "MA60 falling (slope -0.060%/d)"
+              "desc": "MA60 falling (slope -0.066%/d) [modVIX\u2193]"
             },
             {
-              "name": "zscore_ret",
-              "vote": 1,
-              "weight": 5.6106,
-              "desc": "Z-score -1.66 \u2014 oversold (bull)"
-            },
-            {
-              "name": "near_20d_low",
+              "name": "obv_trend",
               "vote": -1,
-              "weight": 0.1441,
-              "desc": "Price within 1.0% of 20d low (+0.00%) \u2014 breakdown (bear)"
+              "weight": 5.8753,
+              "desc": "OBV rising with price \u2014 exhaustion/bear [modVIX\u2193]"
             },
             {
-              "name": "gap_down",
+              "name": "near_20d_high",
               "vote": -1,
-              "weight": 0.1597,
-              "desc": "Gap down -0.72% closed negative \u2014 bear continuation"
+              "weight": 2.5192,
+              "desc": "Price within 0.3% of 20d high (+0.00%) \u2014 fading high (bear) [modVIX\u2193]"
             }
           ],
-          "bull_votes": 2,
-          "bear_votes": 6,
-          "net_score": -2.1798,
-          "regime": "TRANSITION",
-          "bounce_risk": 1
+          "bull_votes": 0,
+          "bear_votes": 4,
+          "net_score": -11.0646,
+          "regime": "BEAR_TREND\u2192TRANSITION (40%)",
+          "bounce_risk": 0
         },
         "ZAP": {
           "direction": "SPXL",
-          "confidence": 7,
-          "expected_pct": 1.4,
+          "confidence": 3,
+          "expected_pct": 0.2,
           "signals": [
             {
               "name": "rsi",
-              "vote": -1,
-              "weight": 0.6855,
-              "desc": "RSI oversold (33.0) \u2014 bear"
-            },
-            {
-              "name": "vix_spike",
-              "vote": -1,
-              "weight": 0.0149,
-              "desc": "VIX spike 29.7 vs 3d avg 26.6 (+12%)"
-            },
-            {
-              "name": "ma60_dist",
-              "vote": -1,
-              "weight": 0.0361,
-              "desc": "Price -5.19% below MA60 \u2014 discount (bull) [inv]"
-            },
-            {
-              "name": "ma20_slope",
               "vote": 1,
-              "weight": 0.017,
-              "desc": "MA20 falling (slope -0.251%/d, bot 10%) [inv]"
+              "weight": 0.6855,
+              "desc": "RSI overbought (69.0) \u2014 bull"
+            },
+            {
+              "name": "obv_trend",
+              "vote": -1,
+              "weight": 0.9915,
+              "desc": "OBV rising with price \u2014 exhaustion/bear"
+            },
+            {
+              "name": "near_20d_high",
+              "vote": -1,
+              "weight": 0.0071,
+              "desc": "Price within 0.3% of 20d high (+0.00%) \u2014 bear"
             }
           ],
           "bull_votes": 1,
-          "bear_votes": 3,
-          "log_posterior": -1.0073,
-          "adx": 51.9,
-          "regime": "TRANSITION\u2192BEAR_TREND (20%)"
+          "bear_votes": 2,
+          "log_posterior": -0.4383,
+          "adx": 31.3,
+          "regime": "BEAR_TREND\u2192TRANSITION (40%)"
         },
         "ZUP": {
           "direction": "SPXS",
           "confidence": 10,
-          "expected_pct": 0.67,
+          "expected_pct": 0.29,
           "signals": [
             {
-              "name": "rsi",
-              "vote": -1,
-              "weight": 0.9225,
-              "desc": "RSI oversold (33.0) \u2014 bear"
-            },
-            {
-              "name": "vix_spike",
-              "vote": -1,
-              "weight": 0.0807,
-              "desc": "VIX spike 29.7 vs 3d avg 26.6 (+12%)"
-            },
-            {
-              "name": "ma60_dist",
-              "vote": -1,
-              "weight": 0.054,
-              "desc": "Price -5.19% below MA60 \u2014 discount (bull) [inv]"
-            },
-            {
-              "name": "ma20_slope",
+              "name": "mom_3d_rev",
               "vote": 1,
-              "weight": 0.0115,
-              "desc": "MA20 falling (slope -0.251%/d, bot 10%) [inv]"
+              "weight": 0.0379,
+              "desc": "3d return +3.40% \u2014 overbought fade [inv]"
             },
             {
               "name": "ma60_slope",
               "vote": -1,
               "weight": 0.4051,
-              "desc": "MA60 falling (slope -0.060%/d)"
+              "desc": "MA60 falling (slope -0.066%/d)"
             },
             {
-              "name": "near_20d_low",
+              "name": "obv_trend",
               "vote": -1,
-              "weight": 0.0562,
-              "desc": "Near 20d low (+0.00%) \u2014 breakdown/bear"
+              "weight": 3.5393,
+              "desc": "OBV rising with price \u2014 exhaustion/bear"
+            },
+            {
+              "name": "near_20d_high",
+              "vote": 1,
+              "weight": 0.0047,
+              "desc": "Near 20d high (+0.00%) \u2014 bear [inv]"
             }
           ],
-          "bull_votes": 1,
-          "bear_votes": 5,
-          "regime": "TRANSITION",
-          "zap_score": -2.1098,
-          "zip_norm": -0.6607,
-          "final_score": -1.7945,
-          "bounce_risk": 1,
+          "bull_votes": 2,
+          "bear_votes": 2,
+          "regime": "BEAR_TREND\u2192TRANSITION (40%)",
+          "zap_score": -5.4635,
+          "zip_norm": -1.0,
+          "final_score": -4.0781,
+          "bounce_risk": 0,
           "bounce_flipped": false
         }
       },
       "accuracy_context": {
         "DRIP": {
-          "weeks_of_data": 2,
-          "avg_weekly_e_delta": 8.4631,
-          "avg_direction_accuracy": 0.3,
-          "last_week_e_delta": 7.0845
+          "weeks_of_data": 3,
+          "avg_weekly_e_delta": 11.1014,
+          "avg_direction_accuracy": 0.5667,
+          "last_week_e_delta": 13.9295
         },
         "ZIP": {
-          "weeks_of_data": 2,
-          "avg_weekly_e_delta": 10.411,
-          "avg_direction_accuracy": 0.5333,
-          "last_week_e_delta": 6.0901
+          "weeks_of_data": 3,
+          "avg_weekly_e_delta": 13.1178,
+          "avg_direction_accuracy": 0.4167,
+          "last_week_e_delta": 15.2704
         },
         "ZAP": {
-          "weeks_of_data": 2,
-          "avg_weekly_e_delta": 8.8192,
-          "avg_direction_accuracy": 0.3667,
-          "last_week_e_delta": 6.2396
+          "weeks_of_data": 3,
+          "avg_weekly_e_delta": 11.6748,
+          "avg_direction_accuracy": 0.5333,
+          "last_week_e_delta": 10.7698
         },
         "ZUP": {
-          "weeks_of_data": 2,
-          "avg_weekly_e_delta": 8.584,
-          "avg_direction_accuracy": 0.6333,
-          "last_week_e_delta": 4.9501
+          "weeks_of_data": 3,
+          "avg_weekly_e_delta": 11.9442,
+          "avg_direction_accuracy": 0.65,
+          "last_week_e_delta": 13.5448
         }
       }
     },
-    "2026-03-31": {
-      "for_date": "2026-03-31",
-      "generated_on": "2026-03-27T15:00:03.157243-04:00",
-      "atr_range_pct": 3.74,
+    "2026-04-14": {
+      "for_date": "2026-04-14",
+      "generated_on": "2026-04-10T15:00:03.790344-04:00",
+      "atr_range_pct": 3.64,
       "models": {
         "DRIP": {
-          "direction": "SPXS",
-          "confidence": 10,
-          "expected_pct": 0.4,
+          "direction": "SPXL",
+          "confidence": 4,
+          "expected_pct": 0.6,
           "signals": [
             {
-              "name": "vix_level",
+              "name": "ma60_slope",
               "vote": -1,
-              "weight": 1.0,
-              "desc": "VIX 29.7 \u2014 elevated/bear week"
+              "weight": 2.2843,
+              "desc": "MA60 falling -0.066%/d \u2014 bear week"
             },
             {
-              "name": "vix_spike",
+              "name": "ma200_trend",
+              "vote": 1,
+              "weight": 0.9055,
+              "desc": "Price +3.13% above MA200 \u2014 bull regime"
+            }
+          ],
+          "bull_votes": 1,
+          "bear_votes": 1,
+          "net_score": -1.3788,
+          "regime": "TRANSITION",
+          "bounce_risk": 0,
+          "adx": null,
+          "log_posterior": null,
+          "final_score": null,
+          "weekly_lock": false,
+          "week_of": "2026-04-13"
+        },
+        "ZIP": {
+          "direction": "SPXS",
+          "confidence": 10,
+          "expected_pct": 0.66,
+          "signals": [
+            {
+              "name": "mom_3d_rev",
               "vote": -1,
-              "weight": 0.1284,
-              "desc": "VIX spike 29.7 vs 3d avg 26.6 (+12%)"
+              "weight": 0.3858,
+              "desc": "3d return +3.40% \u2014 overbought fade setup [modVIX\u2193]"
             },
             {
               "name": "ma60_slope",
               "vote": -1,
               "weight": 2.2843,
-              "desc": "MA60 falling -0.060%/d \u2014 bear week"
+              "desc": "MA60 falling (slope -0.066%/d) [modVIX\u2193]"
+            },
+            {
+              "name": "obv_trend",
+              "vote": -1,
+              "weight": 5.8753,
+              "desc": "OBV rising with price \u2014 exhaustion/bear [modVIX\u2193]"
+            },
+            {
+              "name": "near_20d_high",
+              "vote": -1,
+              "weight": 2.5192,
+              "desc": "Price within 0.3% of 20d high (+0.00%) \u2014 fading high (bear) [modVIX\u2193]"
             }
           ],
           "bull_votes": 0,
-          "bear_votes": 3,
-          "net_score": -3.4127,
+          "bear_votes": 4,
+          "net_score": -11.0646,
+          "regime": "BEAR_TREND\u2192TRANSITION (40%)",
+          "bounce_risk": 0
+        },
+        "ZAP": {
+          "direction": "SPXL",
+          "confidence": 3,
+          "expected_pct": 0.2,
+          "signals": [
+            {
+              "name": "rsi",
+              "vote": 1,
+              "weight": 0.6855,
+              "desc": "RSI overbought (69.0) \u2014 bull"
+            },
+            {
+              "name": "obv_trend",
+              "vote": -1,
+              "weight": 0.9915,
+              "desc": "OBV rising with price \u2014 exhaustion/bear"
+            },
+            {
+              "name": "near_20d_high",
+              "vote": -1,
+              "weight": 0.0071,
+              "desc": "Price within 0.3% of 20d high (+0.00%) \u2014 bear"
+            }
+          ],
+          "bull_votes": 1,
+          "bear_votes": 2,
+          "log_posterior": -0.4383,
+          "adx": 31.3,
+          "regime": "BEAR_TREND\u2192TRANSITION (40%)"
+        },
+        "ZUP": {
+          "direction": "SPXS",
+          "confidence": 10,
+          "expected_pct": 0.29,
+          "signals": [
+            {
+              "name": "mom_3d_rev",
+              "vote": 1,
+              "weight": 0.0379,
+              "desc": "3d return +3.40% \u2014 overbought fade [inv]"
+            },
+            {
+              "name": "ma60_slope",
+              "vote": -1,
+              "weight": 0.4051,
+              "desc": "MA60 falling (slope -0.066%/d)"
+            },
+            {
+              "name": "obv_trend",
+              "vote": -1,
+              "weight": 3.5393,
+              "desc": "OBV rising with price \u2014 exhaustion/bear"
+            },
+            {
+              "name": "near_20d_high",
+              "vote": 1,
+              "weight": 0.0047,
+              "desc": "Near 20d high (+0.00%) \u2014 bear [inv]"
+            }
+          ],
+          "bull_votes": 2,
+          "bear_votes": 2,
+          "regime": "BEAR_TREND\u2192TRANSITION (40%)",
+          "zap_score": -5.4635,
+          "zip_norm": -1.0,
+          "final_score": -4.0781,
+          "bounce_risk": 0,
+          "bounce_flipped": false
+        }
+      },
+      "accuracy_context": {
+        "DRIP": {
+          "weeks_of_data": 3,
+          "avg_weekly_e_delta": 11.1014,
+          "avg_direction_accuracy": 0.5667,
+          "last_week_e_delta": 13.9295
+        },
+        "ZIP": {
+          "weeks_of_data": 3,
+          "avg_weekly_e_delta": 13.1178,
+          "avg_direction_accuracy": 0.4167,
+          "last_week_e_delta": 15.2704
+        },
+        "ZAP": {
+          "weeks_of_data": 3,
+          "avg_weekly_e_delta": 11.6748,
+          "avg_direction_accuracy": 0.5333,
+          "last_week_e_delta": 10.7698
+        },
+        "ZUP": {
+          "weeks_of_data": 3,
+          "avg_weekly_e_delta": 11.9442,
+          "avg_direction_accuracy": 0.65,
+          "last_week_e_delta": 13.5448
+        }
+      }
+    },
+    "2026-04-15": {
+      "for_date": "2026-04-15",
+      "generated_on": "2026-04-10T15:00:04.635869-04:00",
+      "atr_range_pct": 3.64,
+      "models": {
+        "DRIP": {
+          "direction": "SPXL",
+          "confidence": 4,
+          "expected_pct": 0.6,
+          "signals": [
+            {
+              "name": "ma60_slope",
+              "vote": -1,
+              "weight": 2.2843,
+              "desc": "MA60 falling -0.066%/d \u2014 bear week"
+            },
+            {
+              "name": "ma200_trend",
+              "vote": 1,
+              "weight": 0.9055,
+              "desc": "Price +3.13% above MA200 \u2014 bull regime"
+            }
+          ],
+          "bull_votes": 1,
+          "bear_votes": 1,
+          "net_score": -1.3788,
           "regime": "TRANSITION",
           "bounce_risk": 0,
           "adx": null,
           "log_posterior": null,
           "final_score": null,
           "weekly_lock": true,
-          "week_of": "2026-03-30"
+          "week_of": "2026-04-13"
         },
         "ZIP": {
-          "direction": "SPXL",
-          "confidence": 2,
-          "expected_pct": 0.49,
+          "direction": "SPXS",
+          "confidence": 10,
+          "expected_pct": 0.66,
           "signals": [
             {
-              "name": "vix",
+              "name": "mom_3d_rev",
               "vote": -1,
-              "weight": 1.2325,
-              "desc": "VIX elevated (29.7) \u2014 risk-off/bear"
-            },
-            {
-              "name": "vix_spike",
-              "vote": -1,
-              "weight": 0.1284,
-              "desc": "VIX spike 29.7 vs 3d avg 26.6 (+12%)"
-            },
-            {
-              "name": "ma60_dist",
-              "vote": 1,
-              "weight": 0.3893,
-              "desc": "Price -5.19% below MA60 \u2014 discount (bull)"
-            },
-            {
-              "name": "ma20_slope",
-              "vote": -1,
-              "weight": 4.2307,
-              "desc": "MA20 falling (slope -0.251%/d, bot 10%)"
+              "weight": 0.3858,
+              "desc": "3d return +3.40% \u2014 overbought fade setup [modVIX\u2193]"
             },
             {
               "name": "ma60_slope",
               "vote": -1,
               "weight": 2.2843,
-              "desc": "MA60 falling (slope -0.060%/d)"
+              "desc": "MA60 falling (slope -0.066%/d) [modVIX\u2193]"
             },
             {
-              "name": "zscore_ret",
-              "vote": 1,
-              "weight": 5.6106,
-              "desc": "Z-score -1.66 \u2014 oversold (bull)"
-            },
-            {
-              "name": "near_20d_low",
+              "name": "obv_trend",
               "vote": -1,
-              "weight": 0.1441,
-              "desc": "Price within 1.0% of 20d low (+0.00%) \u2014 breakdown (bear)"
+              "weight": 5.8753,
+              "desc": "OBV rising with price \u2014 exhaustion/bear [modVIX\u2193]"
             },
             {
-              "name": "gap_down",
+              "name": "near_20d_high",
               "vote": -1,
-              "weight": 0.1597,
-              "desc": "Gap down -0.72% closed negative \u2014 bear continuation"
+              "weight": 2.5192,
+              "desc": "Price within 0.3% of 20d high (+0.00%) \u2014 fading high (bear) [modVIX\u2193]"
             }
           ],
-          "bull_votes": 2,
-          "bear_votes": 6,
-          "net_score": -2.1798,
-          "regime": "TRANSITION",
-          "bounce_risk": 1
+          "bull_votes": 0,
+          "bear_votes": 4,
+          "net_score": -11.0646,
+          "regime": "BEAR_TREND\u2192TRANSITION (40%)",
+          "bounce_risk": 0
         },
         "ZAP": {
           "direction": "SPXL",
-          "confidence": 7,
-          "expected_pct": 1.4,
+          "confidence": 3,
+          "expected_pct": 0.2,
           "signals": [
             {
               "name": "rsi",
-              "vote": -1,
-              "weight": 0.6855,
-              "desc": "RSI oversold (33.0) \u2014 bear"
-            },
-            {
-              "name": "vix_spike",
-              "vote": -1,
-              "weight": 0.0149,
-              "desc": "VIX spike 29.7 vs 3d avg 26.6 (+12%)"
-            },
-            {
-              "name": "ma60_dist",
-              "vote": -1,
-              "weight": 0.0361,
-              "desc": "Price -5.19% below MA60 \u2014 discount (bull) [inv]"
-            },
-            {
-              "name": "ma20_slope",
               "vote": 1,
-              "weight": 0.017,
-              "desc": "MA20 falling (slope -0.251%/d, bot 10%) [inv]"
+              "weight": 0.6855,
+              "desc": "RSI overbought (69.0) \u2014 bull"
+            },
+            {
+              "name": "obv_trend",
+              "vote": -1,
+              "weight": 0.9915,
+              "desc": "OBV rising with price \u2014 exhaustion/bear"
+            },
+            {
+              "name": "near_20d_high",
+              "vote": -1,
+              "weight": 0.0071,
+              "desc": "Price within 0.3% of 20d high (+0.00%) \u2014 bear"
             }
           ],
           "bull_votes": 1,
-          "bear_votes": 3,
-          "log_posterior": -1.0073,
-          "adx": 51.9,
-          "regime": "TRANSITION\u2192BEAR_TREND (20%)"
+          "bear_votes": 2,
+          "log_posterior": -0.4383,
+          "adx": 31.3,
+          "regime": "BEAR_TREND\u2192TRANSITION (40%)"
         },
         "ZUP": {
           "direction": "SPXS",
           "confidence": 10,
-          "expected_pct": 0.67,
+          "expected_pct": 0.29,
           "signals": [
             {
-              "name": "rsi",
-              "vote": -1,
-              "weight": 0.9225,
-              "desc": "RSI oversold (33.0) \u2014 bear"
-            },
-            {
-              "name": "vix_spike",
-              "vote": -1,
-              "weight": 0.0807,
-              "desc": "VIX spike 29.7 vs 3d avg 26.6 (+12%)"
-            },
-            {
-              "name": "ma60_dist",
-              "vote": -1,
-              "weight": 0.054,
-              "desc": "Price -5.19% below MA60 \u2014 discount (bull) [inv]"
-            },
-            {
-              "name": "ma20_slope",
+              "name": "mom_3d_rev",
               "vote": 1,
-              "weight": 0.0115,
-              "desc": "MA20 falling (slope -0.251%/d, bot 10%) [inv]"
+              "weight": 0.0379,
+              "desc": "3d return +3.40% \u2014 overbought fade [inv]"
             },
             {
               "name": "ma60_slope",
               "vote": -1,
               "weight": 0.4051,
-              "desc": "MA60 falling (slope -0.060%/d)"
+              "desc": "MA60 falling (slope -0.066%/d)"
             },
             {
-              "name": "near_20d_low",
+              "name": "obv_trend",
               "vote": -1,
-              "weight": 0.0562,
-              "desc": "Near 20d low (+0.00%) \u2014 breakdown/bear"
+              "weight": 3.5393,
+              "desc": "OBV rising with price \u2014 exhaustion/bear"
+            },
+            {
+              "name": "near_20d_high",
+              "vote": 1,
+              "weight": 0.0047,
+              "desc": "Near 20d high (+0.00%) \u2014 bear [inv]"
             }
           ],
-          "bull_votes": 1,
-          "bear_votes": 5,
-          "regime": "TRANSITION",
-          "zap_score": -2.1098,
-          "zip_norm": -0.6607,
-          "final_score": -1.7945,
-          "bounce_risk": 1,
+          "bull_votes": 2,
+          "bear_votes": 2,
+          "regime": "BEAR_TREND\u2192TRANSITION (40%)",
+          "zap_score": -5.4635,
+          "zip_norm": -1.0,
+          "final_score": -4.0781,
+          "bounce_risk": 0,
           "bounce_flipped": false
         }
       },
       "accuracy_context": {
         "DRIP": {
-          "weeks_of_data": 2,
-          "avg_weekly_e_delta": 8.4631,
-          "avg_direction_accuracy": 0.3,
-          "last_week_e_delta": 7.0845
+          "weeks_of_data": 3,
+          "avg_weekly_e_delta": 11.1014,
+          "avg_direction_accuracy": 0.5667,
+          "last_week_e_delta": 13.9295
         },
         "ZIP": {
-          "weeks_of_data": 2,
-          "avg_weekly_e_delta": 10.411,
-          "avg_direction_accuracy": 0.5333,
-          "last_week_e_delta": 6.0901
+          "weeks_of_data": 3,
+          "avg_weekly_e_delta": 13.1178,
+          "avg_direction_accuracy": 0.4167,
+          "last_week_e_delta": 15.2704
         },
         "ZAP": {
-          "weeks_of_data": 2,
-          "avg_weekly_e_delta": 8.8192,
-          "avg_direction_accuracy": 0.3667,
-          "last_week_e_delta": 6.2396
+          "weeks_of_data": 3,
+          "avg_weekly_e_delta": 11.6748,
+          "avg_direction_accuracy": 0.5333,
+          "last_week_e_delta": 10.7698
         },
         "ZUP": {
-          "weeks_of_data": 2,
-          "avg_weekly_e_delta": 8.584,
-          "avg_direction_accuracy": 0.6333,
-          "last_week_e_delta": 4.9501
+          "weeks_of_data": 3,
+          "avg_weekly_e_delta": 11.9442,
+          "avg_direction_accuracy": 0.65,
+          "last_week_e_delta": 13.5448
         }
       }
     },
-    "2026-04-01": {
-      "for_date": "2026-04-01",
-      "generated_on": "2026-03-27T15:00:03.988105-04:00",
-      "atr_range_pct": 3.74,
+    "2026-04-16": {
+      "for_date": "2026-04-16",
+      "generated_on": "2026-04-10T15:00:05.483515-04:00",
+      "atr_range_pct": 3.64,
       "models": {
         "DRIP": {
-          "direction": "SPXS",
-          "confidence": 10,
-          "expected_pct": 0.4,
+          "direction": "SPXL",
+          "confidence": 4,
+          "expected_pct": 0.6,
           "signals": [
-            {
-              "name": "vix_level",
-              "vote": -1,
-              "weight": 1.0,
-              "desc": "VIX 29.7 \u2014 elevated/bear week"
-            },
-            {
-              "name": "vix_spike",
-              "vote": -1,
-              "weight": 0.1284,
-              "desc": "VIX spike 29.7 vs 3d avg 26.6 (+12%)"
-            },
             {
               "name": "ma60_slope",
               "vote": -1,
               "weight": 2.2843,
-              "desc": "MA60 falling -0.060%/d \u2014 bear week"
+              "desc": "MA60 falling -0.066%/d \u2014 bear week"
+            },
+            {
+              "name": "ma200_trend",
+              "vote": 1,
+              "weight": 0.9055,
+              "desc": "Price +3.13% above MA200 \u2014 bull regime"
             }
           ],
-          "bull_votes": 0,
-          "bear_votes": 3,
-          "net_score": -3.4127,
+          "bull_votes": 1,
+          "bear_votes": 1,
+          "net_score": -1.3788,
           "regime": "TRANSITION",
           "bounce_risk": 0,
           "adx": null,
           "log_posterior": null,
           "final_score": null,
           "weekly_lock": true,
-          "week_of": "2026-03-30"
+          "week_of": "2026-04-13"
         },
         "ZIP": {
-          "direction": "SPXL",
-          "confidence": 2,
-          "expected_pct": 0.49,
+          "direction": "SPXS",
+          "confidence": 10,
+          "expected_pct": 0.66,
           "signals": [
             {
-              "name": "vix",
+              "name": "mom_3d_rev",
               "vote": -1,
-              "weight": 1.2325,
-              "desc": "VIX elevated (29.7) \u2014 risk-off/bear"
-            },
-            {
-              "name": "vix_spike",
-              "vote": -1,
-              "weight": 0.1284,
-              "desc": "VIX spike 29.7 vs 3d avg 26.6 (+12%)"
-            },
-            {
-              "name": "ma60_dist",
-              "vote": 1,
-              "weight": 0.3893,
-              "desc": "Price -5.19% below MA60 \u2014 discount (bull)"
-            },
-            {
-              "name": "ma20_slope",
-              "vote": -1,
-              "weight": 4.2307,
-              "desc": "MA20 falling (slope -0.251%/d, bot 10%)"
+              "weight": 0.3858,
+              "desc": "3d return +3.40% \u2014 overbought fade setup [modVIX\u2193]"
             },
             {
               "name": "ma60_slope",
               "vote": -1,
               "weight": 2.2843,
-              "desc": "MA60 falling (slope -0.060%/d)"
+              "desc": "MA60 falling (slope -0.066%/d) [modVIX\u2193]"
             },
             {
-              "name": "zscore_ret",
-              "vote": 1,
-              "weight": 5.6106,
-              "desc": "Z-score -1.66 \u2014 oversold (bull)"
-            },
-            {
-              "name": "near_20d_low",
+              "name": "obv_trend",
               "vote": -1,
-              "weight": 0.1441,
-              "desc": "Price within 1.0% of 20d low (+0.00%) \u2014 breakdown (bear)"
+              "weight": 5.8753,
+              "desc": "OBV rising with price \u2014 exhaustion/bear [modVIX\u2193]"
             },
             {
-              "name": "gap_down",
+              "name": "near_20d_high",
               "vote": -1,
-              "weight": 0.1597,
-              "desc": "Gap down -0.72% closed negative \u2014 bear continuation"
+              "weight": 2.5192,
+              "desc": "Price within 0.3% of 20d high (+0.00%) \u2014 fading high (bear) [modVIX\u2193]"
             }
           ],
-          "bull_votes": 2,
-          "bear_votes": 6,
-          "net_score": -2.1798,
-          "regime": "TRANSITION",
-          "bounce_risk": 1
+          "bull_votes": 0,
+          "bear_votes": 4,
+          "net_score": -11.0646,
+          "regime": "BEAR_TREND\u2192TRANSITION (40%)",
+          "bounce_risk": 0
         },
         "ZAP": {
           "direction": "SPXL",
-          "confidence": 7,
-          "expected_pct": 1.4,
+          "confidence": 3,
+          "expected_pct": 0.2,
           "signals": [
             {
               "name": "rsi",
-              "vote": -1,
-              "weight": 0.6855,
-              "desc": "RSI oversold (33.0) \u2014 bear"
-            },
-            {
-              "name": "vix_spike",
-              "vote": -1,
-              "weight": 0.0149,
-              "desc": "VIX spike 29.7 vs 3d avg 26.6 (+12%)"
-            },
-            {
-              "name": "ma60_dist",
-              "vote": -1,
-              "weight": 0.0361,
-              "desc": "Price -5.19% below MA60 \u2014 discount (bull) [inv]"
-            },
-            {
-              "name": "ma20_slope",
               "vote": 1,
-              "weight": 0.017,
-              "desc": "MA20 falling (slope -0.251%/d, bot 10%) [inv]"
+              "weight": 0.6855,
+              "desc": "RSI overbought (69.0) \u2014 bull"
+            },
+            {
+              "name": "obv_trend",
+              "vote": -1,
+              "weight": 0.9915,
+              "desc": "OBV rising with price \u2014 exhaustion/bear"
+            },
+            {
+              "name": "near_20d_high",
+              "vote": -1,
+              "weight": 0.0071,
+              "desc": "Price within 0.3% of 20d high (+0.00%) \u2014 bear"
             }
           ],
           "bull_votes": 1,
-          "bear_votes": 3,
-          "log_posterior": -1.0073,
-          "adx": 51.9,
-          "regime": "TRANSITION\u2192BEAR_TREND (20%)"
+          "bear_votes": 2,
+          "log_posterior": -0.4383,
+          "adx": 31.3,
+          "regime": "BEAR_TREND\u2192TRANSITION (40%)"
         },
         "ZUP": {
           "direction": "SPXS",
           "confidence": 10,
-          "expected_pct": 0.67,
+          "expected_pct": 0.29,
           "signals": [
             {
-              "name": "rsi",
-              "vote": -1,
-              "weight": 0.9225,
-              "desc": "RSI oversold (33.0) \u2014 bear"
-            },
-            {
-              "name": "vix_spike",
-              "vote": -1,
-              "weight": 0.0807,
-              "desc": "VIX spike 29.7 vs 3d avg 26.6 (+12%)"
-            },
-            {
-              "name": "ma60_dist",
-              "vote": -1,
-              "weight": 0.054,
-              "desc": "Price -5.19% below MA60 \u2014 discount (bull) [inv]"
-            },
-            {
-              "name": "ma20_slope",
+              "name": "mom_3d_rev",
               "vote": 1,
-              "weight": 0.0115,
-              "desc": "MA20 falling (slope -0.251%/d, bot 10%) [inv]"
+              "weight": 0.0379,
+              "desc": "3d return +3.40% \u2014 overbought fade [inv]"
             },
             {
               "name": "ma60_slope",
               "vote": -1,
               "weight": 0.4051,
-              "desc": "MA60 falling (slope -0.060%/d)"
+              "desc": "MA60 falling (slope -0.066%/d)"
             },
             {
-              "name": "near_20d_low",
+              "name": "obv_trend",
               "vote": -1,
-              "weight": 0.0562,
-              "desc": "Near 20d low (+0.00%) \u2014 breakdown/bear"
+              "weight": 3.5393,
+              "desc": "OBV rising with price \u2014 exhaustion/bear"
+            },
+            {
+              "name": "near_20d_high",
+              "vote": 1,
+              "weight": 0.0047,
+              "desc": "Near 20d high (+0.00%) \u2014 bear [inv]"
             }
           ],
-          "bull_votes": 1,
-          "bear_votes": 5,
-          "regime": "TRANSITION",
-          "zap_score": -2.1098,
-          "zip_norm": -0.6607,
-          "final_score": -1.7945,
-          "bounce_risk": 1,
+          "bull_votes": 2,
+          "bear_votes": 2,
+          "regime": "BEAR_TREND\u2192TRANSITION (40%)",
+          "zap_score": -5.4635,
+          "zip_norm": -1.0,
+          "final_score": -4.0781,
+          "bounce_risk": 0,
           "bounce_flipped": false
         }
       },
       "accuracy_context": {
         "DRIP": {
-          "weeks_of_data": 2,
-          "avg_weekly_e_delta": 8.4631,
-          "avg_direction_accuracy": 0.3,
-          "last_week_e_delta": 7.0845
+          "weeks_of_data": 3,
+          "avg_weekly_e_delta": 11.1014,
+          "avg_direction_accuracy": 0.5667,
+          "last_week_e_delta": 13.9295
         },
         "ZIP": {
-          "weeks_of_data": 2,
-          "avg_weekly_e_delta": 10.411,
-          "avg_direction_accuracy": 0.5333,
-          "last_week_e_delta": 6.0901
+          "weeks_of_data": 3,
+          "avg_weekly_e_delta": 13.1178,
+          "avg_direction_accuracy": 0.4167,
+          "last_week_e_delta": 15.2704
         },
         "ZAP": {
-          "weeks_of_data": 2,
-          "avg_weekly_e_delta": 8.8192,
-          "avg_direction_accuracy": 0.3667,
-          "last_week_e_delta": 6.2396
+          "weeks_of_data": 3,
+          "avg_weekly_e_delta": 11.6748,
+          "avg_direction_accuracy": 0.5333,
+          "last_week_e_delta": 10.7698
         },
         "ZUP": {
-          "weeks_of_data": 2,
-          "avg_weekly_e_delta": 8.584,
-          "avg_direction_accuracy": 0.6333,
-          "last_week_e_delta": 4.9501
+          "weeks_of_data": 3,
+          "avg_weekly_e_delta": 11.9442,
+          "avg_direction_accuracy": 0.65,
+          "last_week_e_delta": 13.5448
         }
       }
     },
-    "2026-04-02": {
-      "for_date": "2026-04-02",
-      "generated_on": "2026-03-27T15:00:04.761391-04:00",
-      "atr_range_pct": 3.74,
+    "2026-04-17": {
+      "for_date": "2026-04-17",
+      "generated_on": "2026-04-10T15:00:06.298024-04:00",
+      "atr_range_pct": 3.64,
       "models": {
         "DRIP": {
-          "direction": "SPXS",
-          "confidence": 10,
-          "expected_pct": 0.4,
+          "direction": "SPXL",
+          "confidence": 4,
+          "expected_pct": 0.6,
           "signals": [
-            {
-              "name": "vix_level",
-              "vote": -1,
-              "weight": 1.0,
-              "desc": "VIX 29.7 \u2014 elevated/bear week"
-            },
-            {
-              "name": "vix_spike",
-              "vote": -1,
-              "weight": 0.1284,
-              "desc": "VIX spike 29.7 vs 3d avg 26.6 (+12%)"
-            },
             {
               "name": "ma60_slope",
               "vote": -1,
               "weight": 2.2843,
-              "desc": "MA60 falling -0.060%/d \u2014 bear week"
+              "desc": "MA60 falling -0.066%/d \u2014 bear week"
+            },
+            {
+              "name": "ma200_trend",
+              "vote": 1,
+              "weight": 0.9055,
+              "desc": "Price +3.13% above MA200 \u2014 bull regime"
             }
           ],
-          "bull_votes": 0,
-          "bear_votes": 3,
-          "net_score": -3.4127,
+          "bull_votes": 1,
+          "bear_votes": 1,
+          "net_score": -1.3788,
           "regime": "TRANSITION",
           "bounce_risk": 0,
           "adx": null,
           "log_posterior": null,
           "final_score": null,
           "weekly_lock": true,
-          "week_of": "2026-03-30"
+          "week_of": "2026-04-13"
         },
         "ZIP": {
-          "direction": "SPXL",
-          "confidence": 2,
-          "expected_pct": 0.49,
+          "direction": "SPXS",
+          "confidence": 10,
+          "expected_pct": 0.66,
           "signals": [
             {
-              "name": "vix",
+              "name": "mom_3d_rev",
               "vote": -1,
-              "weight": 1.2325,
-              "desc": "VIX elevated (29.7) \u2014 risk-off/bear"
-            },
-            {
-              "name": "vix_spike",
-              "vote": -1,
-              "weight": 0.1284,
-              "desc": "VIX spike 29.7 vs 3d avg 26.6 (+12%)"
-            },
-            {
-              "name": "ma60_dist",
-              "vote": 1,
-              "weight": 0.3893,
-              "desc": "Price -5.19% below MA60 \u2014 discount (bull)"
-            },
-            {
-              "name": "ma20_slope",
-              "vote": -1,
-              "weight": 4.2307,
-              "desc": "MA20 falling (slope -0.251%/d, bot 10%)"
+              "weight": 0.3858,
+              "desc": "3d return +3.40% \u2014 overbought fade setup [modVIX\u2193]"
             },
             {
               "name": "ma60_slope",
               "vote": -1,
               "weight": 2.2843,
-              "desc": "MA60 falling (slope -0.060%/d)"
+              "desc": "MA60 falling (slope -0.066%/d) [modVIX\u2193]"
             },
             {
-              "name": "zscore_ret",
-              "vote": 1,
-              "weight": 5.6106,
-              "desc": "Z-score -1.66 \u2014 oversold (bull)"
+              "name": "obv_trend",
+              "vote": -1,
+              "weight": 5.8753,
+              "desc": "OBV rising with price \u2014 exhaustion/bear [modVIX\u2193]"
             },
             {
-              "name": "near_20d_low",
+              "name": "near_20d_high",
               "vote": -1,
-              "weight": 0.1441,
-              "desc": "Price within 1.0% of 20d low (+0.00%) \u2014 breakdown (bear)"
-            },
-            {
-              "name": "gap_down",
-              "vote": -1,
-              "weight": 0.1597,
-              "desc": "Gap down -0.72% closed negative \u2014 bear continuation"
-            }
-          ],
-          "bull_votes": 2,
-          "bear_votes": 6,
-          "net_score": -2.1798,
-          "regime": "TRANSITION",
-          "bounce_risk": 1
-        },
-        "ZAP": {
-          "direction": "SPXL",
-          "confidence": 7,
-          "expected_pct": 1.4,
-          "signals": [
-            {
-              "name": "rsi",
-              "vote": -1,
-              "weight": 0.6855,
-              "desc": "RSI oversold (33.0) \u2014 bear"
-            },
-            {
-              "name": "vix_spike",
-              "vote": -1,
-              "weight": 0.0149,
-              "desc": "VIX spike 29.7 vs 3d avg 26.6 (+12%)"
-            },
-            {
-              "name": "ma60_dist",
-              "vote": -1,
-              "weight": 0.0361,
-              "desc": "Price -5.19% below MA60 \u2014 discount (bull) [inv]"
-            },
-            {
-              "name": "ma20_slope",
-              "vote": 1,
-              "weight": 0.017,
-              "desc": "MA20 falling (slope -0.251%/d, bot 10%) [inv]"
-            }
-          ],
-          "bull_votes": 1,
-          "bear_votes": 3,
-          "log_posterior": -1.0073,
-          "adx": 51.9,
-          "regime": "TRANSITION\u2192BEAR_TREND (20%)"
-        },
-        "ZUP": {
-          "direction": "SPXS",
-          "confidence": 10,
-          "expected_pct": 0.67,
-          "signals": [
-            {
-              "name": "rsi",
-              "vote": -1,
-              "weight": 0.9225,
-              "desc": "RSI oversold (33.0) \u2014 bear"
-            },
-            {
-              "name": "vix_spike",
-              "vote": -1,
-              "weight": 0.0807,
-              "desc": "VIX spike 29.7 vs 3d avg 26.6 (+12%)"
-            },
-            {
-              "name": "ma60_dist",
-              "vote": -1,
-              "weight": 0.054,
-              "desc": "Price -5.19% below MA60 \u2014 discount (bull) [inv]"
-            },
-            {
-              "name": "ma20_slope",
-              "vote": 1,
-              "weight": 0.0115,
-              "desc": "MA20 falling (slope -0.251%/d, bot 10%) [inv]"
-            },
-            {
-              "name": "ma60_slope",
-              "vote": -1,
-              "weight": 0.4051,
-              "desc": "MA60 falling (slope -0.060%/d)"
-            },
-            {
-              "name": "near_20d_low",
-              "vote": -1,
-              "weight": 0.0562,
-              "desc": "Near 20d low (+0.00%) \u2014 breakdown/bear"
-            }
-          ],
-          "bull_votes": 1,
-          "bear_votes": 5,
-          "regime": "TRANSITION",
-          "zap_score": -2.1098,
-          "zip_norm": -0.6607,
-          "final_score": -1.7945,
-          "bounce_risk": 1,
-          "bounce_flipped": false
-        }
-      },
-      "accuracy_context": {
-        "DRIP": {
-          "weeks_of_data": 2,
-          "avg_weekly_e_delta": 8.4631,
-          "avg_direction_accuracy": 0.3,
-          "last_week_e_delta": 7.0845
-        },
-        "ZIP": {
-          "weeks_of_data": 2,
-          "avg_weekly_e_delta": 10.411,
-          "avg_direction_accuracy": 0.5333,
-          "last_week_e_delta": 6.0901
-        },
-        "ZAP": {
-          "weeks_of_data": 2,
-          "avg_weekly_e_delta": 8.8192,
-          "avg_direction_accuracy": 0.3667,
-          "last_week_e_delta": 6.2396
-        },
-        "ZUP": {
-          "weeks_of_data": 2,
-          "avg_weekly_e_delta": 8.584,
-          "avg_direction_accuracy": 0.6333,
-          "last_week_e_delta": 4.9501
-        }
-      }
-    },
-    "2026-04-03": {
-      "for_date": "2026-04-03",
-      "generated_on": "2026-03-27T15:00:05.552366-04:00",
-      "atr_range_pct": 3.74,
-      "models": {
-        "DRIP": {
-          "direction": "SPXS",
-          "confidence": 10,
-          "expected_pct": 0.4,
-          "signals": [
-            {
-              "name": "vix_level",
-              "vote": -1,
-              "weight": 1.0,
-              "desc": "VIX 29.7 \u2014 elevated/bear week"
-            },
-            {
-              "name": "vix_spike",
-              "vote": -1,
-              "weight": 0.1284,
-              "desc": "VIX spike 29.7 vs 3d avg 26.6 (+12%)"
-            },
-            {
-              "name": "ma60_slope",
-              "vote": -1,
-              "weight": 2.2843,
-              "desc": "MA60 falling -0.060%/d \u2014 bear week"
+              "weight": 2.5192,
+              "desc": "Price within 0.3% of 20d high (+0.00%) \u2014 fading high (bear) [modVIX\u2193]"
             }
           ],
           "bull_votes": 0,
-          "bear_votes": 3,
-          "net_score": -3.4127,
-          "regime": "TRANSITION",
-          "bounce_risk": 0,
-          "adx": null,
-          "log_posterior": null,
-          "final_score": null,
-          "weekly_lock": true,
-          "week_of": "2026-03-30"
-        },
-        "ZIP": {
-          "direction": "SPXL",
-          "confidence": 2,
-          "expected_pct": 0.49,
-          "signals": [
-            {
-              "name": "vix",
-              "vote": -1,
-              "weight": 1.2325,
-              "desc": "VIX elevated (29.7) \u2014 risk-off/bear"
-            },
-            {
-              "name": "vix_spike",
-              "vote": -1,
-              "weight": 0.1284,
-              "desc": "VIX spike 29.7 vs 3d avg 26.6 (+12%)"
-            },
-            {
-              "name": "ma60_dist",
-              "vote": 1,
-              "weight": 0.3893,
-              "desc": "Price -5.19% below MA60 \u2014 discount (bull)"
-            },
-            {
-              "name": "ma20_slope",
-              "vote": -1,
-              "weight": 4.2307,
-              "desc": "MA20 falling (slope -0.251%/d, bot 10%)"
-            },
-            {
-              "name": "ma60_slope",
-              "vote": -1,
-              "weight": 2.2843,
-              "desc": "MA60 falling (slope -0.060%/d)"
-            },
-            {
-              "name": "zscore_ret",
-              "vote": 1,
-              "weight": 5.6106,
-              "desc": "Z-score -1.66 \u2014 oversold (bull)"
-            },
-            {
-              "name": "near_20d_low",
-              "vote": -1,
-              "weight": 0.1441,
-              "desc": "Price within 1.0% of 20d low (+0.00%) \u2014 breakdown (bear)"
-            },
-            {
-              "name": "gap_down",
-              "vote": -1,
-              "weight": 0.1597,
-              "desc": "Gap down -0.72% closed negative \u2014 bear continuation"
-            }
-          ],
-          "bull_votes": 2,
-          "bear_votes": 6,
-          "net_score": -2.1798,
-          "regime": "TRANSITION",
-          "bounce_risk": 1
+          "bear_votes": 4,
+          "net_score": -11.0646,
+          "regime": "BEAR_TREND\u2192TRANSITION (40%)",
+          "bounce_risk": 0
         },
         "ZAP": {
           "direction": "SPXL",
-          "confidence": 7,
-          "expected_pct": 1.4,
+          "confidence": 3,
+          "expected_pct": 0.2,
           "signals": [
             {
               "name": "rsi",
-              "vote": -1,
-              "weight": 0.6855,
-              "desc": "RSI oversold (33.0) \u2014 bear"
-            },
-            {
-              "name": "vix_spike",
-              "vote": -1,
-              "weight": 0.0149,
-              "desc": "VIX spike 29.7 vs 3d avg 26.6 (+12%)"
-            },
-            {
-              "name": "ma60_dist",
-              "vote": -1,
-              "weight": 0.0361,
-              "desc": "Price -5.19% below MA60 \u2014 discount (bull) [inv]"
-            },
-            {
-              "name": "ma20_slope",
               "vote": 1,
-              "weight": 0.017,
-              "desc": "MA20 falling (slope -0.251%/d, bot 10%) [inv]"
+              "weight": 0.6855,
+              "desc": "RSI overbought (69.0) \u2014 bull"
+            },
+            {
+              "name": "obv_trend",
+              "vote": -1,
+              "weight": 0.9915,
+              "desc": "OBV rising with price \u2014 exhaustion/bear"
+            },
+            {
+              "name": "near_20d_high",
+              "vote": -1,
+              "weight": 0.0071,
+              "desc": "Price within 0.3% of 20d high (+0.00%) \u2014 bear"
             }
           ],
           "bull_votes": 1,
-          "bear_votes": 3,
-          "log_posterior": -1.0073,
-          "adx": 51.9,
-          "regime": "TRANSITION\u2192BEAR_TREND (20%)"
+          "bear_votes": 2,
+          "log_posterior": -0.4383,
+          "adx": 31.3,
+          "regime": "BEAR_TREND\u2192TRANSITION (40%)"
         },
         "ZUP": {
           "direction": "SPXS",
           "confidence": 10,
-          "expected_pct": 0.67,
+          "expected_pct": 0.29,
           "signals": [
             {
-              "name": "rsi",
-              "vote": -1,
-              "weight": 0.9225,
-              "desc": "RSI oversold (33.0) \u2014 bear"
-            },
-            {
-              "name": "vix_spike",
-              "vote": -1,
-              "weight": 0.0807,
-              "desc": "VIX spike 29.7 vs 3d avg 26.6 (+12%)"
-            },
-            {
-              "name": "ma60_dist",
-              "vote": -1,
-              "weight": 0.054,
-              "desc": "Price -5.19% below MA60 \u2014 discount (bull) [inv]"
-            },
-            {
-              "name": "ma20_slope",
+              "name": "mom_3d_rev",
               "vote": 1,
-              "weight": 0.0115,
-              "desc": "MA20 falling (slope -0.251%/d, bot 10%) [inv]"
+              "weight": 0.0379,
+              "desc": "3d return +3.40% \u2014 overbought fade [inv]"
             },
             {
               "name": "ma60_slope",
               "vote": -1,
               "weight": 0.4051,
-              "desc": "MA60 falling (slope -0.060%/d)"
+              "desc": "MA60 falling (slope -0.066%/d)"
             },
             {
-              "name": "near_20d_low",
+              "name": "obv_trend",
               "vote": -1,
-              "weight": 0.0562,
-              "desc": "Near 20d low (+0.00%) \u2014 breakdown/bear"
+              "weight": 3.5393,
+              "desc": "OBV rising with price \u2014 exhaustion/bear"
+            },
+            {
+              "name": "near_20d_high",
+              "vote": 1,
+              "weight": 0.0047,
+              "desc": "Near 20d high (+0.00%) \u2014 bear [inv]"
             }
           ],
-          "bull_votes": 1,
-          "bear_votes": 5,
-          "regime": "TRANSITION",
-          "zap_score": -2.1098,
-          "zip_norm": -0.6607,
-          "final_score": -1.7945,
-          "bounce_risk": 1,
+          "bull_votes": 2,
+          "bear_votes": 2,
+          "regime": "BEAR_TREND\u2192TRANSITION (40%)",
+          "zap_score": -5.4635,
+          "zip_norm": -1.0,
+          "final_score": -4.0781,
+          "bounce_risk": 0,
           "bounce_flipped": false
         }
       },
       "accuracy_context": {
         "DRIP": {
-          "weeks_of_data": 2,
-          "avg_weekly_e_delta": 8.4631,
-          "avg_direction_accuracy": 0.3,
-          "last_week_e_delta": 7.0845
+          "weeks_of_data": 3,
+          "avg_weekly_e_delta": 11.1014,
+          "avg_direction_accuracy": 0.5667,
+          "last_week_e_delta": 13.9295
         },
         "ZIP": {
-          "weeks_of_data": 2,
-          "avg_weekly_e_delta": 10.411,
-          "avg_direction_accuracy": 0.5333,
-          "last_week_e_delta": 6.0901
+          "weeks_of_data": 3,
+          "avg_weekly_e_delta": 13.1178,
+          "avg_direction_accuracy": 0.4167,
+          "last_week_e_delta": 15.2704
         },
         "ZAP": {
-          "weeks_of_data": 2,
-          "avg_weekly_e_delta": 8.8192,
-          "avg_direction_accuracy": 0.3667,
-          "last_week_e_delta": 6.2396
+          "weeks_of_data": 3,
+          "avg_weekly_e_delta": 11.6748,
+          "avg_direction_accuracy": 0.5333,
+          "last_week_e_delta": 10.7698
         },
         "ZUP": {
-          "weeks_of_data": 2,
-          "avg_weekly_e_delta": 8.584,
-          "avg_direction_accuracy": 0.6333,
-          "last_week_e_delta": 4.9501
+          "weeks_of_data": 3,
+          "avg_weekly_e_delta": 11.9442,
+          "avg_direction_accuracy": 0.65,
+          "last_week_e_delta": 13.5448
         }
       }
     }
