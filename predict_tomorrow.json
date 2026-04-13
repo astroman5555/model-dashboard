@@ -1,6 +1,6 @@
 {
   "for_date": "2026-04-14",
-  "generated_on": "2026-04-13T16:30:15.923884-04:00",
+  "generated_on": "2026-04-13T17:00:54.217016-04:00",
   "atr_range_pct": 3.55,
   "models": {
     "DRIP": {
@@ -29,7 +29,7 @@
     "ZIP": {
       "direction": "SPXS",
       "confidence": 10,
-      "expected_pct": 0.67,
+      "expected_pct": 0.69,
       "signals": [
         {
           "name": "ret_10d",
@@ -99,9 +99,9 @@
       "regime": "BEAR_TREND\u2192TRANSITION (80%)"
     },
     "ZUP": {
-      "direction": "SPXS",
+      "direction": "SPXL",
       "confidence": 10,
-      "expected_pct": 0.39,
+      "expected_pct": 0.21,
       "signals": [
         {
           "name": "ret_10d",
