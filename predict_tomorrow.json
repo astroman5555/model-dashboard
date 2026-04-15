@@ -1,12 +1,12 @@
 {
   "for_date": "2026-04-16",
-  "generated_on": "2026-04-15T16:30:16.914555-04:00",
+  "generated_on": "2026-04-15T17:00:48.316098-04:00",
   "atr_range_pct": 3.47,
   "models": {
     "DRIP": {
       "direction": "SPXS",
       "confidence": 10,
-      "expected_pct": 0.3,
+      "expected_pct": 0.27,
       "signals": [
         {
           "name": "ma60_slope",
