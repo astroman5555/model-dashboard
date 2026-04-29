@@ -1,7 +1,7 @@
 {
-  "for_date": "2026-04-29",
-  "generated_on": "2026-04-28T17:00:51.677869-04:00",
-  "atr_range_pct": 2.3,
+  "for_date": "2026-04-30",
+  "generated_on": "2026-04-29T16:30:13.716630-04:00",
+  "atr_range_pct": 2.22,
   "models": {
     "DRIP": {
       "direction": "SPXL",
@@ -41,31 +41,31 @@
           "name": "rsi",
           "vote": 1,
           "weight": 2.9852,
-          "desc": "RSI overbought (79.0) \u2014 momentum cont/bull"
+          "desc": "RSI overbought (77.6) \u2014 momentum cont/bull"
         },
         {
           "name": "ma60_dist",
           "vote": -1,
           "weight": 0.3893,
-          "desc": "Price +4.81% above MA60 \u2014 extended (bear) [bull-regime\u2193]"
+          "desc": "Price +4.77% above MA60 \u2014 extended (bear) [bull-regime\u2193] [modVIX\u2193]"
         },
         {
           "name": "ma20_slope",
           "vote": 1,
           "weight": 4.2307,
-          "desc": "MA20 rising (slope +0.517%/d, top 10%)"
+          "desc": "MA20 rising (slope +0.536%/d, top 10%)"
         },
         {
           "name": "ma60_slope",
           "vote": 1,
           "weight": 2.2843,
-          "desc": "MA60 rising (slope +0.050%/d)"
+          "desc": "MA60 rising (slope +0.049%/d)"
         },
         {
           "name": "ma200_trend",
           "vote": 1,
           "weight": 0.9055,
-          "desc": "Price +6.76% above MA200 \u2014 bull regime"
+          "desc": "Price +6.70% above MA200 \u2014 bull regime"
         }
       ],
       "bull_votes": 4,
@@ -83,25 +83,25 @@
           "name": "rsi",
           "vote": 1,
           "weight": 0.6855,
-          "desc": "RSI overbought (79.0) \u2014 bull"
+          "desc": "RSI overbought (77.6) \u2014 bull"
         },
         {
           "name": "ma60_dist",
           "vote": 1,
           "weight": 0.0361,
-          "desc": "Price +4.81% above MA60 \u2014 extended (bear) [inv]"
+          "desc": "Price +4.77% above MA60 \u2014 extended (bear) [inv]"
         },
         {
           "name": "ma20_slope",
           "vote": -1,
           "weight": 0.017,
-          "desc": "MA20 rising (slope +0.517%/d, top 10%) [inv]"
+          "desc": "MA20 rising (slope +0.536%/d, top 10%) [inv]"
         }
       ],
       "bull_votes": 2,
       "bear_votes": 1,
       "log_posterior": 0.9864,
-      "adx": 34.4,
+      "adx": 31.4,
       "regime": "BULL_TREND"
     },
     "ZUP": {
@@ -113,39 +113,39 @@
           "name": "rsi",
           "vote": 1,
           "weight": 0.9225,
-          "desc": "RSI overbought (79.0) \u2014 bull"
+          "desc": "RSI overbought (77.6) \u2014 bull"
         },
         {
           "name": "ma60_dist",
           "vote": 1,
           "weight": 0.054,
-          "desc": "Price +4.81% above MA60 \u2014 extended (bear) [inv]"
+          "desc": "Price +4.77% above MA60 \u2014 extended (bear) [inv]"
         },
         {
           "name": "ma20_slope",
           "vote": -1,
           "weight": 0.0115,
-          "desc": "MA20 rising (slope +0.517%/d, top 10%) [inv]"
+          "desc": "MA20 rising (slope +0.536%/d, top 10%) [inv]"
         },
         {
           "name": "ma60_slope",
           "vote": 1,
           "weight": 0.4051,
-          "desc": "MA60 rising (slope +0.050%/d)"
+          "desc": "MA60 rising (slope +0.049%/d)"
         },
         {
           "name": "ma200_trend",
           "vote": 1,
           "weight": 0.3254,
-          "desc": "Price +6.76% above MA200 \u2014 bull regime"
+          "desc": "Price +6.70% above MA200 \u2014 bull regime"
         }
       ],
       "bull_votes": 4,
       "bear_votes": 1,
       "regime": "BULL_TREND\u2192TRANSITION (0%)",
       "zap_score": 2.3737,
-      "zip_norm": 0.7391,
-      "final_score": 2.0155,
+      "zip_norm": 0.8462,
+      "final_score": 2.1011,
       "bounce_risk": 0,
       "bounce_flipped": false
     }
