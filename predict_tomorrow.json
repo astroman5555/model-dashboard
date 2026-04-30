@@ -1,6 +1,6 @@
 {
   "for_date": "2026-05-01",
-  "generated_on": "2026-04-30T16:30:15.156655-04:00",
+  "generated_on": "2026-04-30T17:00:47.291202-04:00",
   "atr_range_pct": 2.33,
   "models": {
     "DRIP": {
@@ -83,7 +83,7 @@
     "ZAP": {
       "direction": "SPXL",
       "confidence": 7,
-      "expected_pct": 0.89,
+      "expected_pct": 0.94,
       "signals": [
         {
           "name": "rsi",
@@ -119,7 +119,7 @@
     "ZUP": {
       "direction": "SPXL",
       "confidence": 10,
-      "expected_pct": 0.5,
+      "expected_pct": 0.54,
       "signals": [
         {
           "name": "rsi",
