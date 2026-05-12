@@ -1,6 +1,6 @@
 {
-  "for_date": "2026-05-12",
-  "generated_on": "2026-05-11T17:00:50.449993-04:00",
+  "for_date": "2026-05-13",
+  "generated_on": "2026-05-12T16:30:16.572967-04:00",
   "atr_range_pct": 2.19,
   "models": {
     "DRIP": {
@@ -41,37 +41,37 @@
           "name": "rsi",
           "vote": 1,
           "weight": 2.9852,
-          "desc": "RSI overbought (80.5) \u2014 momentum cont/bull"
+          "desc": "RSI overbought (76.1) \u2014 momentum cont/bull"
         },
         {
           "name": "ma60_dist",
           "vote": -1,
           "weight": 0.3893,
-          "desc": "Price +7.96% above MA60 \u2014 extended (bear) [bull-regime\u2193] [modVIX\u2193]"
+          "desc": "Price +7.65% above MA60 \u2014 extended (bear) [bull-regime\u2193]"
         },
         {
           "name": "ma20_slope",
           "vote": 1,
           "weight": 4.2307,
-          "desc": "MA20 rising (slope +0.385%/d, top 10%)"
+          "desc": "MA20 rising (slope +0.366%/d, top 10%)"
         },
         {
           "name": "ma60_slope",
           "vote": 1,
           "weight": 2.2843,
-          "desc": "MA60 rising (slope +0.096%/d)"
+          "desc": "MA60 rising (slope +0.105%/d)"
         },
         {
           "name": "near_20d_high",
           "vote": -1,
           "weight": 1.5249,
-          "desc": "Price within 0.3% of 20d high (+0.00%) \u2014 fading high (bear) [modVIX\u2193]"
+          "desc": "Price within 0.3% of 20d high (-0.15%) \u2014 fading high (bear)"
         },
         {
           "name": "ma200_trend",
           "vote": 1,
           "weight": 0.9055,
-          "desc": "Price +10.16% above MA200 \u2014 bull regime"
+          "desc": "Price +9.91% above MA200 \u2014 bull regime"
         }
       ],
       "bull_votes": 4,
@@ -89,31 +89,31 @@
           "name": "rsi",
           "vote": 1,
           "weight": 0.6855,
-          "desc": "RSI overbought (80.5) \u2014 bull"
+          "desc": "RSI overbought (76.1) \u2014 bull"
         },
         {
           "name": "ma60_dist",
           "vote": 1,
           "weight": 0.0361,
-          "desc": "Price +7.96% above MA60 \u2014 extended (bear) [inv]"
+          "desc": "Price +7.65% above MA60 \u2014 extended (bear) [inv]"
         },
         {
           "name": "ma20_slope",
           "vote": -1,
           "weight": 0.017,
-          "desc": "MA20 rising (slope +0.385%/d, top 10%) [inv]"
+          "desc": "MA20 rising (slope +0.366%/d, top 10%) [inv]"
         },
         {
           "name": "near_20d_high",
           "vote": 1,
           "weight": 0.0071,
-          "desc": "Price within 0.3% of 20d high (+0.00%) \u2014 bear [inv]"
+          "desc": "Price within 0.3% of 20d high (-0.15%) \u2014 bear [inv]"
         }
       ],
       "bull_votes": 3,
       "bear_votes": 1,
       "log_posterior": 0.9964,
-      "adx": 40.3,
+      "adx": 39.3,
       "regime": "BULL_TREND"
     },
     "ZUP": {
@@ -125,45 +125,45 @@
           "name": "rsi",
           "vote": 1,
           "weight": 0.9225,
-          "desc": "RSI overbought (80.5) \u2014 bull"
+          "desc": "RSI overbought (76.1) \u2014 bull"
         },
         {
           "name": "ma60_dist",
           "vote": 1,
           "weight": 0.054,
-          "desc": "Price +7.96% above MA60 \u2014 extended (bear) [inv]"
+          "desc": "Price +7.65% above MA60 \u2014 extended (bear) [inv]"
         },
         {
           "name": "ma20_slope",
           "vote": -1,
           "weight": 0.0115,
-          "desc": "MA20 rising (slope +0.385%/d, top 10%) [inv]"
+          "desc": "MA20 rising (slope +0.366%/d, top 10%) [inv]"
         },
         {
           "name": "ma60_slope",
           "vote": 1,
           "weight": 0.4051,
-          "desc": "MA60 rising (slope +0.096%/d)"
+          "desc": "MA60 rising (slope +0.105%/d)"
         },
         {
           "name": "ma200_trend",
           "vote": 1,
           "weight": 0.3254,
-          "desc": "Price +10.16% above MA200 \u2014 bull regime"
+          "desc": "Price +9.91% above MA200 \u2014 bull regime"
         },
         {
           "name": "near_20d_high",
           "vote": 1,
           "weight": 0.0047,
-          "desc": "Near 20d high (+0.00%) \u2014 bear [inv]"
+          "desc": "Near 20d high (-0.15%) \u2014 bear [inv]"
         }
       ],
       "bull_votes": 5,
       "bear_votes": 1,
       "regime": "BULL_TREND\u2192TRANSITION (0%)",
       "zap_score": 2.3803,
-      "zip_norm": 0.5584,
-      "final_score": 1.8749,
+      "zip_norm": 0.6438,
+      "final_score": 1.9432,
       "bounce_risk": 0,
       "bounce_flipped": false
     }
