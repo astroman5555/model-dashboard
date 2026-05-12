@@ -1,6 +1,6 @@
 {
   "for_date": "2026-05-13",
-  "generated_on": "2026-05-12T16:30:16.572967-04:00",
+  "generated_on": "2026-05-12T17:00:49.251013-04:00",
   "atr_range_pct": 2.19,
   "models": {
     "DRIP": {
@@ -83,7 +83,7 @@
     "ZAP": {
       "direction": "SPXL",
       "confidence": 7,
-      "expected_pct": 0.86,
+      "expected_pct": 0.83,
       "signals": [
         {
           "name": "rsi",
