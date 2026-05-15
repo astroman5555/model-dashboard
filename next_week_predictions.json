@@ -1,11 +1,11 @@
 {
-  "week_of": "2026-05-11",
-  "generated_on": "2026-05-08",
+  "week_of": "2026-05-18",
+  "generated_on": "2026-05-15",
   "days": {
-    "2026-05-11": {
-      "for_date": "2026-05-11",
-      "generated_on": "2026-05-08T15:00:02.479057-04:00",
-      "atr_range_pct": 2.25,
+    "2026-05-18": {
+      "for_date": "2026-05-18",
+      "generated_on": "2026-05-15T15:00:03.045663-04:00",
+      "atr_range_pct": 2.15,
       "models": {
         "DRIP": {
           "direction": "SPXL",
@@ -16,13 +16,13 @@
               "name": "ma60_slope",
               "vote": 1,
               "weight": 2.2843,
-              "desc": "MA60 rising +0.079%/d \u2014 bull week"
+              "desc": "MA60 rising +0.121%/d \u2014 bull week"
             },
             {
               "name": "ma200_trend",
               "vote": 1,
               "weight": 0.9055,
-              "desc": "Price +9.19% above MA200 \u2014 bull regime"
+              "desc": "Price +11.20% above MA200 \u2014 bull regime"
             }
           ],
           "bull_votes": 2,
@@ -34,139 +34,175 @@
           "log_posterior": null,
           "final_score": null,
           "weekly_lock": false,
-          "week_of": "2026-05-11"
+          "week_of": "2026-05-18"
         },
         "ZIP": {
           "direction": "SPXL",
-          "confidence": 9,
-          "expected_pct": 0.25,
+          "confidence": 7,
+          "expected_pct": 0.55,
           "signals": [
+            {
+              "name": "rsi",
+              "vote": 1,
+              "weight": 2.9852,
+              "desc": "RSI overbought (82.0) \u2014 momentum cont/bull"
+            },
             {
               "name": "ma60_dist",
               "vote": -1,
               "weight": 0.3893,
-              "desc": "Price +7.12% above MA60 \u2014 extended (bear) [bull-regime\u2193]"
+              "desc": "Price +8.77% above MA60 \u2014 extended (bear) [bull-regime\u2193] [modVIX\u2193]"
             },
             {
               "name": "ma20_slope",
               "vote": 1,
               "weight": 4.2307,
-              "desc": "MA20 rising (slope +0.414%/d, top 10%)"
+              "desc": "MA20 rising (slope +0.317%/d, top 10%)"
             },
             {
               "name": "ma60_slope",
               "vote": 1,
               "weight": 2.2843,
-              "desc": "MA60 rising (slope +0.079%/d)"
+              "desc": "MA60 rising (slope +0.121%/d)"
+            },
+            {
+              "name": "near_20d_high",
+              "vote": -1,
+              "weight": 1.5249,
+              "desc": "Price within 0.3% of 20d high (+0.00%) \u2014 fading high (bear) [modVIX\u2193]"
             },
             {
               "name": "ma200_trend",
               "vote": 1,
               "weight": 0.9055,
-              "desc": "Price +9.19% above MA200 \u2014 bull regime"
+              "desc": "Price +11.20% above MA200 \u2014 bull regime"
             }
           ],
-          "bull_votes": 3,
-          "bear_votes": 1,
-          "net_score": 7.0312,
+          "bull_votes": 4,
+          "bear_votes": 2,
+          "net_score": 8.4915,
           "regime": "BULL_TREND\u2192TRANSITION (0%)",
           "bounce_risk": 0
         },
         "ZAP": {
           "direction": "SPXL",
-          "confidence": 1,
-          "expected_pct": 0.33,
+          "confidence": 7,
+          "expected_pct": 0.92,
           "signals": [
+            {
+              "name": "rsi",
+              "vote": 1,
+              "weight": 0.6855,
+              "desc": "RSI overbought (82.0) \u2014 bull"
+            },
             {
               "name": "ma60_dist",
               "vote": 1,
               "weight": 0.0361,
-              "desc": "Price +7.12% above MA60 \u2014 extended (bear) [inv]"
+              "desc": "Price +8.77% above MA60 \u2014 extended (bear) [inv]"
             },
             {
               "name": "ma20_slope",
               "vote": -1,
               "weight": 0.017,
-              "desc": "MA20 rising (slope +0.414%/d, top 10%) [inv]"
+              "desc": "MA20 rising (slope +0.317%/d, top 10%) [inv]"
+            },
+            {
+              "name": "near_20d_high",
+              "vote": 1,
+              "weight": 0.0071,
+              "desc": "Price within 0.3% of 20d high (+0.00%) \u2014 bear [inv]"
             }
           ],
-          "bull_votes": 1,
+          "bull_votes": 3,
           "bear_votes": 1,
-          "log_posterior": 0.0267,
-          "adx": 35.5,
-          "regime": "BULL_TREND"
+          "log_posterior": 0.9964,
+          "adx": 41.7,
+          "regime": "BULL_TREND\u2192TRANSITION (0%)"
         },
         "ZUP": {
           "direction": "SPXL",
-          "confidence": 8,
-          "expected_pct": 0.2,
+          "confidence": 10,
+          "expected_pct": 0.58,
           "signals": [
+            {
+              "name": "rsi",
+              "vote": 1,
+              "weight": 0.9225,
+              "desc": "RSI overbought (82.0) \u2014 bull"
+            },
             {
               "name": "ma60_dist",
               "vote": 1,
               "weight": 0.054,
-              "desc": "Price +7.12% above MA60 \u2014 extended (bear) [inv]"
+              "desc": "Price +8.77% above MA60 \u2014 extended (bear) [inv]"
             },
             {
               "name": "ma20_slope",
               "vote": -1,
               "weight": 0.0115,
-              "desc": "MA20 rising (slope +0.414%/d, top 10%) [inv]"
+              "desc": "MA20 rising (slope +0.317%/d, top 10%) [inv]"
             },
             {
               "name": "ma60_slope",
               "vote": 1,
               "weight": 0.4051,
-              "desc": "MA60 rising (slope +0.079%/d)"
+              "desc": "MA60 rising (slope +0.121%/d)"
             },
             {
               "name": "ma200_trend",
               "vote": 1,
               "weight": 0.3254,
-              "desc": "Price +9.19% above MA200 \u2014 bull regime"
+              "desc": "Price +11.20% above MA200 \u2014 bull regime"
+            },
+            {
+              "name": "near_20d_high",
+              "vote": 1,
+              "weight": 0.0047,
+              "desc": "Near 20d high (+0.00%) \u2014 bear [inv]"
             }
           ],
-          "bull_votes": 3,
+          "bull_votes": 5,
           "bear_votes": 1,
           "regime": "BULL_TREND\u2192TRANSITION (0%)",
-          "zap_score": 1.0822,
-          "zip_norm": 0.6949,
-          "final_score": 1.2053,
+          "zap_score": 2.3803,
+          "zip_norm": 0.5584,
+          "final_score": 1.8749,
           "bounce_risk": 0,
           "bounce_flipped": false
         }
       },
       "accuracy_context": {
         "DRIP": {
-          "weeks_of_data": 7,
-          "avg_weekly_e_delta": 8.3444,
-          "avg_direction_accuracy": 0.5286,
-          "last_week_e_delta": 2.8475
+          "weeks_of_data": 8,
+          "avg_weekly_e_delta": 8.088,
+          "avg_direction_accuracy": 0.5375,
+          "last_week_e_delta": 6.2931
         },
         "ZIP": {
-          "weeks_of_data": 7,
-          "avg_weekly_e_delta": 9.9129,
-          "avg_direction_accuracy": 0.4357,
-          "last_week_e_delta": 3.4475
+          "weeks_of_data": 8,
+          "avg_weekly_e_delta": 9.5494,
+          "avg_direction_accuracy": 0.4313,
+          "last_week_e_delta": 7.0049
         },
         "ZAP": {
-          "weeks_of_data": 7,
-          "avg_weekly_e_delta": 9.1828,
-          "avg_direction_accuracy": 0.4857,
-          "last_week_e_delta": 3.8269
+          "weeks_of_data": 8,
+          "avg_weekly_e_delta": 8.7912,
+          "avg_direction_accuracy": 0.5,
+          "last_week_e_delta": 6.0499
         },
         "ZUP": {
-          "weeks_of_data": 7,
-          "avg_weekly_e_delta": 8.9408,
-          "avg_direction_accuracy": 0.5929,
-          "last_week_e_delta": 2.9163
+          "weeks_of_data": 8,
+          "avg_weekly_e_delta": 8.6031,
+          "avg_direction_accuracy": 0.5938,
+          "last_week_e_delta": 6.2391
         }
       }
     },
-    "2026-05-12": {
-      "for_date": "2026-05-12",
-      "generated_on": "2026-05-08T15:00:03.282740-04:00",
-      "atr_range_pct": 2.25,
+    "2026-05-19": {
+      "for_date": "2026-05-19",
+      "generated_on": "2026-05-15T15:00:03.857123-04:00",
+      "atr_range_pct": 2.15,
       "models": {
         "DRIP": {
           "direction": "SPXL",
@@ -177,13 +213,13 @@
               "name": "ma60_slope",
               "vote": 1,
               "weight": 2.2843,
-              "desc": "MA60 rising +0.079%/d \u2014 bull week"
+              "desc": "MA60 rising +0.121%/d \u2014 bull week"
             },
             {
               "name": "ma200_trend",
               "vote": 1,
               "weight": 0.9055,
-              "desc": "Price +9.19% above MA200 \u2014 bull regime"
+              "desc": "Price +11.20% above MA200 \u2014 bull regime"
             }
           ],
           "bull_votes": 2,
@@ -195,139 +231,175 @@
           "log_posterior": null,
           "final_score": null,
           "weekly_lock": false,
-          "week_of": "2026-05-11"
+          "week_of": "2026-05-18"
         },
         "ZIP": {
           "direction": "SPXL",
-          "confidence": 9,
-          "expected_pct": 0.25,
+          "confidence": 7,
+          "expected_pct": 0.55,
           "signals": [
+            {
+              "name": "rsi",
+              "vote": 1,
+              "weight": 2.9852,
+              "desc": "RSI overbought (82.0) \u2014 momentum cont/bull"
+            },
             {
               "name": "ma60_dist",
               "vote": -1,
               "weight": 0.3893,
-              "desc": "Price +7.12% above MA60 \u2014 extended (bear) [bull-regime\u2193]"
+              "desc": "Price +8.77% above MA60 \u2014 extended (bear) [bull-regime\u2193] [modVIX\u2193]"
             },
             {
               "name": "ma20_slope",
               "vote": 1,
               "weight": 4.2307,
-              "desc": "MA20 rising (slope +0.414%/d, top 10%)"
+              "desc": "MA20 rising (slope +0.317%/d, top 10%)"
             },
             {
               "name": "ma60_slope",
               "vote": 1,
               "weight": 2.2843,
-              "desc": "MA60 rising (slope +0.079%/d)"
+              "desc": "MA60 rising (slope +0.121%/d)"
+            },
+            {
+              "name": "near_20d_high",
+              "vote": -1,
+              "weight": 1.5249,
+              "desc": "Price within 0.3% of 20d high (+0.00%) \u2014 fading high (bear) [modVIX\u2193]"
             },
             {
               "name": "ma200_trend",
               "vote": 1,
               "weight": 0.9055,
-              "desc": "Price +9.19% above MA200 \u2014 bull regime"
+              "desc": "Price +11.20% above MA200 \u2014 bull regime"
             }
           ],
-          "bull_votes": 3,
-          "bear_votes": 1,
-          "net_score": 7.0312,
+          "bull_votes": 4,
+          "bear_votes": 2,
+          "net_score": 8.4915,
           "regime": "BULL_TREND\u2192TRANSITION (0%)",
           "bounce_risk": 0
         },
         "ZAP": {
           "direction": "SPXL",
-          "confidence": 1,
-          "expected_pct": 0.33,
+          "confidence": 7,
+          "expected_pct": 0.92,
           "signals": [
+            {
+              "name": "rsi",
+              "vote": 1,
+              "weight": 0.6855,
+              "desc": "RSI overbought (82.0) \u2014 bull"
+            },
             {
               "name": "ma60_dist",
               "vote": 1,
               "weight": 0.0361,
-              "desc": "Price +7.12% above MA60 \u2014 extended (bear) [inv]"
+              "desc": "Price +8.77% above MA60 \u2014 extended (bear) [inv]"
             },
             {
               "name": "ma20_slope",
               "vote": -1,
               "weight": 0.017,
-              "desc": "MA20 rising (slope +0.414%/d, top 10%) [inv]"
+              "desc": "MA20 rising (slope +0.317%/d, top 10%) [inv]"
+            },
+            {
+              "name": "near_20d_high",
+              "vote": 1,
+              "weight": 0.0071,
+              "desc": "Price within 0.3% of 20d high (+0.00%) \u2014 bear [inv]"
             }
           ],
-          "bull_votes": 1,
+          "bull_votes": 3,
           "bear_votes": 1,
-          "log_posterior": 0.0267,
-          "adx": 35.5,
-          "regime": "BULL_TREND"
+          "log_posterior": 0.9964,
+          "adx": 41.7,
+          "regime": "BULL_TREND\u2192TRANSITION (0%)"
         },
         "ZUP": {
           "direction": "SPXL",
-          "confidence": 8,
-          "expected_pct": 0.2,
+          "confidence": 10,
+          "expected_pct": 0.58,
           "signals": [
+            {
+              "name": "rsi",
+              "vote": 1,
+              "weight": 0.9225,
+              "desc": "RSI overbought (82.0) \u2014 bull"
+            },
             {
               "name": "ma60_dist",
               "vote": 1,
               "weight": 0.054,
-              "desc": "Price +7.12% above MA60 \u2014 extended (bear) [inv]"
+              "desc": "Price +8.77% above MA60 \u2014 extended (bear) [inv]"
             },
             {
               "name": "ma20_slope",
               "vote": -1,
               "weight": 0.0115,
-              "desc": "MA20 rising (slope +0.414%/d, top 10%) [inv]"
+              "desc": "MA20 rising (slope +0.317%/d, top 10%) [inv]"
             },
             {
               "name": "ma60_slope",
               "vote": 1,
               "weight": 0.4051,
-              "desc": "MA60 rising (slope +0.079%/d)"
+              "desc": "MA60 rising (slope +0.121%/d)"
             },
             {
               "name": "ma200_trend",
               "vote": 1,
               "weight": 0.3254,
-              "desc": "Price +9.19% above MA200 \u2014 bull regime"
+              "desc": "Price +11.20% above MA200 \u2014 bull regime"
+            },
+            {
+              "name": "near_20d_high",
+              "vote": 1,
+              "weight": 0.0047,
+              "desc": "Near 20d high (+0.00%) \u2014 bear [inv]"
             }
           ],
-          "bull_votes": 3,
+          "bull_votes": 5,
           "bear_votes": 1,
           "regime": "BULL_TREND\u2192TRANSITION (0%)",
-          "zap_score": 1.0822,
-          "zip_norm": 0.6949,
-          "final_score": 1.2053,
+          "zap_score": 2.3803,
+          "zip_norm": 0.5584,
+          "final_score": 1.8749,
           "bounce_risk": 0,
           "bounce_flipped": false
         }
       },
       "accuracy_context": {
         "DRIP": {
-          "weeks_of_data": 7,
-          "avg_weekly_e_delta": 8.3444,
-          "avg_direction_accuracy": 0.5286,
-          "last_week_e_delta": 2.8475
+          "weeks_of_data": 8,
+          "avg_weekly_e_delta": 8.088,
+          "avg_direction_accuracy": 0.5375,
+          "last_week_e_delta": 6.2931
         },
         "ZIP": {
-          "weeks_of_data": 7,
-          "avg_weekly_e_delta": 9.9129,
-          "avg_direction_accuracy": 0.4357,
-          "last_week_e_delta": 3.4475
+          "weeks_of_data": 8,
+          "avg_weekly_e_delta": 9.5494,
+          "avg_direction_accuracy": 0.4313,
+          "last_week_e_delta": 7.0049
         },
         "ZAP": {
-          "weeks_of_data": 7,
-          "avg_weekly_e_delta": 9.1828,
-          "avg_direction_accuracy": 0.4857,
-          "last_week_e_delta": 3.8269
+          "weeks_of_data": 8,
+          "avg_weekly_e_delta": 8.7912,
+          "avg_direction_accuracy": 0.5,
+          "last_week_e_delta": 6.0499
         },
         "ZUP": {
-          "weeks_of_data": 7,
-          "avg_weekly_e_delta": 8.9408,
-          "avg_direction_accuracy": 0.5929,
-          "last_week_e_delta": 2.9163
+          "weeks_of_data": 8,
+          "avg_weekly_e_delta": 8.6031,
+          "avg_direction_accuracy": 0.5938,
+          "last_week_e_delta": 6.2391
         }
       }
     },
-    "2026-05-13": {
-      "for_date": "2026-05-13",
-      "generated_on": "2026-05-08T15:00:04.108320-04:00",
-      "atr_range_pct": 2.25,
+    "2026-05-20": {
+      "for_date": "2026-05-20",
+      "generated_on": "2026-05-15T15:00:04.665231-04:00",
+      "atr_range_pct": 2.15,
       "models": {
         "DRIP": {
           "direction": "SPXL",
@@ -338,13 +410,13 @@
               "name": "ma60_slope",
               "vote": 1,
               "weight": 2.2843,
-              "desc": "MA60 rising +0.079%/d \u2014 bull week"
+              "desc": "MA60 rising +0.121%/d \u2014 bull week"
             },
             {
               "name": "ma200_trend",
               "vote": 1,
               "weight": 0.9055,
-              "desc": "Price +9.19% above MA200 \u2014 bull regime"
+              "desc": "Price +11.20% above MA200 \u2014 bull regime"
             }
           ],
           "bull_votes": 2,
@@ -356,139 +428,175 @@
           "log_posterior": null,
           "final_score": null,
           "weekly_lock": true,
-          "week_of": "2026-05-11"
+          "week_of": "2026-05-18"
         },
         "ZIP": {
           "direction": "SPXL",
-          "confidence": 9,
-          "expected_pct": 0.25,
+          "confidence": 7,
+          "expected_pct": 0.55,
           "signals": [
+            {
+              "name": "rsi",
+              "vote": 1,
+              "weight": 2.9852,
+              "desc": "RSI overbought (82.0) \u2014 momentum cont/bull"
+            },
             {
               "name": "ma60_dist",
               "vote": -1,
               "weight": 0.3893,
-              "desc": "Price +7.12% above MA60 \u2014 extended (bear) [bull-regime\u2193]"
+              "desc": "Price +8.77% above MA60 \u2014 extended (bear) [bull-regime\u2193] [modVIX\u2193]"
             },
             {
               "name": "ma20_slope",
               "vote": 1,
               "weight": 4.2307,
-              "desc": "MA20 rising (slope +0.414%/d, top 10%)"
+              "desc": "MA20 rising (slope +0.317%/d, top 10%)"
             },
             {
               "name": "ma60_slope",
               "vote": 1,
               "weight": 2.2843,
-              "desc": "MA60 rising (slope +0.079%/d)"
+              "desc": "MA60 rising (slope +0.121%/d)"
+            },
+            {
+              "name": "near_20d_high",
+              "vote": -1,
+              "weight": 1.5249,
+              "desc": "Price within 0.3% of 20d high (+0.00%) \u2014 fading high (bear) [modVIX\u2193]"
             },
             {
               "name": "ma200_trend",
               "vote": 1,
               "weight": 0.9055,
-              "desc": "Price +9.19% above MA200 \u2014 bull regime"
+              "desc": "Price +11.20% above MA200 \u2014 bull regime"
             }
           ],
-          "bull_votes": 3,
-          "bear_votes": 1,
-          "net_score": 7.0312,
+          "bull_votes": 4,
+          "bear_votes": 2,
+          "net_score": 8.4915,
           "regime": "BULL_TREND\u2192TRANSITION (0%)",
           "bounce_risk": 0
         },
         "ZAP": {
           "direction": "SPXL",
-          "confidence": 1,
-          "expected_pct": 0.33,
+          "confidence": 7,
+          "expected_pct": 0.92,
           "signals": [
+            {
+              "name": "rsi",
+              "vote": 1,
+              "weight": 0.6855,
+              "desc": "RSI overbought (82.0) \u2014 bull"
+            },
             {
               "name": "ma60_dist",
               "vote": 1,
               "weight": 0.0361,
-              "desc": "Price +7.12% above MA60 \u2014 extended (bear) [inv]"
+              "desc": "Price +8.77% above MA60 \u2014 extended (bear) [inv]"
             },
             {
               "name": "ma20_slope",
               "vote": -1,
               "weight": 0.017,
-              "desc": "MA20 rising (slope +0.414%/d, top 10%) [inv]"
+              "desc": "MA20 rising (slope +0.317%/d, top 10%) [inv]"
+            },
+            {
+              "name": "near_20d_high",
+              "vote": 1,
+              "weight": 0.0071,
+              "desc": "Price within 0.3% of 20d high (+0.00%) \u2014 bear [inv]"
             }
           ],
-          "bull_votes": 1,
+          "bull_votes": 3,
           "bear_votes": 1,
-          "log_posterior": 0.0267,
-          "adx": 35.5,
-          "regime": "BULL_TREND"
+          "log_posterior": 0.9964,
+          "adx": 41.7,
+          "regime": "BULL_TREND\u2192TRANSITION (0%)"
         },
         "ZUP": {
           "direction": "SPXL",
-          "confidence": 8,
-          "expected_pct": 0.2,
+          "confidence": 10,
+          "expected_pct": 0.58,
           "signals": [
+            {
+              "name": "rsi",
+              "vote": 1,
+              "weight": 0.9225,
+              "desc": "RSI overbought (82.0) \u2014 bull"
+            },
             {
               "name": "ma60_dist",
               "vote": 1,
               "weight": 0.054,
-              "desc": "Price +7.12% above MA60 \u2014 extended (bear) [inv]"
+              "desc": "Price +8.77% above MA60 \u2014 extended (bear) [inv]"
             },
             {
               "name": "ma20_slope",
               "vote": -1,
               "weight": 0.0115,
-              "desc": "MA20 rising (slope +0.414%/d, top 10%) [inv]"
+              "desc": "MA20 rising (slope +0.317%/d, top 10%) [inv]"
             },
             {
               "name": "ma60_slope",
               "vote": 1,
               "weight": 0.4051,
-              "desc": "MA60 rising (slope +0.079%/d)"
+              "desc": "MA60 rising (slope +0.121%/d)"
             },
             {
               "name": "ma200_trend",
               "vote": 1,
               "weight": 0.3254,
-              "desc": "Price +9.19% above MA200 \u2014 bull regime"
+              "desc": "Price +11.20% above MA200 \u2014 bull regime"
+            },
+            {
+              "name": "near_20d_high",
+              "vote": 1,
+              "weight": 0.0047,
+              "desc": "Near 20d high (+0.00%) \u2014 bear [inv]"
             }
           ],
-          "bull_votes": 3,
+          "bull_votes": 5,
           "bear_votes": 1,
           "regime": "BULL_TREND\u2192TRANSITION (0%)",
-          "zap_score": 1.0822,
-          "zip_norm": 0.6949,
-          "final_score": 1.2053,
+          "zap_score": 2.3803,
+          "zip_norm": 0.5584,
+          "final_score": 1.8749,
           "bounce_risk": 0,
           "bounce_flipped": false
         }
       },
       "accuracy_context": {
         "DRIP": {
-          "weeks_of_data": 7,
-          "avg_weekly_e_delta": 8.3444,
-          "avg_direction_accuracy": 0.5286,
-          "last_week_e_delta": 2.8475
+          "weeks_of_data": 8,
+          "avg_weekly_e_delta": 8.088,
+          "avg_direction_accuracy": 0.5375,
+          "last_week_e_delta": 6.2931
         },
         "ZIP": {
-          "weeks_of_data": 7,
-          "avg_weekly_e_delta": 9.9129,
-          "avg_direction_accuracy": 0.4357,
-          "last_week_e_delta": 3.4475
+          "weeks_of_data": 8,
+          "avg_weekly_e_delta": 9.5494,
+          "avg_direction_accuracy": 0.4313,
+          "last_week_e_delta": 7.0049
         },
         "ZAP": {
-          "weeks_of_data": 7,
-          "avg_weekly_e_delta": 9.1828,
-          "avg_direction_accuracy": 0.4857,
-          "last_week_e_delta": 3.8269
+          "weeks_of_data": 8,
+          "avg_weekly_e_delta": 8.7912,
+          "avg_direction_accuracy": 0.5,
+          "last_week_e_delta": 6.0499
         },
         "ZUP": {
-          "weeks_of_data": 7,
-          "avg_weekly_e_delta": 8.9408,
-          "avg_direction_accuracy": 0.5929,
-          "last_week_e_delta": 2.9163
+          "weeks_of_data": 8,
+          "avg_weekly_e_delta": 8.6031,
+          "avg_direction_accuracy": 0.5938,
+          "last_week_e_delta": 6.2391
         }
       }
     },
-    "2026-05-14": {
-      "for_date": "2026-05-14",
-      "generated_on": "2026-05-08T15:00:04.922666-04:00",
-      "atr_range_pct": 2.25,
+    "2026-05-21": {
+      "for_date": "2026-05-21",
+      "generated_on": "2026-05-15T15:00:05.493137-04:00",
+      "atr_range_pct": 2.15,
       "models": {
         "DRIP": {
           "direction": "SPXL",
@@ -499,13 +607,13 @@
               "name": "ma60_slope",
               "vote": 1,
               "weight": 2.2843,
-              "desc": "MA60 rising +0.079%/d \u2014 bull week"
+              "desc": "MA60 rising +0.121%/d \u2014 bull week"
             },
             {
               "name": "ma200_trend",
               "vote": 1,
               "weight": 0.9055,
-              "desc": "Price +9.19% above MA200 \u2014 bull regime"
+              "desc": "Price +11.20% above MA200 \u2014 bull regime"
             }
           ],
           "bull_votes": 2,
@@ -517,139 +625,175 @@
           "log_posterior": null,
           "final_score": null,
           "weekly_lock": true,
-          "week_of": "2026-05-11"
+          "week_of": "2026-05-18"
         },
         "ZIP": {
           "direction": "SPXL",
-          "confidence": 9,
-          "expected_pct": 0.25,
+          "confidence": 7,
+          "expected_pct": 0.55,
           "signals": [
+            {
+              "name": "rsi",
+              "vote": 1,
+              "weight": 2.9852,
+              "desc": "RSI overbought (82.0) \u2014 momentum cont/bull"
+            },
             {
               "name": "ma60_dist",
               "vote": -1,
               "weight": 0.3893,
-              "desc": "Price +7.12% above MA60 \u2014 extended (bear) [bull-regime\u2193]"
+              "desc": "Price +8.77% above MA60 \u2014 extended (bear) [bull-regime\u2193] [modVIX\u2193]"
             },
             {
               "name": "ma20_slope",
               "vote": 1,
               "weight": 4.2307,
-              "desc": "MA20 rising (slope +0.414%/d, top 10%)"
+              "desc": "MA20 rising (slope +0.317%/d, top 10%)"
             },
             {
               "name": "ma60_slope",
               "vote": 1,
               "weight": 2.2843,
-              "desc": "MA60 rising (slope +0.079%/d)"
+              "desc": "MA60 rising (slope +0.121%/d)"
+            },
+            {
+              "name": "near_20d_high",
+              "vote": -1,
+              "weight": 1.5249,
+              "desc": "Price within 0.3% of 20d high (+0.00%) \u2014 fading high (bear) [modVIX\u2193]"
             },
             {
               "name": "ma200_trend",
               "vote": 1,
               "weight": 0.9055,
-              "desc": "Price +9.19% above MA200 \u2014 bull regime"
+              "desc": "Price +11.20% above MA200 \u2014 bull regime"
             }
           ],
-          "bull_votes": 3,
-          "bear_votes": 1,
-          "net_score": 7.0312,
+          "bull_votes": 4,
+          "bear_votes": 2,
+          "net_score": 8.4915,
           "regime": "BULL_TREND\u2192TRANSITION (0%)",
           "bounce_risk": 0
         },
         "ZAP": {
           "direction": "SPXL",
-          "confidence": 1,
-          "expected_pct": 0.33,
+          "confidence": 7,
+          "expected_pct": 0.92,
           "signals": [
+            {
+              "name": "rsi",
+              "vote": 1,
+              "weight": 0.6855,
+              "desc": "RSI overbought (82.0) \u2014 bull"
+            },
             {
               "name": "ma60_dist",
               "vote": 1,
               "weight": 0.0361,
-              "desc": "Price +7.12% above MA60 \u2014 extended (bear) [inv]"
+              "desc": "Price +8.77% above MA60 \u2014 extended (bear) [inv]"
             },
             {
               "name": "ma20_slope",
               "vote": -1,
               "weight": 0.017,
-              "desc": "MA20 rising (slope +0.414%/d, top 10%) [inv]"
+              "desc": "MA20 rising (slope +0.317%/d, top 10%) [inv]"
+            },
+            {
+              "name": "near_20d_high",
+              "vote": 1,
+              "weight": 0.0071,
+              "desc": "Price within 0.3% of 20d high (+0.00%) \u2014 bear [inv]"
             }
           ],
-          "bull_votes": 1,
+          "bull_votes": 3,
           "bear_votes": 1,
-          "log_posterior": 0.0267,
-          "adx": 35.5,
-          "regime": "BULL_TREND"
+          "log_posterior": 0.9964,
+          "adx": 41.7,
+          "regime": "BULL_TREND\u2192TRANSITION (0%)"
         },
         "ZUP": {
           "direction": "SPXL",
-          "confidence": 8,
-          "expected_pct": 0.2,
+          "confidence": 10,
+          "expected_pct": 0.58,
           "signals": [
+            {
+              "name": "rsi",
+              "vote": 1,
+              "weight": 0.9225,
+              "desc": "RSI overbought (82.0) \u2014 bull"
+            },
             {
               "name": "ma60_dist",
               "vote": 1,
               "weight": 0.054,
-              "desc": "Price +7.12% above MA60 \u2014 extended (bear) [inv]"
+              "desc": "Price +8.77% above MA60 \u2014 extended (bear) [inv]"
             },
             {
               "name": "ma20_slope",
               "vote": -1,
               "weight": 0.0115,
-              "desc": "MA20 rising (slope +0.414%/d, top 10%) [inv]"
+              "desc": "MA20 rising (slope +0.317%/d, top 10%) [inv]"
             },
             {
               "name": "ma60_slope",
               "vote": 1,
               "weight": 0.4051,
-              "desc": "MA60 rising (slope +0.079%/d)"
+              "desc": "MA60 rising (slope +0.121%/d)"
             },
             {
               "name": "ma200_trend",
               "vote": 1,
               "weight": 0.3254,
-              "desc": "Price +9.19% above MA200 \u2014 bull regime"
+              "desc": "Price +11.20% above MA200 \u2014 bull regime"
+            },
+            {
+              "name": "near_20d_high",
+              "vote": 1,
+              "weight": 0.0047,
+              "desc": "Near 20d high (+0.00%) \u2014 bear [inv]"
             }
           ],
-          "bull_votes": 3,
+          "bull_votes": 5,
           "bear_votes": 1,
           "regime": "BULL_TREND\u2192TRANSITION (0%)",
-          "zap_score": 1.0822,
-          "zip_norm": 0.6949,
-          "final_score": 1.2053,
+          "zap_score": 2.3803,
+          "zip_norm": 0.5584,
+          "final_score": 1.8749,
           "bounce_risk": 0,
           "bounce_flipped": false
         }
       },
       "accuracy_context": {
         "DRIP": {
-          "weeks_of_data": 7,
-          "avg_weekly_e_delta": 8.3444,
-          "avg_direction_accuracy": 0.5286,
-          "last_week_e_delta": 2.8475
+          "weeks_of_data": 8,
+          "avg_weekly_e_delta": 8.088,
+          "avg_direction_accuracy": 0.5375,
+          "last_week_e_delta": 6.2931
         },
         "ZIP": {
-          "weeks_of_data": 7,
-          "avg_weekly_e_delta": 9.9129,
-          "avg_direction_accuracy": 0.4357,
-          "last_week_e_delta": 3.4475
+          "weeks_of_data": 8,
+          "avg_weekly_e_delta": 9.5494,
+          "avg_direction_accuracy": 0.4313,
+          "last_week_e_delta": 7.0049
         },
         "ZAP": {
-          "weeks_of_data": 7,
-          "avg_weekly_e_delta": 9.1828,
-          "avg_direction_accuracy": 0.4857,
-          "last_week_e_delta": 3.8269
+          "weeks_of_data": 8,
+          "avg_weekly_e_delta": 8.7912,
+          "avg_direction_accuracy": 0.5,
+          "last_week_e_delta": 6.0499
         },
         "ZUP": {
-          "weeks_of_data": 7,
-          "avg_weekly_e_delta": 8.9408,
-          "avg_direction_accuracy": 0.5929,
-          "last_week_e_delta": 2.9163
+          "weeks_of_data": 8,
+          "avg_weekly_e_delta": 8.6031,
+          "avg_direction_accuracy": 0.5938,
+          "last_week_e_delta": 6.2391
         }
       }
     },
-    "2026-05-15": {
-      "for_date": "2026-05-15",
-      "generated_on": "2026-05-08T15:00:05.709785-04:00",
-      "atr_range_pct": 2.25,
+    "2026-05-22": {
+      "for_date": "2026-05-22",
+      "generated_on": "2026-05-15T15:00:06.293622-04:00",
+      "atr_range_pct": 2.15,
       "models": {
         "DRIP": {
           "direction": "SPXL",
@@ -660,13 +804,13 @@
               "name": "ma60_slope",
               "vote": 1,
               "weight": 2.2843,
-              "desc": "MA60 rising +0.079%/d \u2014 bull week"
+              "desc": "MA60 rising +0.121%/d \u2014 bull week"
             },
             {
               "name": "ma200_trend",
               "vote": 1,
               "weight": 0.9055,
-              "desc": "Price +9.19% above MA200 \u2014 bull regime"
+              "desc": "Price +11.20% above MA200 \u2014 bull regime"
             }
           ],
           "bull_votes": 2,
@@ -678,132 +822,168 @@
           "log_posterior": null,
           "final_score": null,
           "weekly_lock": true,
-          "week_of": "2026-05-11"
+          "week_of": "2026-05-18"
         },
         "ZIP": {
           "direction": "SPXL",
-          "confidence": 9,
-          "expected_pct": 0.25,
+          "confidence": 7,
+          "expected_pct": 0.55,
           "signals": [
+            {
+              "name": "rsi",
+              "vote": 1,
+              "weight": 2.9852,
+              "desc": "RSI overbought (82.0) \u2014 momentum cont/bull"
+            },
             {
               "name": "ma60_dist",
               "vote": -1,
               "weight": 0.3893,
-              "desc": "Price +7.12% above MA60 \u2014 extended (bear) [bull-regime\u2193]"
+              "desc": "Price +8.77% above MA60 \u2014 extended (bear) [bull-regime\u2193] [modVIX\u2193]"
             },
             {
               "name": "ma20_slope",
               "vote": 1,
               "weight": 4.2307,
-              "desc": "MA20 rising (slope +0.414%/d, top 10%)"
+              "desc": "MA20 rising (slope +0.317%/d, top 10%)"
             },
             {
               "name": "ma60_slope",
               "vote": 1,
               "weight": 2.2843,
-              "desc": "MA60 rising (slope +0.079%/d)"
+              "desc": "MA60 rising (slope +0.121%/d)"
+            },
+            {
+              "name": "near_20d_high",
+              "vote": -1,
+              "weight": 1.5249,
+              "desc": "Price within 0.3% of 20d high (+0.00%) \u2014 fading high (bear) [modVIX\u2193]"
             },
             {
               "name": "ma200_trend",
               "vote": 1,
               "weight": 0.9055,
-              "desc": "Price +9.19% above MA200 \u2014 bull regime"
+              "desc": "Price +11.20% above MA200 \u2014 bull regime"
             }
           ],
-          "bull_votes": 3,
-          "bear_votes": 1,
-          "net_score": 7.0312,
+          "bull_votes": 4,
+          "bear_votes": 2,
+          "net_score": 8.4915,
           "regime": "BULL_TREND\u2192TRANSITION (0%)",
           "bounce_risk": 0
         },
         "ZAP": {
           "direction": "SPXL",
-          "confidence": 1,
-          "expected_pct": 0.33,
+          "confidence": 7,
+          "expected_pct": 0.92,
           "signals": [
+            {
+              "name": "rsi",
+              "vote": 1,
+              "weight": 0.6855,
+              "desc": "RSI overbought (82.0) \u2014 bull"
+            },
             {
               "name": "ma60_dist",
               "vote": 1,
               "weight": 0.0361,
-              "desc": "Price +7.12% above MA60 \u2014 extended (bear) [inv]"
+              "desc": "Price +8.77% above MA60 \u2014 extended (bear) [inv]"
             },
             {
               "name": "ma20_slope",
               "vote": -1,
               "weight": 0.017,
-              "desc": "MA20 rising (slope +0.414%/d, top 10%) [inv]"
+              "desc": "MA20 rising (slope +0.317%/d, top 10%) [inv]"
+            },
+            {
+              "name": "near_20d_high",
+              "vote": 1,
+              "weight": 0.0071,
+              "desc": "Price within 0.3% of 20d high (+0.00%) \u2014 bear [inv]"
             }
           ],
-          "bull_votes": 1,
+          "bull_votes": 3,
           "bear_votes": 1,
-          "log_posterior": 0.0267,
-          "adx": 35.5,
-          "regime": "BULL_TREND"
+          "log_posterior": 0.9964,
+          "adx": 41.7,
+          "regime": "BULL_TREND\u2192TRANSITION (0%)"
         },
         "ZUP": {
           "direction": "SPXL",
-          "confidence": 8,
-          "expected_pct": 0.2,
+          "confidence": 10,
+          "expected_pct": 0.58,
           "signals": [
+            {
+              "name": "rsi",
+              "vote": 1,
+              "weight": 0.9225,
+              "desc": "RSI overbought (82.0) \u2014 bull"
+            },
             {
               "name": "ma60_dist",
               "vote": 1,
               "weight": 0.054,
-              "desc": "Price +7.12% above MA60 \u2014 extended (bear) [inv]"
+              "desc": "Price +8.77% above MA60 \u2014 extended (bear) [inv]"
             },
             {
               "name": "ma20_slope",
               "vote": -1,
               "weight": 0.0115,
-              "desc": "MA20 rising (slope +0.414%/d, top 10%) [inv]"
+              "desc": "MA20 rising (slope +0.317%/d, top 10%) [inv]"
             },
             {
               "name": "ma60_slope",
               "vote": 1,
               "weight": 0.4051,
-              "desc": "MA60 rising (slope +0.079%/d)"
+              "desc": "MA60 rising (slope +0.121%/d)"
             },
             {
               "name": "ma200_trend",
               "vote": 1,
               "weight": 0.3254,
-              "desc": "Price +9.19% above MA200 \u2014 bull regime"
+              "desc": "Price +11.20% above MA200 \u2014 bull regime"
+            },
+            {
+              "name": "near_20d_high",
+              "vote": 1,
+              "weight": 0.0047,
+              "desc": "Near 20d high (+0.00%) \u2014 bear [inv]"
             }
           ],
-          "bull_votes": 3,
+          "bull_votes": 5,
           "bear_votes": 1,
           "regime": "BULL_TREND\u2192TRANSITION (0%)",
-          "zap_score": 1.0822,
-          "zip_norm": 0.6949,
-          "final_score": 1.2053,
+          "zap_score": 2.3803,
+          "zip_norm": 0.5584,
+          "final_score": 1.8749,
           "bounce_risk": 0,
           "bounce_flipped": false
         }
       },
       "accuracy_context": {
         "DRIP": {
-          "weeks_of_data": 7,
-          "avg_weekly_e_delta": 8.3444,
-          "avg_direction_accuracy": 0.5286,
-          "last_week_e_delta": 2.8475
+          "weeks_of_data": 8,
+          "avg_weekly_e_delta": 8.088,
+          "avg_direction_accuracy": 0.5375,
+          "last_week_e_delta": 6.2931
         },
         "ZIP": {
-          "weeks_of_data": 7,
-          "avg_weekly_e_delta": 9.9129,
-          "avg_direction_accuracy": 0.4357,
-          "last_week_e_delta": 3.4475
+          "weeks_of_data": 8,
+          "avg_weekly_e_delta": 9.5494,
+          "avg_direction_accuracy": 0.4313,
+          "last_week_e_delta": 7.0049
         },
         "ZAP": {
-          "weeks_of_data": 7,
-          "avg_weekly_e_delta": 9.1828,
-          "avg_direction_accuracy": 0.4857,
-          "last_week_e_delta": 3.8269
+          "weeks_of_data": 8,
+          "avg_weekly_e_delta": 8.7912,
+          "avg_direction_accuracy": 0.5,
+          "last_week_e_delta": 6.0499
         },
         "ZUP": {
-          "weeks_of_data": 7,
-          "avg_weekly_e_delta": 8.9408,
-          "avg_direction_accuracy": 0.5929,
-          "last_week_e_delta": 2.9163
+          "weeks_of_data": 8,
+          "avg_weekly_e_delta": 8.6031,
+          "avg_direction_accuracy": 0.5938,
+          "last_week_e_delta": 6.2391
         }
       }
     }
