@@ -1,12 +1,12 @@
 {
   "for_date": "2026-05-18",
-  "generated_on": "2026-05-15T16:30:18.190196-04:00",
+  "generated_on": "2026-05-15T17:00:50.957220-04:00",
   "atr_range_pct": 2.34,
   "models": {
     "DRIP": {
       "direction": "SPXL",
       "confidence": 10,
-      "expected_pct": 0.11,
+      "expected_pct": 0.1,
       "signals": [
         {
           "name": "ma60_slope",
@@ -83,7 +83,7 @@
     "ZAP": {
       "direction": "SPXL",
       "confidence": 1,
-      "expected_pct": 1.08,
+      "expected_pct": 1.16,
       "signals": [
         {
           "name": "ma60_dist",
@@ -147,27 +147,27 @@
   "accuracy_context": {
     "DRIP": {
       "weeks_of_data": 8,
-      "avg_weekly_e_delta": 7.4173,
-      "avg_direction_accuracy": 0.5875,
-      "last_week_e_delta": 4.4764
+      "avg_weekly_e_delta": 7.5743,
+      "avg_direction_accuracy": 0.5625,
+      "last_week_e_delta": 5.7322
     },
     "ZIP": {
       "weeks_of_data": 8,
-      "avg_weekly_e_delta": 8.6089,
-      "avg_direction_accuracy": 0.3812,
-      "last_week_e_delta": 7.2082
+      "avg_weekly_e_delta": 8.6817,
+      "avg_direction_accuracy": 0.4062,
+      "last_week_e_delta": 7.7904
     },
     "ZAP": {
       "weeks_of_data": 8,
-      "avg_weekly_e_delta": 7.6475,
-      "avg_direction_accuracy": 0.575,
-      "last_week_e_delta": 2.2496
+      "avg_weekly_e_delta": 7.9058,
+      "avg_direction_accuracy": 0.55,
+      "last_week_e_delta": 4.3154
     },
     "ZUP": {
       "weeks_of_data": 8,
-      "avg_weekly_e_delta": 7.4346,
-      "avg_direction_accuracy": 0.6438,
-      "last_week_e_delta": 2.8696
+      "avg_weekly_e_delta": 7.6503,
+      "avg_direction_accuracy": 0.6188,
+      "last_week_e_delta": 4.5954
     }
   }
 }
