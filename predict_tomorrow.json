@@ -1,7 +1,7 @@
 {
-  "for_date": "2026-05-18",
-  "generated_on": "2026-05-15T17:00:50.957220-04:00",
-  "atr_range_pct": 2.34,
+  "for_date": "2026-05-19",
+  "generated_on": "2026-05-18T16:30:18.240913-04:00",
+  "atr_range_pct": 2.39,
   "models": {
     "DRIP": {
       "direction": "SPXL",
@@ -29,7 +29,7 @@
       "adx": null,
       "log_posterior": null,
       "final_score": null,
-      "weekly_lock": false,
+      "weekly_lock": true,
       "week_of": "2026-05-18"
     },
     "ZIP": {
@@ -38,108 +38,150 @@
       "expected_pct": 0.25,
       "signals": [
         {
+          "name": "rsi",
+          "vote": 1,
+          "weight": 2.9852,
+          "desc": "RSI overbought (73.1) \u2014 momentum cont/bull"
+        },
+        {
+          "name": "macd_mom",
+          "vote": 1,
+          "weight": 0.9339,
+          "desc": "MACD hist falling (-0.6265  dir-flip) \u2014 momentum cont/bull"
+        },
+        {
+          "name": "macd_cross",
+          "vote": 1,
+          "weight": 2.0576,
+          "desc": "MACD crossed below signal (last 2d) \u2014 momentum cont/bull"
+        },
+        {
           "name": "ma60_dist",
           "vote": -1,
           "weight": 0.3893,
-          "desc": "Price +7.32% above MA60 \u2014 extended (bear) [bull-regime\u2193] [modVIX\u2193]"
+          "desc": "Price +7.11% above MA60 \u2014 extended (bear) [bull-regime\u2193]"
         },
         {
           "name": "ma20_slope",
           "vote": 1,
           "weight": 4.2307,
-          "desc": "MA20 rising (slope +0.285%/d, top 10%)"
+          "desc": "MA20 rising (slope +0.256%/d, top 10%)"
         },
         {
           "name": "ma60_slope",
           "vote": 1,
           "weight": 2.2843,
-          "desc": "MA60 rising (slope +0.128%/d)"
-        },
-        {
-          "name": "zscore_ret",
-          "vote": 1,
-          "weight": 5.6106,
-          "desc": "Z-score -2.08 \u2014 oversold (bull)"
-        },
-        {
-          "name": "gap_down",
-          "vote": -1,
-          "weight": 0.1597,
-          "desc": "Gap down -0.85% closed negative \u2014 bear continuation [modVIX\u2193]"
+          "desc": "MA60 rising (slope +0.133%/d)"
         },
         {
           "name": "ma200_trend",
           "vote": 1,
           "weight": 0.9055,
-          "desc": "Price +9.78% above MA200 \u2014 bull regime"
+          "desc": "Price +9.61% above MA200 \u2014 bull regime"
         }
       ],
-      "bull_votes": 4,
-      "bear_votes": 2,
-      "net_score": 12.4821,
+      "bull_votes": 6,
+      "bear_votes": 1,
+      "net_score": 13.0079,
       "regime": "BULL_TREND\u2192TRANSITION (0%)",
       "bounce_risk": 0
     },
     "ZAP": {
-      "direction": "SPXL",
-      "confidence": 1,
-      "expected_pct": 1.16,
+      "direction": "SPXS",
+      "confidence": 10,
+      "expected_pct": 0.46,
       "signals": [
+        {
+          "name": "rsi",
+          "vote": 1,
+          "weight": 0.6855,
+          "desc": "RSI overbought (73.1) \u2014 bull"
+        },
+        {
+          "name": "macd_mom",
+          "vote": 1,
+          "weight": 0.1253,
+          "desc": "MACD hist falling (-0.6265) \u2014 bull"
+        },
+        {
+          "name": "macd_cross",
+          "vote": 1,
+          "weight": 0.1926,
+          "desc": "MACD crossed below signal \u2014 bull"
+        },
         {
           "name": "ma60_dist",
           "vote": 1,
           "weight": 0.0361,
-          "desc": "Price +7.32% above MA60 \u2014 extended (bear) [inv]"
+          "desc": "Price +7.11% above MA60 \u2014 extended (bear) [inv]"
         },
         {
           "name": "ma20_slope",
           "vote": -1,
           "weight": 0.017,
-          "desc": "MA20 rising (slope +0.285%/d, top 10%) [inv]"
+          "desc": "MA20 rising (slope +0.256%/d, top 10%) [inv]"
         }
       ],
-      "bull_votes": 1,
+      "bull_votes": 4,
       "bear_votes": 1,
-      "log_posterior": 0.0267,
-      "adx": 39.9,
+      "log_posterior": 1.4315,
+      "adx": 36.0,
       "regime": "BULL_TREND"
     },
     "ZUP": {
-      "direction": "SPXS",
-      "confidence": 7,
-      "expected_pct": 0.2,
+      "direction": "SPXL",
+      "confidence": 10,
+      "expected_pct": 0.53,
       "signals": [
+        {
+          "name": "rsi",
+          "vote": 1,
+          "weight": 0.9225,
+          "desc": "RSI overbought (73.1) \u2014 bull"
+        },
+        {
+          "name": "macd_mom",
+          "vote": 1,
+          "weight": 0.1254,
+          "desc": "MACD hist falling (-0.6265) \u2014 bull"
+        },
+        {
+          "name": "macd_cross",
+          "vote": 1,
+          "weight": 0.2334,
+          "desc": "MACD crossed below signal \u2014 bull"
+        },
         {
           "name": "ma60_dist",
           "vote": 1,
           "weight": 0.054,
-          "desc": "Price +7.32% above MA60 \u2014 extended (bear) [inv]"
+          "desc": "Price +7.11% above MA60 \u2014 extended (bear) [inv]"
         },
         {
           "name": "ma20_slope",
           "vote": -1,
           "weight": 0.0115,
-          "desc": "MA20 rising (slope +0.285%/d, top 10%) [inv]"
+          "desc": "MA20 rising (slope +0.256%/d, top 10%) [inv]"
         },
         {
           "name": "ma60_slope",
           "vote": 1,
           "weight": 0.4051,
-          "desc": "MA60 rising (slope +0.128%/d)"
+          "desc": "MA60 rising (slope +0.133%/d)"
         },
         {
           "name": "ma200_trend",
           "vote": 1,
           "weight": 0.3254,
-          "desc": "Price +9.78% above MA200 \u2014 bull regime"
+          "desc": "Price +9.61% above MA200 \u2014 bull regime"
         }
       ],
-      "bull_votes": 3,
+      "bull_votes": 6,
       "bear_votes": 1,
       "regime": "BULL_TREND\u2192TRANSITION (0%)",
-      "zap_score": 1.0822,
-      "zip_norm": 0.5,
-      "final_score": 1.0493,
+      "zap_score": 2.876,
+      "zip_norm": 0.8667,
+      "final_score": 2.4189,
       "bounce_risk": 0,
       "bounce_flipped": false
     }
