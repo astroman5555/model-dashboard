@@ -1,6 +1,6 @@
 {
-  "for_date": "2026-05-25",
-  "generated_on": "2026-05-22T17:00:53.284438-04:00",
+  "for_date": "2026-05-26",
+  "generated_on": "2026-05-25T16:30:18.565495-04:00",
   "atr_range_pct": 2.43,
   "models": {
     "DRIP": {
@@ -18,7 +18,7 @@
           "name": "ma200_trend",
           "vote": 1,
           "weight": 0.9055,
-          "desc": "Price +10.27% above MA200 \u2014 bull regime"
+          "desc": "Price +10.26% above MA200 \u2014 bull regime"
         }
       ],
       "bull_votes": 2,
@@ -29,7 +29,7 @@
       "adx": null,
       "log_posterior": null,
       "final_score": null,
-      "weekly_lock": false,
+      "weekly_lock": true,
       "week_of": "2026-05-25"
     },
     "ZIP": {
@@ -41,7 +41,7 @@
           "name": "rsi",
           "vote": 1,
           "weight": 2.9852,
-          "desc": "RSI overbought (71.9) \u2014 momentum cont/bull"
+          "desc": "RSI overbought (71.8) \u2014 momentum cont/bull"
         },
         {
           "name": "ma60_dist",
@@ -65,7 +65,7 @@
           "name": "ma200_trend",
           "vote": 1,
           "weight": 0.9055,
-          "desc": "Price +10.27% above MA200 \u2014 bull regime"
+          "desc": "Price +10.26% above MA200 \u2014 bull regime"
         }
       ],
       "bull_votes": 4,
@@ -83,7 +83,7 @@
           "name": "rsi",
           "vote": 1,
           "weight": 0.6855,
-          "desc": "RSI overbought (71.9) \u2014 bull"
+          "desc": "RSI overbought (71.8) \u2014 bull"
         },
         {
           "name": "ma60_dist",
@@ -113,7 +113,7 @@
           "name": "rsi",
           "vote": 1,
           "weight": 0.9225,
-          "desc": "RSI overbought (71.9) \u2014 bull"
+          "desc": "RSI overbought (71.8) \u2014 bull"
         },
         {
           "name": "ma60_dist",
@@ -137,7 +137,7 @@
           "name": "ma200_trend",
           "vote": 1,
           "weight": 0.3254,
-          "desc": "Price +10.27% above MA200 \u2014 bull regime"
+          "desc": "Price +10.26% above MA200 \u2014 bull regime"
         }
       ],
       "bull_votes": 4,
