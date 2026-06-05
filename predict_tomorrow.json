@@ -1,6 +1,6 @@
 {
   "for_date": "2026-06-08",
-  "generated_on": "2026-06-05T16:30:23.591775-04:00",
+  "generated_on": "2026-06-05T17:00:52.162564-04:00",
   "atr_range_pct": 2.33,
   "models": {
     "DRIP": {
@@ -117,9 +117,9 @@
       "bounce_risk": 3
     },
     "ZAP": {
-      "direction": "SPXL",
+      "direction": "SPXS",
       "confidence": 1,
-      "expected_pct": 0.58,
+      "expected_pct": 0.16,
       "signals": [
         {
           "name": "vix_spike",
@@ -213,27 +213,27 @@
   "accuracy_context": {
     "DRIP": {
       "weeks_of_data": 8,
-      "avg_weekly_e_delta": 5.5309,
-      "avg_direction_accuracy": 0.4875,
-      "last_week_e_delta": 6.0149
+      "avg_weekly_e_delta": 6.2381,
+      "avg_direction_accuracy": 0.5125,
+      "last_week_e_delta": 11.6725
     },
     "ZIP": {
       "weeks_of_data": 8,
-      "avg_weekly_e_delta": 6.5786,
-      "avg_direction_accuracy": 0.3937,
-      "last_week_e_delta": 7.2449
+      "avg_weekly_e_delta": 7.2671,
+      "avg_direction_accuracy": 0.4188,
+      "last_week_e_delta": 12.7525
     },
     "ZAP": {
       "weeks_of_data": 8,
-      "avg_weekly_e_delta": 6.0157,
-      "avg_direction_accuracy": 0.5563,
-      "last_week_e_delta": 4.8191
+      "avg_weekly_e_delta": 6.8418,
+      "avg_direction_accuracy": 0.5375,
+      "last_week_e_delta": 11.4279
     },
     "ZUP": {
       "weeks_of_data": 8,
-      "avg_weekly_e_delta": 5.2614,
-      "avg_direction_accuracy": 0.6375,
-      "last_week_e_delta": 4.2181
+      "avg_weekly_e_delta": 6.1676,
+      "avg_direction_accuracy": 0.6188,
+      "last_week_e_delta": 11.4669
     }
   }
 }
