@@ -1,78 +1,120 @@
 {
-  "for_date": "2026-06-05",
-  "generated_on": "2026-06-05T15:00:15.491896-04:00",
-  "atr_range_pct": 2.01,
+  "for_date": "2026-06-08",
+  "generated_on": "2026-06-05T16:30:23.591775-04:00",
+  "atr_range_pct": 2.33,
   "models": {
     "DRIP": {
       "direction": "SPXL",
-      "confidence": 10,
-      "expected_pct": 0.1,
+      "confidence": 8,
+      "expected_pct": 0.17,
       "signals": [
         {
-          "name": "vol_regime",
-          "vote": 1,
-          "weight": 1.2744,
-          "desc": "Vol calm 20d/60d=0.63 \u2014 bull week"
+          "name": "vix_spike",
+          "vote": -1,
+          "weight": 0.1284,
+          "desc": "VIX spike 21.5 vs 3d avg 15.7 (+37%)"
+        },
+        {
+          "name": "vix_trend",
+          "vote": -1,
+          "weight": 0.2154,
+          "desc": "VIX rising +40.4% (5d) \u2014 bear week"
         },
         {
           "name": "ma60_slope",
           "vote": 1,
           "weight": 2.2843,
-          "desc": "MA60 rising +0.178%/d \u2014 bull week"
+          "desc": "MA60 rising +0.181%/d \u2014 bull week"
         },
         {
           "name": "ma200_trend",
           "vote": 1,
           "weight": 0.9055,
-          "desc": "Price +11.17% above MA200 \u2014 bull regime"
+          "desc": "Price +8.19% above MA200 \u2014 bull regime"
         }
       ],
-      "bull_votes": 3,
-      "bear_votes": 0,
-      "net_score": 4.4642,
-      "regime": "BULL_TREND",
+      "bull_votes": 2,
+      "bear_votes": 2,
+      "net_score": 2.846,
+      "regime": "TRANSITION",
       "bounce_risk": 0,
       "adx": null,
       "log_posterior": null,
       "final_score": null,
       "weekly_lock": false,
-      "week_of": "2026-06-01"
+      "week_of": "2026-06-08"
     },
     "ZIP": {
-      "direction": "SPXL",
-      "confidence": 9,
-      "expected_pct": 0.25,
+      "direction": "SPXS",
+      "confidence": 8,
+      "expected_pct": 0.26,
       "signals": [
+        {
+          "name": "vix_spike",
+          "vote": -1,
+          "weight": 0.1284,
+          "desc": "VIX spike 21.5 vs 3d avg 15.7 (+37%) [modVIX\u2193]"
+        },
+        {
+          "name": "vix_trend",
+          "vote": -1,
+          "weight": 0.2154,
+          "desc": "VIX rising fast +40.4% (5d) \u2014 bear [modVIX\u2193]"
+        },
+        {
+          "name": "vol_ratio",
+          "vote": -1,
+          "weight": 0.7619,
+          "desc": "Vol 1.8x avg (high participation, down) [modVIX\u2193]"
+        },
         {
           "name": "ma60_dist",
           "vote": -1,
           "weight": 0.3893,
-          "desc": "Price +7.63% above MA60 \u2014 extended (bear) [bull-regime\u2193]"
+          "desc": "Price +4.68% above MA60 \u2014 extended (bear) [bull-regime\u2193] [modVIX\u2193]"
         },
         {
           "name": "ma20_slope",
           "vote": 1,
           "weight": 4.2307,
-          "desc": "MA20 rising (slope +0.227%/d, top 10%)"
+          "desc": "MA20 rising (slope +0.171%/d, top 10%)"
         },
         {
           "name": "ma60_slope",
           "vote": 1,
           "weight": 2.2843,
-          "desc": "MA60 rising (slope +0.178%/d)"
+          "desc": "MA60 rising (slope +0.181%/d)"
+        },
+        {
+          "name": "zscore_ret",
+          "vote": 1,
+          "weight": 5.6106,
+          "desc": "Z-score -3.18 \u2014 oversold (bull)"
+        },
+        {
+          "name": "near_20d_low",
+          "vote": -1,
+          "weight": 0.1441,
+          "desc": "Price within 1.0% of 20d low (+0.50%) \u2014 breakdown (bear) [modVIX\u2193]"
+        },
+        {
+          "name": "gap_down",
+          "vote": -1,
+          "weight": 0.1597,
+          "desc": "Gap down -0.63% closed negative \u2014 bear continuation [modVIX\u2193]"
         },
         {
           "name": "ma200_trend",
           "vote": 1,
           "weight": 0.9055,
-          "desc": "Price +11.17% above MA200 \u2014 bull regime"
+          "desc": "Price +8.19% above MA200 \u2014 bull regime"
         }
       ],
-      "bull_votes": 3,
-      "bear_votes": 1,
-      "net_score": 7.0312,
-      "regime": "BULL_TREND",
-      "bounce_risk": 0
+      "bull_votes": 4,
+      "bear_votes": 6,
+      "net_score": 11.2323,
+      "regime": "BULL_TREND\u2192TRANSITION (0%)",
+      "bounce_risk": 3
     },
     "ZAP": {
       "direction": "SPXL",
@@ -80,61 +122,91 @@
       "expected_pct": 0.58,
       "signals": [
         {
+          "name": "vix_spike",
+          "vote": -1,
+          "weight": 0.0149,
+          "desc": "VIX spike 21.5 vs 3d avg 15.7 (+37%)"
+        },
+        {
           "name": "ma60_dist",
           "vote": 1,
           "weight": 0.0361,
-          "desc": "Price +7.63% above MA60 \u2014 extended (bear) [inv]"
+          "desc": "Price +4.68% above MA60 \u2014 extended (bear) [inv]"
         },
         {
           "name": "ma20_slope",
           "vote": -1,
           "weight": 0.017,
-          "desc": "MA20 rising (slope +0.227%/d, top 10%) [inv]"
+          "desc": "MA20 rising (slope +0.171%/d, top 10%) [inv]"
         }
       ],
       "bull_votes": 1,
-      "bear_votes": 1,
-      "log_posterior": 0.0267,
-      "adx": 39.9,
-      "regime": "BULL_TREND"
+      "bear_votes": 2,
+      "log_posterior": 0.0059,
+      "adx": 39.3,
+      "regime": "BULL_TREND\u2192TRANSITION (0%)"
     },
     "ZUP": {
-      "direction": "SPXL",
-      "confidence": 9,
-      "expected_pct": 1.22,
+      "direction": "SPXS",
+      "confidence": 2,
+      "expected_pct": 0.1,
       "signals": [
+        {
+          "name": "vix_spike",
+          "vote": -1,
+          "weight": 0.0807,
+          "desc": "VIX spike 21.5 vs 3d avg 15.7 (+37%)"
+        },
+        {
+          "name": "vol_ratio",
+          "vote": -1,
+          "weight": 0.0963,
+          "desc": "Vol 1.8\u00d7 avg (down)"
+        },
+        {
+          "name": "mom_3d_rev",
+          "vote": -1,
+          "weight": 0.0379,
+          "desc": "3d return -2.92% \u2014 oversold bounce [inv]"
+        },
         {
           "name": "ma60_dist",
           "vote": 1,
           "weight": 0.054,
-          "desc": "Price +7.63% above MA60 \u2014 extended (bear) [inv]"
+          "desc": "Price +4.68% above MA60 \u2014 extended (bear) [inv]"
         },
         {
           "name": "ma20_slope",
           "vote": -1,
           "weight": 0.0115,
-          "desc": "MA20 rising (slope +0.227%/d, top 10%) [inv]"
+          "desc": "MA20 rising (slope +0.171%/d, top 10%) [inv]"
         },
         {
           "name": "ma60_slope",
           "vote": 1,
           "weight": 0.4051,
-          "desc": "MA60 rising (slope +0.178%/d)"
+          "desc": "MA60 rising (slope +0.181%/d)"
         },
         {
           "name": "ma200_trend",
           "vote": 1,
           "weight": 0.3254,
-          "desc": "Price +11.17% above MA200 \u2014 bull regime"
+          "desc": "Price +8.19% above MA200 \u2014 bull regime"
+        },
+        {
+          "name": "near_20d_low",
+          "vote": -1,
+          "weight": 0.0562,
+          "desc": "Near 20d low (+0.50%) \u2014 breakdown/bear"
         }
       ],
       "bull_votes": 3,
-      "bear_votes": 1,
-      "regime": "BULL_TREND",
-      "zap_score": 1.0822,
-      "zip_norm": 0.8182,
-      "final_score": 1.3039,
-      "bounce_risk": 0,
+      "bear_votes": 5,
+      "regime": "BULL_TREND\u2192TRANSITION (0%)",
+      "zap_score": 0.714,
+      "zip_norm": -0.1656,
+      "final_score": 0.2959,
+      "bounce_risk": 3,
       "bounce_flipped": false
     }
   },
