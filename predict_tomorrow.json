@@ -1,6 +1,6 @@
 {
   "for_date": "2026-06-26",
-  "generated_on": "2026-06-25T16:30:14.895219-04:00",
+  "generated_on": "2026-06-25T17:00:49.263067-04:00",
   "atr_range_pct": 4.02,
   "models": {
     "DRIP": {
@@ -35,7 +35,7 @@
     "ZIP": {
       "direction": "SPXS",
       "confidence": 10,
-      "expected_pct": 0.09,
+      "expected_pct": 0.08,
       "signals": [
         {
           "name": "ma60_slope",
@@ -70,7 +70,7 @@
     "ZUP": {
       "direction": "SPXL",
       "confidence": 10,
-      "expected_pct": 0.27,
+      "expected_pct": 0.55,
       "signals": [
         {
           "name": "ma60_slope",
