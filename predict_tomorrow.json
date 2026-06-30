@@ -1,6 +1,6 @@
 {
   "for_date": "2026-07-01",
-  "generated_on": "2026-06-30T16:30:13.524676-04:00",
+  "generated_on": "2026-06-30T17:00:49.275813-04:00",
   "atr_range_pct": 3.63,
   "models": {
     "DRIP": {
@@ -35,7 +35,7 @@
     "ZIP": {
       "direction": "SPXL",
       "confidence": 1,
-      "expected_pct": 0.52,
+      "expected_pct": 1.4,
       "signals": [
         {
           "name": "ma20_slope",
