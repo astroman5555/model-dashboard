@@ -1,7 +1,7 @@
 {
-  "for_date": "2026-07-02",
-  "generated_on": "2026-07-01T17:00:47.220837-04:00",
-  "atr_range_pct": 3.5,
+  "for_date": "2026-07-03",
+  "generated_on": "2026-07-02T16:30:15.544326-04:00",
+  "atr_range_pct": 3.4,
   "models": {
     "DRIP": {
       "direction": "SPXL",
@@ -41,13 +41,13 @@
           "name": "ma60_slope",
           "vote": 1,
           "weight": 2.2843,
-          "desc": "MA60 rising (slope +0.212%/d)"
+          "desc": "MA60 rising (slope +0.209%/d)"
         },
         {
           "name": "ma200_trend",
           "vote": 1,
           "weight": 0.9055,
-          "desc": "Price +8.35% above MA200 \u2014 bull regime"
+          "desc": "Price +8.14% above MA200 \u2014 bull regime"
         }
       ],
       "bull_votes": 2,
@@ -65,45 +65,39 @@
           "name": "vix",
           "vote": -1,
           "weight": 0.1913,
-          "desc": "VIX low (16.6) \u2014 risk-on/bull [inv]"
+          "desc": "VIX low (16.1) \u2014 risk-on/bull [inv]"
         }
       ],
       "bull_votes": 0,
       "bear_votes": 1,
       "log_posterior": -0.2678,
-      "adx": 32.4,
+      "adx": 30.8,
       "regime": "TRANSITION"
     },
     "ZUP": {
       "direction": "SPXL",
-      "confidence": 9,
-      "expected_pct": 0.16,
+      "confidence": 10,
+      "expected_pct": 0.32,
       "signals": [
-        {
-          "name": "mom_3d_rev",
-          "vote": 1,
-          "weight": 0.0379,
-          "desc": "3d return +2.29% \u2014 overbought fade [inv]"
-        },
         {
           "name": "ma60_slope",
           "vote": 1,
           "weight": 0.4051,
-          "desc": "MA60 rising (slope +0.212%/d)"
+          "desc": "MA60 rising (slope +0.209%/d)"
         },
         {
           "name": "ma200_trend",
           "vote": 1,
           "weight": 0.3254,
-          "desc": "Price +8.35% above MA200 \u2014 bull regime"
+          "desc": "Price +8.14% above MA200 \u2014 bull regime"
         }
       ],
-      "bull_votes": 3,
+      "bull_votes": 2,
       "bear_votes": 0,
       "regime": "TRANSITION",
-      "zap_score": 1.0758,
-      "zip_norm": 0.8421,
-      "final_score": 1.3191,
+      "zap_score": 1.0227,
+      "zip_norm": 1.0,
+      "final_score": 1.4136,
       "bounce_risk": 0,
       "bounce_flipped": false
     }
