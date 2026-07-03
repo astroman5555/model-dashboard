@@ -1,6 +1,6 @@
 {
-  "for_date": "2026-07-03",
-  "generated_on": "2026-07-02T17:00:47.638303-04:00",
+  "for_date": "2026-07-06",
+  "generated_on": "2026-07-03T16:30:14.300152-04:00",
   "atr_range_pct": 3.4,
   "models": {
     "DRIP": {
@@ -12,13 +12,13 @@
           "name": "ma60_slope",
           "vote": 1,
           "weight": 2.2843,
-          "desc": "MA60 rising +0.216%/d \u2014 bull week"
+          "desc": "MA60 rising +0.209%/d \u2014 bull week"
         },
         {
           "name": "ma200_trend",
           "vote": 1,
           "weight": 0.9055,
-          "desc": "Price +6.14% above MA200 \u2014 bull regime"
+          "desc": "Price +8.14% above MA200 \u2014 bull regime"
         }
       ],
       "bull_votes": 2,
@@ -29,8 +29,8 @@
       "adx": null,
       "log_posterior": null,
       "final_score": null,
-      "weekly_lock": true,
-      "week_of": "2026-06-29"
+      "weekly_lock": false,
+      "week_of": "2026-07-06"
     },
     "ZIP": {
       "direction": "SPXS",
@@ -65,7 +65,7 @@
           "name": "vix",
           "vote": -1,
           "weight": 0.1913,
-          "desc": "VIX low (16.1) \u2014 risk-on/bull [inv]"
+          "desc": "VIX low (15.8) \u2014 risk-on/bull [inv]"
         }
       ],
       "bull_votes": 0,
@@ -105,27 +105,27 @@
   "accuracy_context": {
     "DRIP": {
       "weeks_of_data": 8,
-      "avg_weekly_e_delta": 5.2594,
-      "avg_direction_accuracy": 0.4625,
-      "last_week_e_delta": 2.6065
+      "avg_weekly_e_delta": 5.2584,
+      "avg_direction_accuracy": 0.4437,
+      "last_week_e_delta": 5.3866
     },
     "ZIP": {
       "weeks_of_data": 8,
-      "avg_weekly_e_delta": 5.9607,
-      "avg_direction_accuracy": 0.4438,
-      "last_week_e_delta": 2.6279
+      "avg_weekly_e_delta": 6.1232,
+      "avg_direction_accuracy": 0.4062,
+      "last_week_e_delta": 6.6717
     },
     "ZAP": {
       "weeks_of_data": 8,
-      "avg_weekly_e_delta": 5.5629,
-      "avg_direction_accuracy": 0.5125,
-      "last_week_e_delta": 2.6466
+      "avg_weekly_e_delta": 5.4554,
+      "avg_direction_accuracy": 0.5563,
+      "last_week_e_delta": 4.9341
     },
     "ZUP": {
       "weeks_of_data": 8,
-      "avg_weekly_e_delta": 5.2052,
-      "avg_direction_accuracy": 0.5938,
-      "last_week_e_delta": 3.2779
+      "avg_weekly_e_delta": 5.124,
+      "avg_direction_accuracy": 0.5563,
+      "last_week_e_delta": 4.7825
     }
   }
 }
