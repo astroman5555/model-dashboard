@@ -1,7 +1,7 @@
 {
-  "for_date": "2026-07-08",
-  "generated_on": "2026-07-07T17:00:46.841717-04:00",
-  "atr_range_pct": 3.15,
+  "for_date": "2026-07-09",
+  "generated_on": "2026-07-08T16:30:14.376943-04:00",
+  "atr_range_pct": 3.22,
   "models": {
     "DRIP": {
       "direction": "SPXL",
@@ -34,88 +34,63 @@
     },
     "ZIP": {
       "direction": "SPXS",
-      "confidence": 2,
-      "expected_pct": 0.77,
+      "confidence": 10,
+      "expected_pct": 0.08,
       "signals": [
-        {
-          "name": "macd_cross",
-          "vote": -1,
-          "weight": 2.0576,
-          "desc": "MACD crossed above signal (last 2d) \u2014 momentum cont/bear"
-        },
         {
           "name": "ma60_slope",
           "vote": 1,
           "weight": 2.2843,
-          "desc": "MA60 rising (slope +0.200%/d)"
+          "desc": "MA60 rising (slope +0.192%/d)"
         },
         {
           "name": "ma200_trend",
           "vote": 1,
           "weight": 0.9055,
-          "desc": "Price +8.40% above MA200 \u2014 bull regime"
+          "desc": "Price +7.99% above MA200 \u2014 bull regime"
         }
       ],
       "bull_votes": 2,
-      "bear_votes": 1,
-      "net_score": 1.1322,
+      "bear_votes": 0,
+      "net_score": 3.1898,
       "regime": "TRANSITION",
       "bounce_risk": 0
     },
     "ZAP": {
       "direction": "SPXL",
-      "confidence": 4,
-      "expected_pct": 0.09,
-      "signals": [
-        {
-          "name": "macd_cross",
-          "vote": -1,
-          "weight": 0.1926,
-          "desc": "MACD crossed above signal \u2014 bear"
-        },
-        {
-          "name": "vix",
-          "vote": -1,
-          "weight": 0.1913,
-          "desc": "VIX low (16.1) \u2014 risk-on/bull [inv]"
-        }
-      ],
+      "confidence": 0,
+      "expected_pct": null,
+      "signals": [],
       "bull_votes": 0,
-      "bear_votes": 2,
-      "log_posterior": -0.5375,
-      "adx": 28.0,
-      "regime": "TRANSITION\u2192BULL_TREND (20%)"
+      "bear_votes": 0,
+      "log_posterior": 0.0,
+      "adx": 29.2,
+      "regime": "TRANSITION\u2192BULL_TREND (40%)"
     },
     "ZUP": {
-      "direction": "SPXS",
-      "confidence": 7,
-      "expected_pct": 0.2,
+      "direction": "SPXL",
+      "confidence": 10,
+      "expected_pct": 0.3,
       "signals": [
-        {
-          "name": "macd_cross",
-          "vote": -1,
-          "weight": 0.2334,
-          "desc": "MACD crossed above signal \u2014 bear"
-        },
         {
           "name": "ma60_slope",
           "vote": 1,
           "weight": 0.4051,
-          "desc": "MA60 rising (slope +0.200%/d)"
+          "desc": "MA60 rising (slope +0.192%/d)"
         },
         {
           "name": "ma200_trend",
           "vote": 1,
           "weight": 0.3254,
-          "desc": "Price +8.40% above MA200 \u2014 bull regime"
+          "desc": "Price +7.99% above MA200 \u2014 bull regime"
         }
       ],
       "bull_votes": 2,
-      "bear_votes": 1,
+      "bear_votes": 0,
       "regime": "TRANSITION",
-      "zap_score": 0.6959,
-      "zip_norm": 0.75,
-      "final_score": 1.0176,
+      "zap_score": 1.0227,
+      "zip_norm": 1.0,
+      "final_score": 1.4136,
       "bounce_risk": 0,
       "bounce_flipped": false
     }
